@@ -6,6 +6,10 @@ import { ProductGrid } from '@/components/katalog/ProductGrid';
 import { FilterPanel, FilterState } from '@/components/katalog/FilterPanel';
 import { SearchBar } from '@/components/katalog/SearchBar';
 import { MOCK_PRODUCTS, MOCK_CATEGORIES } from '@/lib/mock-data';
+import { Globe2, ChevronDown } from 'lucide-react';
+import { Dropdown } from '@/components/ui/Dropdown';
+import { cn } from '@/lib/utils/cn';
+import { PublicFooter } from '@/components/layout/PublicFooter';
 
 export default function KatalogPage() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -51,29 +55,37 @@ export default function KatalogPage() {
     <div className="min-h-screen bg-[var(--color-bg-base)] flex flex-col">
       <PublicNavbar />
       
-      {/* Decorative Background */}
-      <div className="fixed inset-0 grid-pattern opacity-30 z-0 pointer-events-none"></div>
-
-      <main className="flex-1 pt-[calc(var(--header-height)+2rem)] pb-20 relative z-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
-        
-        <div className="mb-8 animate-in fade-in slide-in-from-bottom-4 duration-500">
-          <h1 className="text-3xl md:text-4xl font-display font-bold text-[var(--color-text-primary)] mb-4">
-            Katalog Produk Ekspor
-          </h1>
-          <p className="text-[var(--color-text-secondary)] max-w-2xl text-lg">
-            Temukan ribuan produk unggulan dari UMKM Indonesia yang siap bersaing di pasar global.
-          </p>
+      {/* Hero Header */}
+      <div className="relative pt-32 pb-16 bg-[var(--color-primary)] overflow-hidden">
+        <div className="absolute inset-0 futuristic-bg opacity-30 mix-blend-overlay"></div>
+        <div className="absolute -right-20 -bottom-20 opacity-10">
+          <Globe2 className="w-96 h-96 text-white" />
         </div>
+        
+        <div className="relative z-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
+          <div className="max-w-2xl animate-fade-in">
+            <h1 className="text-4xl md:text-5xl font-display font-extrabold text-white mb-4 tracking-tight">
+              Katalog Produk Ekspor
+            </h1>
+            <p className="text-[var(--color-primary-light)] text-lg md:text-xl font-medium">
+              Eksplorasi ribuan produk unggulan dari UMKM Indonesia yang siap memenuhi standar pasar global.
+            </p>
+          </div>
+        </div>
+      </div>
 
+      <main className="flex-1 -mt-8 relative z-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full pb-20">
         <div className="flex flex-col lg:flex-row gap-8 items-start">
           
           {/* Sidebar / Filters */}
           <div className="w-full lg:w-72 shrink-0 space-y-6 lg:sticky lg:top-[calc(var(--header-height)+2rem)]">
-            <SearchBar 
-              value={searchQuery}
-              onChange={setSearchQuery}
-              placeholder="Cari nama produk..."
-            />
+            <div className="bg-white rounded-2xl shadow-sm border border-[var(--color-border)] p-5">
+              <SearchBar 
+                value={searchQuery}
+                onChange={setSearchQuery}
+                placeholder="Cari nama produk..."
+              />
+            </div>
             
             <FilterPanel
               categories={MOCK_CATEGORIES}
@@ -87,9 +99,24 @@ export default function KatalogPage() {
           </div>
 
           {/* Main Content */}
-          <div className="flex-1 w-full">
-            <div className="mb-4 flex items-center justify-between text-sm text-[var(--color-text-secondary)]">
-              <span>Menampilkan <strong>{filteredProducts.length}</strong> produk</span>
+          <div className="flex-1 w-full mt-8 lg:mt-0">
+            <div className="mb-6 flex items-center justify-between text-sm text-[var(--color-text-secondary)] bg-white px-4 py-3 rounded-xl border border-[var(--color-border)] shadow-sm">
+              <span>Menampilkan <strong className="text-[var(--color-text-primary)]">{filteredProducts.length}</strong> produk</span>
+              <div className="flex items-center gap-2">
+                <Dropdown 
+                  align="left"
+                  trigger={(isOpen) => (
+                    <div className="flex items-center gap-1.5 font-bold text-[var(--color-primary)] hover:text-[var(--color-primary-hover)] transition-colors cursor-pointer bg-[var(--color-bg-subtle)] px-3 py-1.5 rounded-lg border border-[var(--color-border)]">
+                      Terbaru <ChevronDown className={cn("w-4 h-4 transition-transform duration-200", isOpen && "rotate-180")} />
+                    </div>
+                  )}
+                  items={[
+                    { id: 'newest', label: 'Terbaru' },
+                    { id: 'lowest', label: 'Harga Terendah' },
+                    { id: 'highest', label: 'Harga Tertinggi' },
+                  ]}
+                />
+              </div>
             </div>
             <ProductGrid 
               products={filteredProducts} 
@@ -99,6 +126,8 @@ export default function KatalogPage() {
 
         </div>
       </main>
+
+      <PublicFooter variant="light" />
     </div>
   );
 }

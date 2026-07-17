@@ -25,31 +25,31 @@ export const StatCard = ({
 
   const variants = {
     default: {
-      bg: 'bg-[var(--color-bg-subtle)]',
+      bg: 'bg-[var(--color-bg-subtle)] border border-[var(--color-border)]',
       iconText: 'text-[var(--color-text-muted)]',
       trendUpBg: 'bg-emerald-100',
       trendUpText: 'text-emerald-700',
     },
     emerald: {
-      bg: 'bg-emerald-50',
-      iconText: 'text-[#006B52]',
-      trendUpBg: 'bg-emerald-100',
-      trendUpText: 'text-emerald-700',
+      bg: 'bg-[var(--color-primary-subtle)] border border-[var(--color-primary)]/20',
+      iconText: 'text-[var(--color-primary)]',
+      trendUpBg: 'bg-[var(--color-primary-subtle)]',
+      trendUpText: 'text-[var(--color-primary)]',
     },
     gold: {
-      bg: 'bg-[#FEF9E7]',
-      iconText: 'text-[#C8941A]',
-      trendUpBg: 'bg-amber-100',
-      trendUpText: 'text-amber-700',
+      bg: 'bg-[var(--color-warning)]/10 border border-[var(--color-warning)]/20',
+      iconText: 'text-[var(--color-warning)]',
+      trendUpBg: 'bg-[var(--color-warning)]/10',
+      trendUpText: 'text-[var(--color-warning-hover)]',
     },
     blue: {
-      bg: 'bg-blue-50',
+      bg: 'bg-blue-50 border border-blue-200',
       iconText: 'text-blue-600',
       trendUpBg: 'bg-blue-100',
       trendUpText: 'text-blue-700',
     },
     purple: {
-      bg: 'bg-purple-50',
+      bg: 'bg-purple-50 border border-purple-200',
       iconText: 'text-purple-600',
       trendUpBg: 'bg-purple-100',
       trendUpText: 'text-purple-700',
@@ -59,35 +59,36 @@ export const StatCard = ({
   const style = variants[variant];
 
   return (
-    <Card interactive className={cn("group overflow-hidden relative", className)}>
+    <Card interactive className={cn("group overflow-hidden relative border-[var(--color-border)] shadow-sm hover:shadow-lg transition-all duration-300 var(--ease-out-quart) rounded-2xl", className)}>
       {variant === 'gold' && (
         <div className="absolute top-0 right-0 w-32 h-32 bg-white/40 rounded-full blur-2xl -mr-10 -mt-10"></div>
       )}
-      <CardHeader className="pb-2 flex flex-row items-center justify-between relative z-10">
-        <CardTitle className="text-sm font-semibold text-[var(--color-text-secondary)] uppercase tracking-wider">
+      <CardHeader className="pb-2 flex flex-row items-center justify-between relative z-10 p-5">
+        <CardTitle className="text-xs font-bold text-[var(--color-text-secondary)] uppercase tracking-wider">
           {title}
         </CardTitle>
-        <div className={cn("w-10 h-10 rounded-full flex items-center justify-center transition-transform group-hover:scale-110 shadow-sm", style.bg)}>
-          <Icon className={cn("w-5 h-5", style.iconText)} />
+        <div className={cn("w-12 h-12 rounded-[14px] flex items-center justify-center transition-transform duration-300 var(--ease-out-quart) group-hover:scale-110 shadow-sm", style.bg)}>
+          <Icon className={cn("w-6 h-6", style.iconText)} />
         </div>
       </CardHeader>
-      <CardContent className="relative z-10">
-        <div className="text-3xl font-mono font-bold text-[var(--color-text-primary)] tracking-tight">
+      <CardContent className="relative z-10 px-5 pb-5 pt-0">
+        <div className="text-3xl font-display font-bold text-[var(--color-text-primary)] tracking-tight">
           {value}
         </div>
         
         {trendValue && (
-          <p className="text-xs mt-2 flex items-center gap-1 font-medium">
+          <p className="text-xs mt-3 flex items-center gap-1.5 font-bold">
             <span className={cn(
-              "px-1.5 rounded-sm",
+              "px-2 py-0.5 rounded-[4px]",
               trend === 'up' ? style.trendUpBg + " " + style.trendUpText : 
               trend === 'down' ? "bg-red-100 text-red-700" : 
-              "bg-gray-100 text-gray-700"
+              "bg-[var(--color-bg-subtle)] text-[var(--color-text-secondary)]"
             )}>
               {trend === 'up' && '↑ '}
               {trend === 'down' && '↓ '}
               {trendValue}
             </span>
+            <span className="text-[var(--color-text-muted)] font-medium">vs bulan lalu</span>
           </p>
         )}
       </CardContent>

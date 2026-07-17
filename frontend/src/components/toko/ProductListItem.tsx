@@ -34,43 +34,43 @@ export const ProductListItem = ({ product, onDelete }: ProductListItemProps) => 
 
   return (
     <>
-      <tr className="hover:bg-[var(--color-bg-subtle)]/50 transition-colors group">
-        <td className="p-4">
+      <tr className="hover:bg-[var(--color-bg-subtle)]/60 transition-colors duration-200 group">
+        <td className="p-5">
           <div className="flex items-center gap-4">
-            <div className="w-12 h-12 rounded-lg bg-[var(--color-bg-subtle)] border border-[var(--color-border)] overflow-hidden shrink-0">
+            <div className="w-14 h-14 rounded-xl bg-[var(--color-bg-subtle)] border border-[var(--color-border)] overflow-hidden shrink-0">
               {product.photoUrl ? (
                 <img src={product.photoUrl} alt={product.name} className="w-full h-full object-cover" />
               ) : (
-                <div className="w-full h-full flex items-center justify-center text-[10px] text-[var(--color-text-muted)]">No Img</div>
+                <div className="w-full h-full flex items-center justify-center text-[10px] font-bold text-[var(--color-text-muted)]">No Img</div>
               )}
             </div>
             <div className="min-w-0">
-              <h4 className="font-semibold text-sm text-[var(--color-text-primary)] truncate max-w-[200px] sm:max-w-[300px]">
+              <h4 className="font-bold text-[15px] text-[var(--color-text-primary)] truncate max-w-[200px] sm:max-w-[300px]">
                 {product.name}
               </h4>
-              <p className="text-xs text-[var(--color-text-secondary)]">{product.category}</p>
+              <p className="text-[13px] font-medium text-[var(--color-text-secondary)] mt-0.5">{product.category}</p>
             </div>
           </div>
         </td>
         
-        <td className="p-4 hidden sm:table-cell">
-          <div className="text-sm font-mono text-[var(--color-text-primary)]">
+        <td className="p-5 hidden sm:table-cell">
+          <div className="text-[15px] font-mono font-bold text-[var(--color-text-primary)]">
             {formatRupiah(product.minPrice)}
           </div>
         </td>
         
-        <td className="p-4">
-          <Badge variant={isActive ? 'success' : 'default'} className="text-[10px]">
+        <td className="p-5">
+          <Badge variant={isActive ? 'success' : 'default'} className="font-bold tracking-wider px-2 py-0.5 shadow-sm">
             {isActive ? 'Aktif' : 'Nonaktif'}
           </Badge>
         </td>
         
-        <td className="p-4 text-right relative">
+        <td className="p-5 text-right relative">
           <button 
             onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-            className="p-1.5 rounded-md hover:bg-[var(--color-bg-subtle)] text-[var(--color-text-secondary)] transition-colors"
+            className="p-2 rounded-lg hover:bg-white border border-transparent hover:border-[var(--color-border)] hover:shadow-sm text-[var(--color-text-secondary)] hover:text-[var(--color-primary)] transition-all duration-200"
           >
-            <MoreVertical className="w-4 h-4" />
+            <MoreVertical className="w-5 h-5" />
           </button>
           
           {isDropdownOpen && (
@@ -79,10 +79,10 @@ export const ProductListItem = ({ product, onDelete }: ProductListItemProps) => 
                 className="fixed inset-0 z-10" 
                 onClick={() => setIsDropdownOpen(false)}
               ></div>
-              <div className="absolute right-4 top-12 w-48 bg-white border border-[var(--color-border)] rounded-lg shadow-lg z-20 py-1 animate-in fade-in slide-in-from-top-2 duration-200">
+              <div className="absolute right-6 top-14 w-48 bg-white border border-[var(--color-border)] rounded-xl shadow-lg shadow-[var(--color-text-primary)]/5 z-20 py-1.5 animate-slide-up duration-200">
                 <Link 
                   href={`/toko/produk/${product.id}`}
-                  className="flex items-center gap-2 px-4 py-2 text-sm text-[var(--color-text-primary)] hover:bg-[var(--color-bg-subtle)] transition-colors"
+                  className="flex items-center gap-2.5 px-4 py-2.5 text-sm font-bold text-[var(--color-text-primary)] hover:bg-[var(--color-bg-subtle)] hover:text-[var(--color-primary)] transition-colors"
                 >
                   <Edit className="w-4 h-4" /> Edit Produk
                 </Link>
@@ -91,7 +91,7 @@ export const ProductListItem = ({ product, onDelete }: ProductListItemProps) => 
                     setIsActive(!isActive);
                     setIsDropdownOpen(false);
                   }}
-                  className="w-full flex items-center gap-2 px-4 py-2 text-sm text-[var(--color-text-primary)] hover:bg-[var(--color-bg-subtle)] transition-colors"
+                  className="w-full flex items-center gap-2.5 px-4 py-2.5 text-sm font-bold text-[var(--color-text-primary)] hover:bg-[var(--color-bg-subtle)] transition-colors"
                 >
                   {isActive ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
                   {isActive ? 'Nonaktifkan' : 'Aktifkan'}
@@ -102,7 +102,7 @@ export const ProductListItem = ({ product, onDelete }: ProductListItemProps) => 
                     setIsDeleteModalOpen(true);
                     setIsDropdownOpen(false);
                   }}
-                  className="w-full flex items-center gap-2 px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors"
+                  className="w-full flex items-center gap-2.5 px-4 py-2.5 text-sm font-bold text-[var(--color-error)] hover:bg-[var(--color-error)]/5 transition-colors"
                 >
                   <Trash2 className="w-4 h-4" /> Hapus
                 </button>
@@ -119,14 +119,14 @@ export const ProductListItem = ({ product, onDelete }: ProductListItemProps) => 
         title="Hapus Produk"
       >
         <div className="p-6">
-          <p className="text-[var(--color-text-secondary)] mb-6">
-            Apakah Anda yakin ingin menghapus produk <strong>{product.name}</strong>? Tindakan ini tidak dapat dibatalkan.
+          <p className="text-[var(--color-text-secondary)] font-medium mb-6">
+            Apakah Anda yakin ingin menghapus produk <strong className="text-[var(--color-text-primary)]">{product.name}</strong>? Tindakan ini tidak dapat dibatalkan.
           </p>
           <div className="flex justify-end gap-3">
-            <Button variant="ghost" onClick={() => setIsDeleteModalOpen(false)}>
+            <Button variant="ghost" onClick={() => setIsDeleteModalOpen(false)} className="font-bold">
               Batal
             </Button>
-            <Button variant="danger" onClick={handleDeleteConfirm} leftIcon={<Trash2 className="w-4 h-4" />}>
+            <Button variant="danger" onClick={handleDeleteConfirm} className="font-bold shadow-sm" leftIcon={<Trash2 className="w-4 h-4" />}>
               Ya, Hapus
             </Button>
           </div>

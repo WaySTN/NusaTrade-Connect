@@ -4,16 +4,18 @@ import { cn } from '@/lib/utils/cn';
 export interface BadgeProps extends HTMLAttributes<HTMLDivElement> {
   variant?: 'default' | 'verified' | 'premium' | 'success' | 'warning' | 'error' | 'info' | 'pending';
   pulse?: boolean;
+  dot?: boolean;
 }
 
 export const Badge = ({
   className,
   variant = 'default',
   pulse = false,
+  dot = false,
   children,
   ...props
 }: BadgeProps) => {
-  const baseStyles = "inline-flex items-center gap-1.5 rounded-md px-2.5 py-0.5 text-xs font-semibold transition-colors";
+  const baseStyles = "inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-xs font-semibold transition-colors";
   
   const variants = {
     default: "bg-[var(--color-bg-subtle)] text-[var(--color-text-secondary)] border border-[var(--color-border)]",
@@ -26,12 +28,24 @@ export const Badge = ({
     pending: "bg-[var(--color-bg-subtle)] text-[var(--color-text-secondary)] border border-dashed border-[var(--color-text-placeholder)]",
   };
 
+  const getDotColor = () => {
+    switch(variant) {
+      case 'success': return 'bg-[var(--color-success)]';
+      case 'error': return 'bg-[var(--color-error)]';
+      case 'warning': return 'bg-[var(--color-warning)]';
+      case 'info': return 'bg-[var(--color-info)]';
+      case 'verified': return 'bg-[var(--color-verified)]';
+      case 'premium': return 'bg-[var(--color-premium)]';
+      default: return 'bg-[var(--color-text-secondary)]';
+    }
+  };
+
   return (
     <div className={cn(baseStyles, variants[variant], className)} {...props}>
-      {pulse && (
+      {(pulse || dot) && (
         <span className="relative flex h-2 w-2">
-          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-current opacity-40"></span>
-          <span className="relative inline-flex rounded-full h-2 w-2 bg-current"></span>
+          {pulse && <span className={cn("animate-ping absolute inline-flex h-full w-full rounded-full opacity-40", getDotColor())}></span>}
+          <span className={cn("relative inline-flex rounded-full h-2 w-2", getDotColor())}></span>
         </span>
       )}
       {children}

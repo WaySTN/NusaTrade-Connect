@@ -12,30 +12,30 @@ export const NIBReminderBanner = () => {
 
   return (
     <div className={cn(
-      "bg-[#FFFBEB] border border-[#D97706]/20 border-l-4 border-l-[#D97706] rounded-r-lg p-4 flex items-start sm:items-center justify-between gap-4 animate-in fade-in duration-300"
+      "bg-[var(--color-warning)]/10 border border-[var(--color-warning)]/20 border-l-4 border-l-[var(--color-warning)] rounded-r-2xl p-5 flex items-start sm:items-center justify-between gap-4 animate-slide-up duration-300 var(--ease-out-quart) shadow-sm"
     )}>
-      <div className="flex items-start sm:items-center gap-3">
-        <div className="w-8 h-8 rounded-full bg-amber-100 flex items-center justify-center shrink-0 mt-0.5 sm:mt-0">
-          <AlertTriangle className="w-4 h-4 text-[#D97706]" />
+      <div className="flex items-start sm:items-center gap-4">
+        <div className="w-10 h-10 rounded-full bg-[var(--color-warning)]/20 flex items-center justify-center shrink-0 mt-0.5 sm:mt-0">
+          <AlertTriangle className="w-5 h-5 text-[var(--color-warning)]" />
         </div>
         <div>
-          <h4 className="text-sm font-semibold text-amber-900">NIB Belum Terverifikasi</h4>
-          <p className="text-xs text-amber-800 mt-0.5">
+          <h4 className="text-sm font-bold text-[var(--color-warning-hover)]">NIB Belum Terverifikasi</h4>
+          <p className="text-xs font-medium text-[var(--color-warning-hover)]/80 mt-1">
             Verifikasi NIB Anda untuk membuka akses penuh ke fitur pembayaran internasional dan pengurusan PPJK.
           </p>
         </div>
       </div>
       
-      <div className="flex items-center gap-3 shrink-0">
+      <div className="flex items-center gap-4 shrink-0">
         <Link 
           href="/toko/verifikasi"
-          className="text-sm font-medium text-[#D97706] hover:text-amber-700 hover:underline"
+          className="text-sm font-bold text-[var(--color-warning)] hover:text-[var(--color-warning-hover)] hover:underline transition-colors duration-200"
         >
           Verifikasi Sekarang
         </Link>
         <button 
           onClick={() => setIsVisible(false)}
-          className="text-amber-500 hover:text-amber-700 hover:bg-amber-100 p-1 rounded-md transition-colors"
+          className="text-[var(--color-warning-hover)]/60 hover:text-[var(--color-warning-hover)] hover:bg-[var(--color-warning)]/10 p-1.5 rounded-lg transition-colors duration-200"
         >
           <X className="w-4 h-4" />
         </button>

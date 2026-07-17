@@ -41,52 +41,52 @@ export const QRCodeDisplay = ({ status, expiryTime }: QRCodeDisplayProps) => {
   }, [status]);
 
   return (
-    <div className="flex flex-col items-center p-6 bg-white border border-[var(--color-border)] rounded-2xl w-full max-w-sm mx-auto shadow-sm">
+    <div className="flex flex-col items-center p-6 bg-white border border-[var(--color-border)] rounded-3xl w-full max-w-sm mx-auto shadow-sm hover:shadow-md transition-shadow duration-300 var(--ease-out-quart)">
       <h3 className="font-bold text-[var(--color-text-primary)] mb-6 text-center">QRIS Cross-Border</h3>
       
       <div className={cn(
-        "relative w-48 h-48 rounded-xl border-2 flex items-center justify-center bg-[var(--color-bg-subtle)] p-2 mb-6",
-        status === 'PENDING' ? "border-dashed border-[#006B52]" : "border-solid border-[var(--color-border)]",
-        status === 'PAID' || status === 'COMPLETED' ? "border-emerald-500" : "",
-        status === 'EXPIRED' || status === 'FAILED' ? "border-red-300 opacity-50" : ""
+        "relative w-56 h-56 rounded-2xl border-2 flex items-center justify-center bg-[var(--color-bg-subtle)] p-2.5 mb-6 transition-all duration-300",
+        status === 'PENDING' ? "border-dashed border-[var(--color-primary)] bg-[var(--color-primary-subtle)]" : "border-solid border-[var(--color-border)] bg-white",
+        status === 'PAID' || status === 'COMPLETED' ? "border-[var(--color-success)] shadow-[0_0_20px_var(--color-success)]/20" : "",
+        status === 'EXPIRED' || status === 'FAILED' ? "border-[var(--color-error)]/30 opacity-60" : ""
       )}>
         {/* Fake QR Pattern */}
-        <div className="w-full h-full bg-white flex flex-wrap content-start gap-1 p-1 overflow-hidden opacity-80">
-          {[...Array(64)].map((_, i) => (
+        <div className="w-full h-full bg-white flex flex-wrap content-start gap-1 p-1.5 overflow-hidden opacity-90 rounded-xl">
+          {[...Array(81)].map((_, i) => (
             <div key={i} className={cn(
               "w-4 h-4 rounded-sm",
               Math.random() > 0.4 ? "bg-[#0F1A2A]" : "bg-transparent"
             )}></div>
           ))}
           {/* Central Logo */}
-          <div className="absolute inset-0 m-auto w-12 h-12 bg-white rounded-lg flex items-center justify-center border border-[var(--color-border)] shadow-sm">
-            <QrCode className="w-8 h-8 text-[#006B52]" />
+          <div className="absolute inset-0 m-auto w-14 h-14 bg-white rounded-xl flex items-center justify-center border-2 border-[var(--color-primary)] shadow-lg shadow-[var(--color-primary)]/10">
+            <QrCode className="w-8 h-8 text-[var(--color-primary)]" />
           </div>
         </div>
 
         {/* Overlays */}
         {(status === 'PAID' || status === 'COMPLETED') && (
-          <div className="absolute inset-0 bg-white/90 backdrop-blur-sm rounded-lg flex flex-col items-center justify-center animate-in zoom-in duration-300">
-            <CheckCircle2 className="w-16 h-16 text-emerald-500 mb-2" />
-            <span className="font-bold text-emerald-700">Berhasil Dibayar</span>
+          <div className="absolute inset-0 bg-white/95 backdrop-blur-md rounded-2xl flex flex-col items-center justify-center animate-slide-up duration-500 var(--ease-out-quart)">
+            <CheckCircle2 className="w-16 h-16 text-[var(--color-success)] mb-3 drop-shadow-[0_4px_8px_rgba(0,107,82,0.2)]" />
+            <span className="font-extrabold text-[var(--color-success-hover)] text-lg tracking-tight">Berhasil Dibayar</span>
           </div>
         )}
         
         {(status === 'EXPIRED') && (
-          <div className="absolute inset-0 bg-white/90 backdrop-blur-sm rounded-lg flex flex-col items-center justify-center animate-in zoom-in duration-300">
-            <Clock className="w-16 h-16 text-red-400 mb-2" />
-            <span className="font-bold text-red-600">Kode Kedaluwarsa</span>
+          <div className="absolute inset-0 bg-white/95 backdrop-blur-md rounded-2xl flex flex-col items-center justify-center animate-slide-up duration-500 var(--ease-out-quart)">
+            <Clock className="w-16 h-16 text-[var(--color-text-muted)] mb-3 opacity-50" />
+            <span className="font-bold text-[var(--color-text-secondary)] text-lg tracking-tight">Kedaluwarsa</span>
           </div>
         )}
       </div>
 
       {status === 'PENDING' && (
         <div className="flex flex-col items-center text-center">
-          <div className="flex items-center gap-2 text-[#D97706] bg-[#FFFBEB] px-3 py-1.5 rounded-full text-xs font-semibold mb-3 border border-[#D97706]/20">
+          <div className="flex items-center gap-2 text-[var(--color-warning-hover)] bg-[var(--color-warning)]/10 px-4 py-2 rounded-full text-xs font-bold mb-4 shadow-sm border border-[var(--color-warning)]/20 tracking-wider">
             <Clock className="w-3.5 h-3.5" />
-            Berakhir dalam {timeLeft}
+            BERAKHIR DALAM {timeLeft}
           </div>
-          <p className="text-xs text-[var(--color-text-secondary)]">
+          <p className="text-xs font-medium text-[var(--color-text-secondary)] leading-relaxed px-4">
             Minta pembeli untuk scan QR code ini dengan aplikasi pembayaran yang didukung.
           </p>
         </div>
@@ -95,7 +95,7 @@ export const QRCodeDisplay = ({ status, expiryTime }: QRCodeDisplayProps) => {
       {status === 'EXPIRED' && (
         <Button 
           variant="outline" 
-          className="w-full border-red-200 text-red-600 hover:bg-red-50"
+          className="w-full font-bold border-[var(--color-border-strong)] bg-white hover:bg-[var(--color-bg-subtle)]"
           leftIcon={<RefreshCw className="w-4 h-4" />}
         >
           Buat QR Baru

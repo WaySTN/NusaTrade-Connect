@@ -50,11 +50,11 @@ export default function ChatWindowPage() {
 
   if (!conversation) {
     return (
-      <div className="flex-1 flex flex-col items-center justify-center h-full bg-white text-center p-6">
+      <div className="flex-1 flex flex-col items-center justify-center h-full bg-[var(--color-bg-base)] text-center p-6">
         <h2 className="text-xl font-bold text-[var(--color-text-primary)] mb-2">Percakapan Tidak Ditemukan</h2>
-        <p className="text-sm text-[var(--color-text-secondary)] mb-4">Mungkin telah dihapus atau ID tidak valid.</p>
+        <p className="text-sm font-medium text-[var(--color-text-secondary)] mb-4">Mungkin telah dihapus atau ID tidak valid.</p>
         <Link href="/chat">
-          <Button variant="primary">Kembali ke Inbox</Button>
+          <Button variant="primary" className="shadow-lg shadow-[var(--color-primary)]/20 font-bold">Kembali ke Inbox</Button>
         </Link>
       </div>
     );
@@ -126,30 +126,30 @@ export default function ChatWindowPage() {
     <div className="flex flex-col h-[calc(100vh-var(--header-height))] bg-[var(--color-bg-base)] max-w-4xl mx-auto border-x border-[var(--color-border)] relative">
       
       {/* Header Fixed */}
-      <div className="flex items-center justify-between p-3 sm:p-4 bg-white border-b border-[var(--color-border)] z-20 shadow-sm shrink-0">
-        <div className="flex items-center gap-3">
+      <div className="flex items-center justify-between p-3 sm:p-5 bg-white border-b border-[var(--color-border)] z-20 shadow-sm shrink-0 backdrop-blur-md bg-white/90">
+        <div className="flex items-center gap-4">
           <button 
             onClick={() => router.push('/chat')}
-            className="p-1.5 rounded-full hover:bg-[var(--color-bg-subtle)] text-[var(--color-text-secondary)] transition-colors"
+            className="p-2 rounded-full hover:bg-[var(--color-bg-subtle)] hover:text-[var(--color-primary)] text-[var(--color-text-secondary)] transition-colors duration-200"
           >
             <ArrowLeft className="w-5 h-5" />
           </button>
           
           <div className="relative">
-            <Avatar initials={conversation.buyerAvatar} size="md" />
+            <Avatar initials={conversation.buyerAvatar} size="md" className="ring-2 ring-[var(--color-border)]" />
             {conversation.isOnline && (
-              <span className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-emerald-500 border-2 border-white rounded-full"></span>
+              <span className="absolute bottom-0 right-0 w-3 h-3 bg-[var(--color-success)] border-2 border-white rounded-full"></span>
             )}
           </div>
           
           <div className="flex flex-col min-w-0">
-            <h2 className="text-sm sm:text-base font-bold text-[var(--color-text-primary)] truncate">
+            <h2 className="text-base font-bold text-[var(--color-text-primary)] truncate">
               {conversation.buyerName}
             </h2>
-            <span className="text-[10px] sm:text-xs text-[var(--color-text-secondary)] flex items-center gap-1.5">
+            <span className="text-[11px] font-medium text-[var(--color-text-secondary)] flex items-center gap-1.5 mt-0.5">
               {conversation.isOnline ? (
                 <>
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Online
+                  <span className="w-1.5 h-1.5 rounded-full bg-[var(--color-success)]"></span> Online
                 </>
               ) : 'Offline'}
             </span>
@@ -159,8 +159,8 @@ export default function ChatWindowPage() {
         <Button 
           variant="outline" 
           size="sm"
-          className="border-[#C8941A] text-[#C8941A] hover:bg-[#FEF9E7] shadow-sm whitespace-nowrap"
-          leftIcon={<Receipt className="w-3.5 h-3.5" />}
+          className="border-[var(--color-warning)] text-[var(--color-warning-hover)] hover:bg-[var(--color-warning)]/10 hover:text-[var(--color-warning-hover)] shadow-sm whitespace-nowrap font-bold h-10 px-4"
+          leftIcon={<Receipt className="w-4 h-4" />}
           onClick={() => setInvoiceFormOpen(true)}
         >
           <span className="hidden sm:inline">Buat</span> Invoice
@@ -168,7 +168,7 @@ export default function ChatWindowPage() {
       </div>
 
       {/* Chat Area Scrollable */}
-      <div className="flex-1 overflow-y-auto p-4 sm:p-6 pb-4 flex flex-col relative z-10">
+      <div className="flex-1 overflow-y-auto p-4 sm:p-6 pb-4 flex flex-col relative z-10 bg-[var(--color-bg-base)]">
         {messages.map((msg) => (
           <ChatBubble key={msg.id} message={msg}>
             {msg.hasInvoice && MOCK_INVOICES[0] && (
@@ -181,23 +181,23 @@ export default function ChatWindowPage() {
 
       {/* Conditional PPJK Banner */}
       {showPPJKBanner && (
-        <div className="mx-4 mb-2 p-3 bg-blue-50 border border-blue-100 rounded-xl flex items-start sm:items-center justify-between gap-3 shadow-sm z-10">
+        <div className="mx-5 mb-3 p-4 bg-blue-50/50 border border-blue-200 rounded-2xl flex items-start sm:items-center justify-between gap-4 shadow-sm z-10 animate-slide-up duration-300">
           <div className="flex items-start sm:items-center gap-3">
-            <div className="w-8 h-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center shrink-0">
+            <div className="w-8 h-8 rounded-full bg-blue-100/50 text-blue-600 flex items-center justify-center shrink-0">
               <Info className="w-4 h-4" />
             </div>
-            <p className="text-xs text-blue-800">
-              Negosiasi hampir selesai? Kami bisa bantu urus dokumen PEB dan pengiriman lewat mitra PPJK kami. <Link href="/ppjk" className="font-bold underline hover:text-blue-900">Cari PPJK Sekarang</Link>
+            <p className="text-xs font-medium text-blue-800 leading-relaxed">
+              Negosiasi hampir selesai? Kami bisa bantu urus dokumen PEB dan pengiriman lewat mitra PPJK kami. <Link href="/ppjk" className="font-bold underline hover:text-blue-900 transition-colors">Cari PPJK Sekarang</Link>
             </p>
           </div>
-          <button onClick={() => setShowPPJKBanner(false)} className="text-blue-400 hover:text-blue-600">
+          <button onClick={() => setShowPPJKBanner(false)} className="p-1.5 rounded-lg text-blue-400 hover:text-blue-600 hover:bg-blue-100/50 transition-colors">
             <X className="w-4 h-4" />
           </button>
         </div>
       )}
 
       {/* Input Area Fixed */}
-      <div className="bg-white border-t border-[var(--color-border)] p-3 sm:p-4 z-20 shrink-0">
+      <div className="bg-white border-t border-[var(--color-border)] p-0 z-20 shrink-0">
         <ChatInput 
           onSend={handleSendText}
           isRecording={isRecording}
@@ -221,6 +221,9 @@ export default function ChatWindowPage() {
         isOpen={isPriceModalOpen}
         onClose={() => setPriceModalOpen(false)}
         onConfirm={handlePriceConfirm}
+        productName={MOCK_PRODUCTS[0]?.name || "Produk"}
+        pricePerUnit={MOCK_PRODUCTS[0]?.price || 350000}
+        quantity={1}
       />
 
       <InvoiceForm

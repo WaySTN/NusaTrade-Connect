@@ -14,11 +14,12 @@ export interface TabsProps {
   activeTab?: string;
   onChange?: (tabId: string) => void;
   className?: string;
+  variant?: 'underline' | 'pill';
 }
 
-export function Tabs({ tabs, activeTab: externalActiveTab, onChange, className }: TabsProps) {
+export function Tabs({ tabs, activeTab: externalActiveTab, onChange, className, variant = 'underline' }: TabsProps) {
   const [activeTab, setActiveTab] = useState(externalActiveTab || tabs[0]?.id);
-  const [indicatorStyle, setIndicatorStyle] = useState({ left: 0, width: 0 });
+  const [indicatorStyle, setIndicatorStyle] = useState({ left: 0, width: 0, height: 0, top: 0 });
   const tabsRef = useRef<(HTMLButtonElement | null)[]>([]);
 
   useEffect(() => {
@@ -36,6 +37,8 @@ export function Tabs({ tabs, activeTab: externalActiveTab, onChange, className }
       setIndicatorStyle({
         left: activeElement.offsetLeft,
         width: activeElement.offsetWidth,
+        height: activeElement.offsetHeight,
+        top: activeElement.offsetTop
       });
     }
   }, [activeTab, tabs]);
@@ -48,31 +51,56 @@ export function Tabs({ tabs, activeTab: externalActiveTab, onChange, className }
   };
 
   return (
-    <div className={cn("relative border-b border-[var(--color-border)]", className)}>
-      <div className="flex space-x-6 relative">
+    <div className={cn("relative", variant === 'underline' && "border-b border-[var(--color-border)]", className)}>
+      <div className={cn(
+        "flex relative",
+        variant === 'underline' ? "space-x-6" : "space-x-2 bg-[var(--color-bg-subtle)] p-1 rounded-xl w-fit"
+      )}>
+        {/* Animated indicator */}
+        {variant === 'underline' ? (
+          <div 
+            className="absolute bottom-0 h-0.5 bg-[var(--color-primary)] transition-all duration-300 var(--ease-out-quart)"
+            style={{ left: indicatorStyle.left, width: indicatorStyle.width }}
+          />
+        ) : (
+          <div 
+            className="absolute rounded-lg bg-white shadow-sm border border-[var(--color-border)] transition-all duration-300 var(--ease-out-quart)"
+            style={{ 
+              left: indicatorStyle.left, 
+              width: indicatorStyle.width,
+              height: indicatorStyle.height,
+              top: indicatorStyle.top
+            }}
+          />
+        )}
+        
         {tabs.map((tab, index) => (
           <button
             key={tab.id}
             ref={el => { tabsRef.current[index] = el; }}
             onClick={() => handleTabClick(tab.id)}
             className={cn(
-              "pb-3 text-sm font-medium transition-colors flex items-center gap-2",
+              "relative z-10 text-sm font-semibold transition-colors flex items-center gap-2",
+              variant === 'underline' 
+                ? "pb-3" 
+                : "px-4 py-2 rounded-lg",
               activeTab === tab.id
-                ? "text-[#006B52]"
+                ? "text-[var(--color-primary)]"
                 : "text-[var(--color-text-muted)] hover:text-[var(--color-text-primary)]"
             )}
           >
-            {tab.icon}
+            {tab.icon && (
+              <span className={cn(
+                "transition-colors duration-200", 
+                activeTab === tab.id ? "text-[var(--color-primary)]" : "text-[var(--color-text-placeholder)]"
+              )}>
+                {tab.icon}
+              </span>
+            )}
             {tab.label}
           </button>
         ))}
       </div>
-      
-      {/* Animated underline indicator */}
-      <div 
-        className="absolute bottom-0 h-0.5 bg-[#006B52] transition-all duration-300 ease-out"
-        style={{ left: indicatorStyle.left, width: indicatorStyle.width }}
-      />
     </div>
   );
 }

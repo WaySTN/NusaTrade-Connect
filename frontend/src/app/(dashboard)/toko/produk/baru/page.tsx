@@ -55,33 +55,33 @@ export default function TambahProdukPage() {
   };
 
   return (
-    <div className="p-4 sm:p-6 lg:p-8 max-w-4xl mx-auto min-h-full flex flex-col space-y-6">
+    <div className="p-4 sm:p-6 lg:p-8 max-w-4xl mx-auto min-h-full flex flex-col space-y-6 lg:space-y-8 bg-[var(--color-bg-base)]">
       
       {/* Breadcrumb */}
-      <div className="flex items-center gap-2 text-sm text-[var(--color-text-secondary)]">
-        <Link href="/toko" className="hover:text-[#006B52] transition-colors">Toko Saya</Link>
-        <ChevronRight className="w-4 h-4" />
-        <span className="font-semibold text-[var(--color-text-primary)]">Tambah Produk Baru</span>
+      <div className="flex items-center gap-2 text-sm font-medium text-[var(--color-text-secondary)]">
+        <Link href="/toko" className="hover:text-[var(--color-primary)] transition-colors duration-200">Toko Saya</Link>
+        <ChevronRight className="w-4 h-4 text-[var(--color-text-muted)]" />
+        <span className="font-bold text-[var(--color-text-primary)]">Tambah Produk Baru</span>
       </div>
 
       <div>
-        <h1 className="text-2xl sm:text-3xl font-display font-bold text-[var(--color-text-primary)]">
+        <h1 className="text-2xl sm:text-3xl font-display font-extrabold text-[var(--color-text-primary)] tracking-tight">
           Tambah Produk Ekspor
         </h1>
-        <p className="text-[var(--color-text-secondary)] mt-1">
+        <p className="text-[var(--color-text-secondary)] font-medium mt-1.5">
           Lengkapi detail produk Anda agar mudah ditemukan oleh pembeli internasional.
         </p>
       </div>
 
-      <form onSubmit={handleSubmit} className="bg-white border border-[var(--color-border)] rounded-2xl shadow-sm overflow-hidden flex flex-col animate-in fade-in slide-in-from-bottom-4 duration-500">
+      <form onSubmit={handleSubmit} className="bg-white border border-[var(--color-border)] rounded-3xl shadow-sm overflow-hidden flex flex-col animate-slide-up duration-300 var(--ease-out-quart) hover:shadow-md transition-shadow">
         
-        <div className="p-6 sm:p-8 border-b border-[var(--color-border)] space-y-8">
+        <div className="p-6 sm:p-8 border-b border-[var(--color-border)] space-y-10">
           
           <PhotoUpload maxPhotos={5} onPhotosChange={setPhotos} />
           
           <div className="pt-8 border-t border-[var(--color-border)] space-y-6">
-            <h3 className="font-bold text-[var(--color-text-primary)] mb-2 flex items-center gap-2">
-              <PackagePlus className="w-5 h-5 text-[#006B52]" />
+            <h3 className="font-bold text-[var(--color-text-primary)] text-lg mb-4 flex items-center gap-2">
+              <PackagePlus className="w-5 h-5 text-[var(--color-primary)]" />
               Informasi Dasar
             </h3>
             
@@ -97,12 +97,12 @@ export default function TambahProdukPage() {
               </div>
 
               <div>
-                <label className="block text-sm font-semibold text-[var(--color-text-primary)] mb-1.5">
-                  Kategori Produk <span className="text-red-500">*</span>
+                <label className="block text-sm font-bold text-[var(--color-text-primary)] mb-1.5">
+                  Kategori Produk <span className="text-[var(--color-error)]">*</span>
                 </label>
                 <div className="relative">
                   <select 
-                    className="w-full h-11 px-4 bg-[var(--color-bg-base)] border border-[var(--color-border-strong)] rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#006B52]/50 focus:border-[#006B52] transition-all appearance-none"
+                    className="w-full h-11 px-4 bg-[var(--color-bg-base)] border border-[var(--color-border-strong)] rounded-xl text-sm font-medium focus:outline-none focus:ring-2 focus:ring-[var(--color-primary-subtle)] focus:border-[var(--color-primary)] transition-all appearance-none shadow-sm hover:border-[var(--color-border-hover)]"
                     value={formData.category}
                     onChange={(e) => setFormData({...formData, category: e.target.value})}
                     required
@@ -132,8 +132,8 @@ export default function TambahProdukPage() {
           </div>
 
           <div className="pt-8 border-t border-[var(--color-border)] space-y-6">
-            <h3 className="font-bold text-[var(--color-text-primary)] mb-2 flex items-center gap-2">
-              <span className="w-5 h-5 rounded-full bg-amber-100 text-[#D97706] flex items-center justify-center font-bold text-xs">$</span>
+            <h3 className="font-bold text-[var(--color-text-primary)] text-lg mb-4 flex items-center gap-2">
+              <span className="w-5 h-5 rounded-full bg-[var(--color-warning)]/20 text-[var(--color-warning-hover)] flex items-center justify-center font-bold text-xs">$</span>
               Estimasi Harga
             </h3>
             
@@ -157,18 +157,18 @@ export default function TambahProdukPage() {
                 required
               />
             </div>
-            <p className="text-xs text-[var(--color-text-secondary)] -mt-4">
+            <p className="text-xs font-medium text-[var(--color-text-secondary)] -mt-2">
               Pembeli dapat menegosiasikan harga aktual di dalam chat berdasarkan volume pesanan.
             </p>
           </div>
 
         </div>
 
-        <div className="p-6 sm:px-8 bg-[var(--color-bg-subtle)] flex flex-col sm:flex-row items-center justify-end gap-3">
+        <div className="p-6 sm:px-8 bg-[var(--color-bg-subtle)] flex flex-col sm:flex-row items-center justify-end gap-4 border-t border-[var(--color-border)]">
           <Button 
             type="button" 
             variant="ghost" 
-            className="w-full sm:w-auto text-[var(--color-text-secondary)]" 
+            className="w-full sm:w-auto font-bold text-[var(--color-text-secondary)] hover:bg-white hover:text-[var(--color-text-primary)]" 
             onClick={handleCancel}
             disabled={isLoading}
           >
@@ -177,7 +177,7 @@ export default function TambahProdukPage() {
           <Button 
             type="submit" 
             variant="primary" 
-            className="w-full sm:w-auto emerald-gradient shadow-md" 
+            className="w-full sm:w-auto font-bold shadow-md shadow-[var(--color-primary)]/20 px-8" 
             leftIcon={isLoading ? undefined : <Save className="w-4 h-4" />}
             disabled={isLoading}
           >

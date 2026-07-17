@@ -41,8 +41,8 @@ export const SearchBar = ({
   };
 
   return (
-    <div className={cn("relative flex items-center w-full", className)}>
-      <div className="absolute left-3 flex items-center justify-center pointer-events-none text-[var(--color-text-muted)]">
+    <div className={cn("relative flex items-center w-full group", className)}>
+      <div className="absolute left-4 flex items-center justify-center pointer-events-none text-[var(--color-text-placeholder)] group-focus-within:text-[var(--color-primary)] transition-colors duration-200">
         <Search className="w-5 h-5" />
       </div>
       
@@ -52,17 +52,17 @@ export const SearchBar = ({
         onChange={(e) => setLocalValue(e.target.value)}
         placeholder={placeholder}
         className={cn(
-          "flex h-12 w-full rounded-xl border bg-white px-10 py-2 text-base text-[var(--color-text-primary)] transition-all",
-          "placeholder:text-[#94A3B8]",
-          "border-[var(--color-border)] hover:border-[var(--color-border-strong)]",
-          "focus:outline-none focus:ring-2 focus:ring-[#006B52] focus:border-transparent shadow-sm"
+          "peer flex h-12 w-full rounded-xl border bg-white pl-12 pr-10 py-2 text-sm font-medium text-[var(--color-text-primary)] transition-all duration-300 var(--ease-out-quart)",
+          "placeholder:text-[var(--color-text-placeholder)] placeholder:font-normal",
+          "border-[var(--color-border-strong)] hover:border-[var(--color-primary)]",
+          "focus:outline-none focus:ring-2 focus:ring-[var(--color-primary-light)] focus:border-[var(--color-primary)] shadow-sm"
         )}
       />
       
       {localValue && (
         <button
           onClick={handleClear}
-          className="absolute right-3 flex items-center justify-center text-[var(--color-text-muted)] hover:text-[var(--color-text-primary)] rounded-full p-1 hover:bg-[var(--color-bg-subtle)] transition-colors"
+          className="absolute right-3 flex items-center justify-center text-[var(--color-text-muted)] hover:text-[var(--color-text-primary)] rounded-lg p-1.5 hover:bg-[var(--color-bg-subtle)] transition-colors"
           aria-label="Clear search"
         >
           <X className="w-4 h-4" />

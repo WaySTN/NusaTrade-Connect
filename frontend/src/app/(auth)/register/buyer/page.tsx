@@ -25,20 +25,20 @@ export default function RegisterBuyerPage() {
 
   return (
     <>
-      <div className="mb-6">
-        <div className="flex items-center gap-2 text-sm font-semibold text-[#C8941A] mb-4 cursor-pointer hover:underline" onClick={() => router.push('/register')}>
+      <div className="mb-8">
+        <div className="flex items-center gap-2 text-sm font-bold text-[var(--color-warning)] mb-6 cursor-pointer hover:text-[var(--color-warning-hover)] transition-colors duration-200" onClick={() => router.push('/register')}>
           <ArrowLeft className="w-4 h-4" />
           Kembali pilih peran
         </div>
-        <h2 className="text-3xl font-display font-bold text-[var(--color-text-primary)] mb-2">
+        <h2 className="text-3xl font-display font-extrabold text-[var(--color-text-primary)] mb-3 tracking-tight">
           Daftar Importir
         </h2>
-        <p className="text-[var(--color-text-secondary)]">
+        <p className="text-[var(--color-text-secondary)] font-medium">
           Lengkapi informasi perusahaan Anda untuk mulai mencari produk.
         </p>
       </div>
 
-      <form onSubmit={handleRegister} className="space-y-5 animate-in fade-in slide-in-from-right-8 duration-300">
+      <form onSubmit={handleRegister} className="space-y-6 animate-slide-up duration-300">
         
         <Input
           label="Nama Lengkap"
@@ -64,12 +64,12 @@ export default function RegisterBuyerPage() {
           required
         />
 
-        <div className="space-y-1.5">
-          <label className="block text-sm font-semibold text-[var(--color-text-primary)]">Negara</label>
-          <div className="relative">
-            <Globe className="absolute left-3.5 top-3.5 w-5 h-5 text-[var(--color-text-placeholder)]" />
-            <select className="w-full h-12 pl-11 pr-4 bg-white border border-[var(--color-border-strong)] rounded-xl focus:ring-2 focus:ring-[#C8941A] focus:outline-none appearance-none cursor-pointer" required defaultValue="">
-              <option value="" disabled>Pilih Negara Asal</option>
+        <div className="space-y-2">
+          <label className="block text-sm font-bold text-[var(--color-text-primary)]">Negara</label>
+          <div className="relative group">
+            <Globe className="absolute left-4 top-3.5 w-5 h-5 text-[var(--color-text-placeholder)] group-focus-within:text-[var(--color-warning)] transition-colors duration-200" />
+            <select className="w-full h-12 pl-12 pr-4 bg-white border border-[var(--color-border-strong)] rounded-xl focus:ring-2 focus:ring-[var(--color-warning)]/30 focus:border-[var(--color-warning)] hover:border-[var(--color-warning)] transition-colors duration-200 focus:outline-none appearance-none cursor-pointer text-sm font-medium" required defaultValue="">
+              <option value="" disabled className="text-[var(--color-text-placeholder)] font-normal">Pilih Negara Asal</option>
               <option value="usa">Amerika Serikat (USA)</option>
               <option value="sg">Singapura (SG)</option>
               <option value="my">Malaysia (MY)</option>
@@ -88,11 +88,11 @@ export default function RegisterBuyerPage() {
           required
         />
         
-        <div className="pt-2 text-sm text-[var(--color-text-secondary)] bg-[var(--color-bg-subtle)] p-4 rounded-lg">
-          Dengan mendaftar, Anda menyetujui <Link href="/terms" className="text-[#C8941A] font-semibold hover:underline">Syarat & Ketentuan</Link> serta Kebijakan Privasi NusaTrade Connect.
+        <div className="pt-2 text-sm font-medium text-[var(--color-text-secondary)] bg-amber-50/50 border border-amber-200/50 p-5 rounded-2xl">
+          Dengan mendaftar, Anda menyetujui <Link href="/terms" className="text-[var(--color-warning)] font-bold hover:text-[var(--color-warning-hover)] transition-colors duration-200">Syarat & Ketentuan</Link> serta Kebijakan Privasi NusaTrade Connect.
         </div>
 
-        <Button type="submit" variant="accent" size="lg" className="w-full mt-2 h-12 shadow-md hover:shadow-lg" isLoading={isLoading} rightIcon={!isLoading && <ArrowRight className="w-4 h-4" />}>
+        <Button type="submit" variant="accent" size="lg" className="w-full mt-4 h-12 shadow-lg shadow-[var(--color-warning)]/20 text-base" isLoading={isLoading} rightIcon={!isLoading && <ArrowRight className="w-5 h-5" />}>
           Selesaikan Pendaftaran
         </Button>
 

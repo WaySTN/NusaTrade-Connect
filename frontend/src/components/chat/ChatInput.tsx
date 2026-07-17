@@ -9,9 +9,10 @@ export interface ChatInputProps {
   onSendMessage: (text: string) => void;
   onSendVoice?: (audioBlob: Blob) => void;
   isProcessingAudio?: boolean;
+  disabled?: boolean;
 }
 
-export const ChatInput = ({ onSendMessage, onSendVoice, isProcessingAudio = false }: ChatInputProps) => {
+export const ChatInput = ({ onSendMessage, onSendVoice, isProcessingAudio = false, disabled = false }: ChatInputProps) => {
   const [text, setText] = useState('');
   const [isRecording, setIsRecording] = useState(false);
   const [recordingTime, setRecordingTime] = useState(0);
@@ -48,7 +49,7 @@ export const ChatInput = ({ onSendMessage, onSendVoice, isProcessingAudio = fals
   };
 
   const handleSend = () => {
-    if (text.trim()) {
+    if (text.trim() && !disabled) {
       onSendMessage(text.trim());
       setText('');
       if (textareaRef.current) {
@@ -65,6 +66,7 @@ export const ChatInput = ({ onSendMessage, onSendVoice, isProcessingAudio = fals
   };
 
   const toggleRecording = () => {
+    if (disabled) return;
     if (isRecording) {
       setIsRecording(false);
       // Simulate stopping recording and sending fake blob
@@ -77,30 +79,30 @@ export const ChatInput = ({ onSendMessage, onSendVoice, isProcessingAudio = fals
   };
 
   return (
-    <div className="border-t border-[var(--color-border)] bg-white p-3 sm:p-4">
-      <div className="flex items-end gap-2 max-w-4xl mx-auto">
+    <div className={cn("border-t border-[var(--color-border)] bg-white p-3 sm:p-5 transition-opacity duration-200", disabled && "opacity-50 pointer-events-none")}>
+      <div className="flex items-end gap-3 max-w-4xl mx-auto">
         <button 
-          className="p-2.5 text-[var(--color-text-muted)] hover:text-[var(--color-text-primary)] hover:bg-[var(--color-bg-subtle)] rounded-full transition-colors flex-shrink-0"
+          className="p-3 text-[var(--color-text-muted)] hover:text-[var(--color-primary)] hover:bg-[var(--color-primary-subtle)] rounded-full transition-colors flex-shrink-0"
           title="Lampirkan File"
-          disabled={isRecording || isProcessingAudio}
+          disabled={isRecording || isProcessingAudio || disabled}
         >
           <Paperclip className="w-5 h-5" />
         </button>
 
-        <div className="flex-1 relative bg-[var(--color-bg-subtle)] rounded-2xl border border-[var(--color-border)] focus-within:border-[#006B52] focus-within:ring-1 focus-within:ring-[#006B52] transition-all overflow-hidden flex items-center min-h-[44px]">
+        <div className="flex-1 relative bg-[var(--color-bg-subtle)] rounded-3xl border border-[var(--color-border)] focus-within:border-[var(--color-primary)] focus-within:ring-2 focus-within:ring-[var(--color-primary)]/30 transition-all overflow-hidden flex items-center min-h-[48px] shadow-sm">
           
           {isProcessingAudio ? (
-            <div className="w-full flex items-center justify-center gap-2 text-[#006B52] font-medium text-sm py-3 h-[44px]">
+            <div className="w-full flex items-center justify-center gap-2 text-[var(--color-primary)] font-bold text-sm py-3 h-[48px]">
               <Loader2 className="w-4 h-4 animate-spin" />
               <span>Mengolah audio...</span>
             </div>
           ) : isRecording ? (
-            <div className="w-full flex items-center justify-between px-4 py-2 h-[44px]">
-              <div className="flex items-center gap-2">
-                <div className="w-2.5 h-2.5 rounded-full bg-red-500 animate-pulse"></div>
-                <span className="text-red-500 font-mono text-sm font-medium">{formatTime(recordingTime)}</span>
+            <div className="w-full flex items-center justify-between px-5 py-2 h-[48px]">
+              <div className="flex items-center gap-3">
+                <div className="w-3 h-3 rounded-full bg-[var(--color-error)] animate-pulse shadow-[0_0_8px_var(--color-error)]"></div>
+                <span className="text-[var(--color-error)] font-mono text-sm font-bold tracking-wider">{formatTime(recordingTime)}</span>
               </div>
-              <AudioLines className="w-5 h-5 text-red-400 animate-pulse" />
+              <AudioLines className="w-5 h-5 text-[var(--color-error-hover)] animate-pulse" />
             </div>
           ) : (
             <textarea
@@ -108,9 +110,10 @@ export const ChatInput = ({ onSendMessage, onSendVoice, isProcessingAudio = fals
               value={text}
               onChange={(e) => setText(e.target.value)}
               onKeyDown={handleKeyDown}
-              placeholder="Ketik pesan..."
-              className="w-full max-h-[120px] bg-transparent border-0 focus:ring-0 resize-none py-3 px-4 text-sm text-[var(--color-text-primary)] placeholder-[var(--color-text-placeholder)] m-0 leading-relaxed"
+              placeholder="Ketik pesan untuk pembeli..."
+              className="w-full max-h-[120px] bg-transparent border-0 focus:ring-0 resize-none py-3 px-5 text-sm font-medium text-[var(--color-text-primary)] placeholder-[var(--color-text-placeholder)] m-0 leading-relaxed"
               rows={1}
+              disabled={disabled}
             />
           )}
         </div>
@@ -118,9 +121,9 @@ export const ChatInput = ({ onSendMessage, onSendVoice, isProcessingAudio = fals
         {text.trim() ? (
           <Button 
             variant="primary" 
-            className="rounded-full w-11 h-11 p-0 flex-shrink-0 emerald-gradient flex items-center justify-center"
+            className="rounded-full w-12 h-12 p-0 flex-shrink-0 flex items-center justify-center shadow-lg shadow-[var(--color-primary)]/20"
             onClick={handleSend}
-            disabled={isProcessingAudio}
+            disabled={isProcessingAudio || disabled}
           >
             <Send className="w-5 h-5 -ml-0.5" />
           </Button>
@@ -128,11 +131,11 @@ export const ChatInput = ({ onSendMessage, onSendVoice, isProcessingAudio = fals
           <Button 
             variant={isRecording ? "danger" : "secondary"} 
             className={cn(
-              "rounded-full w-11 h-11 p-0 flex-shrink-0 flex items-center justify-center transition-all duration-300",
-              isRecording ? "bg-red-50 border-red-500 text-red-500 hover:bg-red-100" : "border-transparent text-[var(--color-text-secondary)] hover:bg-[var(--color-bg-subtle)]"
+              "rounded-full w-12 h-12 p-0 flex-shrink-0 flex items-center justify-center transition-all duration-300 shadow-sm hover:shadow-md",
+              isRecording ? "bg-[var(--color-error)]/10 border-[var(--color-error)] text-[var(--color-error)] hover:bg-[var(--color-error)]/20" : "border-[var(--color-border-strong)] text-[var(--color-text-secondary)] hover:bg-[var(--color-bg-subtle)] hover:border-[var(--color-text-muted)]"
             )}
             onClick={toggleRecording}
-            disabled={isProcessingAudio}
+            disabled={isProcessingAudio || disabled}
           >
             {isRecording ? <Square className="w-5 h-5 fill-current" /> : <Mic className="w-5 h-5" />}
           </Button>

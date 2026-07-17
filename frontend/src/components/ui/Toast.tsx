@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import { cn } from '@/lib/utils/cn';
-import { X, CheckCircle, AlertCircle, AlertTriangle, Info } from 'lucide-react';
+import { X, CheckCircle2, AlertCircle, AlertTriangle, Info } from 'lucide-react';
 
 // --- Global Toast Logic ---
 export type ToastType = 'success' | 'error' | 'warning' | 'info';
@@ -56,7 +56,7 @@ export function ToastProvider() {
   const { toasts, dismissToast } = useToast();
 
   return (
-    <div className="fixed top-4 right-4 z-50 flex flex-col gap-2 pointer-events-none">
+    <div className="fixed top-6 right-6 z-50 flex flex-col gap-3 pointer-events-none">
       {toasts.map((t) => (
         <ToastItem key={t.id} toast={t} onDismiss={() => dismissToast(t.id)} />
       ))}
@@ -73,51 +73,75 @@ function ToastItem({ toast, onDismiss }: { toast: ToastMessage; onDismiss: () =>
     // Allow animation to play before completely removing from DOM
     setTimeout(() => {
       onDismiss();
-    }, 150); 
+    }, 300); 
   };
 
   const icons = {
-    success: <CheckCircle className="w-5 h-5 text-emerald-500" />,
-    error: <AlertCircle className="w-5 h-5 text-red-500" />,
-    warning: <AlertTriangle className="w-5 h-5 text-amber-500" />,
-    info: <Info className="w-5 h-5 text-blue-500" />
+    success: <CheckCircle2 className="w-5 h-5 text-[var(--color-success)]" />,
+    error: <AlertCircle className="w-5 h-5 text-[var(--color-error)]" />,
+    warning: <AlertTriangle className="w-5 h-5 text-[var(--color-warning)]" />,
+    info: <Info className="w-5 h-5 text-[var(--color-info)]" />
   };
 
-  const borders = {
-    success: 'border-emerald-200 bg-emerald-50',
-    error: 'border-red-200 bg-red-50',
-    warning: 'border-amber-200 bg-amber-50',
-    info: 'border-blue-200 bg-blue-50'
+  const colors = {
+    success: 'border-[var(--color-success-light)] bg-white text-[var(--color-success)]',
+    error: 'border-[var(--color-error-light)] bg-white text-[var(--color-error)]',
+    warning: 'border-[var(--color-warning-light)] bg-white text-[var(--color-warning)]',
+    info: 'border-[var(--color-info-light)] bg-white text-[var(--color-info)]'
+  };
+  
+  const progressColors = {
+    success: 'bg-[var(--color-success)]',
+    error: 'bg-[var(--color-error)]',
+    warning: 'bg-[var(--color-warning)]',
+    info: 'bg-[var(--color-info)]'
   };
 
   return (
     <div 
       className={cn(
-        "pointer-events-auto flex items-start gap-3 w-full max-w-sm rounded-lg border p-4 shadow-lg bg-white",
-        "transition-all",
-        borders[toast.type],
-        isClosing ? "opacity-0 scale-95 duration-150" : "animate-slide-in-right"
+        "pointer-events-auto flex flex-col w-full w-80 rounded-xl border shadow-xl bg-white overflow-hidden",
+        "transition-all duration-300 var(--ease-out-quart)",
+        isClosing ? "opacity-0 scale-95 translate-x-12" : "animate-slide-in-right",
+        colors[toast.type]
       )}
     >
-      <div className="shrink-0 mt-0.5">
-        {icons[toast.type]}
+      <div className="flex items-start gap-3 p-4">
+        <div className="shrink-0 mt-0.5">
+          {icons[toast.type]}
+        </div>
+        <div className="flex-1 min-w-0">
+          <h3 className="text-sm font-semibold text-[var(--color-text-primary)]">
+            {toast.title}
+          </h3>
+          {toast.description && (
+            <p className="mt-1 text-sm text-[var(--color-text-secondary)]">
+              {toast.description}
+            </p>
+          )}
+        </div>
+        <button 
+          onClick={handleDismiss}
+          className="shrink-0 rounded-lg p-1.5 hover:bg-[var(--color-bg-subtle)] text-[var(--color-text-muted)] hover:text-[var(--color-text-primary)] transition-colors"
+        >
+          <X className="w-4 h-4" />
+        </button>
       </div>
-      <div className="flex-1 min-w-0">
-        <h3 className="text-sm font-semibold text-[var(--color-text-primary)]">
-          {toast.title}
-        </h3>
-        {toast.description && (
-          <p className="mt-1 text-sm text-[var(--color-text-secondary)]">
-            {toast.description}
-          </p>
-        )}
+      
+      {/* Progress Bar */}
+      <div className="h-1 w-full bg-[var(--color-bg-subtle)]">
+        <div 
+          className={cn("h-full", progressColors[toast.type])}
+          style={{ animation: 'toast-progress 4s linear forwards' }}
+        />
       </div>
-      <button 
-        onClick={handleDismiss}
-        className="shrink-0 rounded-md p-1 hover:bg-black/5 text-[var(--color-text-muted)] transition-colors"
-      >
-        <X className="w-4 h-4" />
-      </button>
+      
+      <style dangerouslySetInnerHTML={{__html: `
+        @keyframes toast-progress {
+          0% { width: 100%; }
+          100% { width: 0%; }
+        }
+      `}} />
     </div>
   );
 }

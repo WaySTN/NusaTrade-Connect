@@ -1,59 +1,64 @@
 import React from 'react';
 import Link from 'next/link';
 import { Store, ShoppingCart, ArrowRight } from 'lucide-react';
+import { cn } from '@/lib/utils/cn';
 
 export default function RegisterRoleSelectPage() {
   return (
     <>
-      <div className="mb-8 text-center sm:text-left">
-        <h2 className="text-3xl font-display font-bold text-[var(--color-text-primary)] mb-2">
+      <div className="mb-10 text-center sm:text-left">
+        <h2 className="text-3xl font-display font-extrabold text-[var(--color-text-primary)] mb-3 tracking-tight">
           Pilih Peran Anda
         </h2>
-        <p className="text-[var(--color-text-secondary)]">
+        <p className="text-[var(--color-text-secondary)] font-medium">
           Bagaimana Anda ingin menggunakan NusaTrade Connect?
         </p>
       </div>
 
       <div className="space-y-4">
         <Link href="/register/seller" className="block group">
-          <div className="flex items-center p-5 border-2 border-[var(--color-border)] rounded-2xl bg-white hover:border-[#006B52] hover:bg-[#F0FAF6] transition-all duration-300">
-            <div className="w-14 h-14 bg-emerald-50 rounded-full flex items-center justify-center shrink-0 group-hover:bg-[#006B52] transition-colors">
-              <Store className="w-7 h-7 text-[#006B52] group-hover:text-white transition-colors" />
+          <div className="flex items-center p-6 border-2 border-[var(--color-border)] rounded-2xl bg-white hover:border-[var(--color-primary-light)] hover:bg-[var(--color-primary-subtle)] hover:shadow-lg transition-all duration-300 var(--ease-out-quart)">
+            <div className="w-16 h-16 bg-[var(--color-bg-subtle)] border border-[var(--color-border)] rounded-full flex items-center justify-center shrink-0 group-hover:bg-[var(--color-primary)] group-hover:border-[var(--color-primary)] transition-colors duration-300">
+              <Store className="w-8 h-8 text-[var(--color-primary)] group-hover:text-white transition-colors duration-300" />
             </div>
             <div className="ml-5 flex-1">
-              <h3 className="text-lg font-semibold text-[var(--color-text-primary)] group-hover:text-[#006B52] transition-colors">
+              <h3 className="text-lg font-bold text-[var(--color-text-primary)] group-hover:text-[var(--color-primary)] transition-colors duration-200">
                 Sebagai Penjual (Eksportir)
               </h3>
-              <p className="text-sm text-[var(--color-text-secondary)] mt-0.5">
+              <p className="text-sm font-medium text-[var(--color-text-secondary)] mt-1">
                 Saya ingin menawarkan dan menjual produk ke pasar global.
               </p>
             </div>
-            <ArrowRight className="w-5 h-5 text-[var(--color-text-muted)] group-hover:text-[#006B52] transition-colors transform group-hover:translate-x-1" />
+            <div className="w-10 h-10 rounded-full flex items-center justify-center bg-transparent group-hover:bg-white/50 transition-colors duration-300">
+              <ArrowRight className="w-5 h-5 text-[var(--color-text-muted)] group-hover:text-[var(--color-primary)] transition-colors transform group-hover:translate-x-1 duration-300 var(--ease-out-quart)" />
+            </div>
           </div>
         </Link>
 
         <Link href="/register/buyer" className="block group">
-          <div className="flex items-center p-5 border-2 border-[var(--color-border)] rounded-2xl bg-white hover:border-[#C8941A] hover:bg-[#FEF9E7] transition-all duration-300">
-            <div className="w-14 h-14 bg-amber-50 rounded-full flex items-center justify-center shrink-0 group-hover:bg-[#C8941A] transition-colors">
-              <ShoppingCart className="w-7 h-7 text-[#C8941A] group-hover:text-white transition-colors" />
+          <div className="flex items-center p-6 border-2 border-[var(--color-border)] rounded-2xl bg-white hover:border-[var(--color-warning)] hover:bg-[var(--color-warning)]/5 hover:shadow-lg transition-all duration-300 var(--ease-out-quart)">
+            <div className="w-16 h-16 bg-[var(--color-bg-subtle)] border border-[var(--color-border)] rounded-full flex items-center justify-center shrink-0 group-hover:bg-[var(--color-warning)] group-hover:border-[var(--color-warning)] transition-colors duration-300">
+              <ShoppingCart className="w-8 h-8 text-[var(--color-warning)] group-hover:text-white transition-colors duration-300" />
             </div>
             <div className="ml-5 flex-1">
-              <h3 className="text-lg font-semibold text-[var(--color-text-primary)] group-hover:text-[#C8941A] transition-colors">
+              <h3 className="text-lg font-bold text-[var(--color-text-primary)] group-hover:text-[var(--color-warning)] transition-colors duration-200">
                 Sebagai Pembeli (Importir)
               </h3>
-              <p className="text-sm text-[var(--color-text-secondary)] mt-0.5">
+              <p className="text-sm font-medium text-[var(--color-text-secondary)] mt-1">
                 Saya mencari produk berkualitas dari supplier Indonesia.
               </p>
             </div>
-            <ArrowRight className="w-5 h-5 text-[var(--color-text-muted)] group-hover:text-[#C8941A] transition-colors transform group-hover:translate-x-1" />
+            <div className="w-10 h-10 rounded-full flex items-center justify-center bg-transparent group-hover:bg-white/50 transition-colors duration-300">
+              <ArrowRight className="w-5 h-5 text-[var(--color-text-muted)] group-hover:text-[var(--color-warning)] transition-colors transform group-hover:translate-x-1 duration-300 var(--ease-out-quart)" />
+            </div>
           </div>
         </Link>
       </div>
 
-      <div className="mt-8 pt-6 border-t border-[var(--color-border)] text-center">
-        <p className="text-sm text-[var(--color-text-secondary)]">
+      <div className="mt-10 pt-8 border-t border-[var(--color-border)] text-center">
+        <p className="text-sm font-medium text-[var(--color-text-secondary)]">
           Sudah punya akun?{' '}
-          <Link href="/login" className="font-semibold text-[#006B52] hover:underline">
+          <Link href="/login" className="font-bold text-[var(--color-primary)] hover:text-[var(--color-primary-light)] transition-colors duration-200">
             Masuk
           </Link>
         </p>
