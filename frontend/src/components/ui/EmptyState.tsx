@@ -6,6 +6,7 @@ export interface EmptyStateProps {
   title: string;
   description: string;
   action?: React.ReactNode;
+  size?: 'sm' | 'md' | 'lg';
   className?: string;
 }
 
@@ -14,12 +15,25 @@ export const EmptyState = ({
   title,
   description,
   action,
+  size = 'md',
   className,
 }: EmptyStateProps) => {
+  const sizeClasses = {
+    sm: 'p-6 sm:p-8',
+    md: 'p-8 sm:p-12',
+    lg: 'py-16 px-8 sm:px-12 sm:py-24'
+  };
+  
+  const iconSizeClasses = {
+    sm: 'w-12 h-12 mb-3',
+    md: 'w-16 h-16 mb-4',
+    lg: 'w-20 h-20 mb-5'
+  };
+
   return (
-    <div className={cn("flex flex-col items-center justify-center p-8 sm:p-12 text-center border-2 border-dashed border-[var(--color-border-strong)] rounded-3xl bg-[var(--color-bg-subtle)] animate-slide-up duration-300 var(--ease-out-quart)", className)}>
+    <div className={cn("flex flex-col items-center justify-center text-center border-2 border-dashed border-[var(--color-border-strong)] rounded-3xl bg-[var(--color-bg-subtle)] animate-slide-up duration-300 var(--ease-out-quart)", sizeClasses[size], className)}>
       {icon && (
-        <div className="w-20 h-20 bg-white rounded-full flex items-center justify-center mb-5 border border-[var(--color-border)] shadow-sm text-[var(--color-text-muted)]">
+        <div className={cn("bg-white rounded-full flex items-center justify-center border border-[var(--color-border)] shadow-sm text-[var(--color-primary)] bg-[var(--color-primary-subtle)]/30", iconSizeClasses[size])}>
           {icon}
         </div>
       )}

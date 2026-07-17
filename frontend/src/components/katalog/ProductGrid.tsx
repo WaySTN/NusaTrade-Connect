@@ -80,8 +80,10 @@ export const ProductGrid = ({
 
   return (
     <div className={cn("grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6", className)}>
-      {products.map((product) => (
-        <ProductCard key={product.id} product={product} />
+      {products.map((product, i) => (
+        <div key={product.id} className="animate-slide-up" style={{ animationDelay: `${Math.min(i * 50, 500)}ms` }}>
+          <ProductCard product={product} className="h-full" />
+        </div>
       ))}
     </div>
   );

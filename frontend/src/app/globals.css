@@ -226,13 +226,31 @@ h1, h2, h3, h4, h5, h6, .font-display {
 }
 
 /* Animation Utilities using ease-out-quart */
-.animate-fade-in { animation: fadeIn var(--duration-enter) var(--ease-out-quart) forwards; }
-.animate-slide-up { animation: slideUp var(--duration-enter) var(--ease-out-quart) forwards; }
-.animate-slide-in-right { animation: slideInRight var(--duration-enter) var(--ease-out-quart) forwards; }
-.animate-slide-in-left { animation: slideInLeft var(--duration-enter) var(--ease-out-quart) forwards; }
-.animate-scale-in { animation: scaleIn var(--duration-enter) var(--ease-out-quart) forwards; }
-.animate-rise { animation: rise var(--duration-enter) var(--ease-out-quart) forwards; }
+.animate-fade-in { animation: fadeIn var(--duration-enter) var(--ease-out-quart) both; }
+.animate-slide-up { animation: slideUp var(--duration-enter) var(--ease-out-quart) both; }
+.animate-slide-in-right { animation: slideInRight var(--duration-enter) var(--ease-out-quart) both; }
+.animate-slide-in-left { animation: slideInLeft var(--duration-enter) var(--ease-out-quart) both; }
+.animate-scale-in { animation: scaleIn var(--duration-enter) var(--ease-out-quart) both; }
+.animate-rise { animation: rise var(--duration-enter) var(--ease-out-quart) both; }
 .pulse-red { animation: pulse-red 1s var(--ease-out-quart) infinite; }
+
+/* Staggered Animation Delays */
+.delay-50 { animation-delay: 50ms; }
+.delay-100 { animation-delay: 100ms; }
+.delay-150 { animation-delay: 150ms; }
+.delay-200 { animation-delay: 200ms; }
+.delay-250 { animation-delay: 250ms; }
+.delay-300 { animation-delay: 300ms; }
+.delay-400 { animation-delay: 400ms; }
+.delay-500 { animation-delay: 500ms; }
+
+/* Hover Lift Effect */
+.hover-lift {
+  transition: transform var(--duration-normal) var(--ease-out-quart), box-shadow var(--duration-normal) var(--ease-out-quart), border-color var(--duration-normal) var(--ease-out-quart);
+}
+.hover-lift:hover {
+  transform: translateY(-4px);
+}
 
 .skeleton-shimmer {
   background: linear-gradient(

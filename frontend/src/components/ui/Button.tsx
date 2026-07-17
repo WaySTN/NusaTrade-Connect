@@ -32,7 +32,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       accent: "bg-[var(--color-accent)] text-white hover:bg-[var(--color-accent-hover)] focus-visible:ring-[var(--color-accent)] shadow-sm hover:shadow-md",
       secondary: "bg-[var(--color-primary-light)] text-[var(--color-primary)] hover:bg-[#D1EBE2] focus-visible:ring-[var(--color-primary)]",
       outline: "bg-transparent border border-[var(--color-border-strong)] text-[var(--color-text-primary)] hover:bg-[var(--color-bg-subtle)] hover:text-[var(--color-primary)] hover:border-[var(--color-primary)] focus-visible:ring-[var(--color-primary)]",
-      ghost: "bg-transparent text-[var(--color-text-secondary)] hover:bg-[var(--color-bg-subtle)] hover:text-[var(--color-text-primary)] focus-visible:ring-[var(--color-border)]",
+      ghost: "bg-transparent text-[var(--color-text-secondary)] hover:bg-[var(--color-bg-subtle)] hover:text-[var(--color-text-primary)] focus-visible:ring-[var(--color-primary-light)]",
       danger: "bg-[var(--color-error-light)] text-[var(--color-error)] hover:bg-[#FEE2E2] focus-visible:ring-[var(--color-error)]",
     };
 

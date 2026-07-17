@@ -71,36 +71,48 @@ export default function OverviewPage() {
 
       {/* Stats Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <StatCard 
-          title="Total Transaksi" 
-          value={MOCK_STATS.totalTransaksi.toString()} 
-          icon={Package} 
-          trend="up"
-          trendValue="12%" 
-        />
-        <StatCard 
-          title="Nilai Transaksi" 
-          value={formatRupiah(MOCK_STATS.nilaiTransaksi)} 
-          icon={Activity} 
-          trend="up"
-          trendValue="8.5%" 
-          variant="gold"
-        />
-        <StatCard 
-          title="Produk Aktif" 
-          value={MOCK_STATS.produkAktif.toString()} 
-          icon={Box} 
-          trend="neutral"
-          trendValue="0%" 
-        />
-        <StatCard 
-          title="Pesan Baru" 
-          value={MOCK_STATS.chatAktif.toString()} 
-          icon={MessageCircle} 
-          trend="up"
-          trendValue="25%" 
-          variant="emerald"
-        />
+        <div className="animate-slide-up delay-100 h-full">
+          <StatCard 
+            title="Total Transaksi" 
+            value={MOCK_STATS.totalTransaksi.toString()} 
+            icon={Package} 
+            trend="up"
+            trendValue="12%" 
+            className="h-full"
+          />
+        </div>
+        <div className="animate-slide-up delay-150 h-full">
+          <StatCard 
+            title="Nilai Transaksi" 
+            value={formatRupiah(MOCK_STATS.nilaiTransaksi)} 
+            icon={Activity} 
+            trend="up"
+            trendValue="8.5%" 
+            variant="gold"
+            className="h-full"
+          />
+        </div>
+        <div className="animate-slide-up delay-200 h-full">
+          <StatCard 
+            title="Produk Aktif" 
+            value={MOCK_STATS.produkAktif.toString()} 
+            icon={Box} 
+            trend="neutral"
+            trendValue="0%" 
+            className="h-full"
+          />
+        </div>
+        <div className="animate-slide-up delay-250 h-full">
+          <StatCard 
+            title="Pesan Baru" 
+            value={MOCK_STATS.chatAktif.toString()} 
+            icon={MessageCircle} 
+            trend="up"
+            trendValue="25%" 
+            variant="emerald"
+            className="h-full"
+          />
+        </div>
       </div>
 
       {/* Main Content Layout */}
@@ -110,7 +122,7 @@ export default function OverviewPage() {
         <div className="lg:col-span-1 space-y-8">
           
           {/* Recent Conversations */}
-          <div className="bg-white border border-[var(--color-border)] rounded-2xl shadow-sm overflow-hidden flex flex-col">
+          <div className="bg-white border border-[var(--color-border)] rounded-2xl shadow-sm overflow-hidden flex flex-col animate-slide-up delay-300">
             <div className="p-5 border-b border-[var(--color-border)] flex items-center justify-between">
               <h3 className="font-bold text-[var(--color-text-primary)]">Pesan Terbaru</h3>
               <Link href="/chat" className="text-xs font-bold text-[var(--color-primary)] hover:text-[var(--color-primary-light)] transition-colors">
@@ -127,7 +139,7 @@ export default function OverviewPage() {
           </div>
 
           {/* Performance Mini-widget */}
-          <div className="bg-[var(--color-primary)] text-white rounded-2xl p-6 shadow-lg relative overflow-hidden">
+          <div className="bg-[var(--color-primary)] text-white rounded-2xl p-6 shadow-lg relative overflow-hidden animate-slide-up delay-400">
             <div className="absolute inset-0 futuristic-bg opacity-30 mix-blend-overlay"></div>
             <div className="absolute -top-10 -right-10 p-4 opacity-10 mix-blend-overlay">
               <Activity className="w-32 h-32 text-white" />
@@ -162,7 +174,7 @@ export default function OverviewPage() {
         </div>
 
         {/* Right Column (Recent Payments/Invoices) */}
-        <div className="lg:col-span-2">
+        <div className="lg:col-span-2 animate-slide-up delay-300">
           <div className="bg-white border border-[var(--color-border)] rounded-2xl shadow-sm flex flex-col h-full overflow-hidden">
             <div className="p-6 border-b border-[var(--color-border)] flex items-center justify-between">
               <div>

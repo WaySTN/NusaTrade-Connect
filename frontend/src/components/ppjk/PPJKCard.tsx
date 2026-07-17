@@ -26,7 +26,7 @@ export const PPJKCard = ({
   estimatedCost
 }: PPJKCardProps) => {
   return (
-    <div className="bg-white border border-[var(--color-border)] rounded-2xl overflow-hidden hover:shadow-xl transition-all duration-300 var(--ease-out-quart) hover:-translate-y-1 hover:border-[var(--color-primary-light)] hover:ring-4 hover:ring-[var(--color-primary-light)]/20 flex flex-col cursor-pointer group">
+    <div className="bg-white border border-[var(--color-border)] rounded-2xl overflow-hidden hover:shadow-xl hover-lift hover:border-[var(--color-primary-light)] hover:ring-4 hover:ring-[var(--color-primary-light)]/20 flex flex-col cursor-pointer group">
       
       {/* Header Info */}
       <div className="p-5 flex gap-4">

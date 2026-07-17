@@ -59,7 +59,7 @@ export const StatCard = ({
   const style = variants[variant];
 
   return (
-    <Card interactive className={cn("group overflow-hidden relative border-[var(--color-border)] shadow-sm hover:shadow-lg transition-all duration-300 var(--ease-out-quart) rounded-2xl", className)}>
+    <Card interactive className={cn("group overflow-hidden relative border-[var(--color-border)] shadow-sm hover:shadow-lg hover-lift rounded-2xl", className)}>
       {variant === 'gold' && (
         <div className="absolute top-0 right-0 w-32 h-32 bg-white/40 rounded-full blur-2xl -mr-10 -mt-10"></div>
       )}

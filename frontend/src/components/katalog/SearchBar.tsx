@@ -42,7 +42,7 @@ export const SearchBar = ({
 
   return (
     <div className={cn("relative flex items-center w-full group", className)}>
-      <div className="absolute left-4 flex items-center justify-center pointer-events-none text-[var(--color-text-placeholder)] group-focus-within:text-[var(--color-primary)] transition-colors duration-200">
+      <div className="absolute left-4 flex items-center justify-center pointer-events-none text-[var(--color-text-placeholder)] group-focus-within:text-[var(--color-primary)] transition-all duration-300 var(--ease-out-quart) group-focus-within:scale-110">
         <Search className="w-5 h-5" />
       </div>
       
@@ -55,7 +55,7 @@ export const SearchBar = ({
           "peer flex h-12 w-full rounded-xl border bg-white pl-12 pr-10 py-2 text-sm font-medium text-[var(--color-text-primary)] transition-all duration-300 var(--ease-out-quart)",
           "placeholder:text-[var(--color-text-placeholder)] placeholder:font-normal",
           "border-[var(--color-border-strong)] hover:border-[var(--color-primary)]",
-          "focus:outline-none focus:ring-2 focus:ring-[var(--color-primary-light)] focus:border-[var(--color-primary)] shadow-sm"
+          "focus:outline-none focus:ring-4 focus:ring-[var(--color-primary-light)]/30 focus:border-[var(--color-primary)] shadow-sm"
         )}
       />
       

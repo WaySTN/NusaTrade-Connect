@@ -24,7 +24,7 @@ export const ProductCard = ({ product, className }: ProductCardProps) => {
     <Link href={`/katalog/${product.slug}`}>
       <div className={cn(
         "group flex flex-col bg-white border border-[var(--color-border)] rounded-2xl overflow-hidden cursor-pointer",
-        "transition-all duration-300 var(--ease-out-quart) hover:-translate-y-1 hover:shadow-lg hover:border-[var(--color-primary-light)] hover:ring-4 hover:ring-[var(--color-primary-light)]/20",
+        "transition-all duration-300 var(--ease-out-quart) hover-lift hover:shadow-lg hover:border-[var(--color-primary-light)] hover:ring-4 hover:ring-[var(--color-primary-light)]/20",
         className
       )}>
         {/* Image Container (1:1 aspect ratio) */}

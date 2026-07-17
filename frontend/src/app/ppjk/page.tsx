@@ -81,17 +81,18 @@ export default function PPJKDirectoryPage() {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredPPJK.map((ppjk, idx) => (
-              <PPJKCard 
-                key={ppjk.id}
-                id={ppjk.id}
-                name={ppjk.name}
-                location={ppjk.city + ", Indonesia"}
-                rating={ppjk.rating}
-                reviews={Math.floor(Math.random() * 200) + 15}
-                isVerified={ppjk.isVerified}
-                services={ppjk.services}
-                estimatedCost={idx % 2 === 0 ? "Rp 500rb - 2Jt" : "Sesuai Negosiasi"}
-              />
+              <div key={ppjk.id} className="animate-slide-up h-full" style={{ animationDelay: `${Math.min(idx * 75, 600)}ms` }}>
+                <PPJKCard 
+                  id={ppjk.id}
+                  name={ppjk.name}
+                  location={ppjk.city + ", Indonesia"}
+                  rating={ppjk.rating}
+                  reviews={Math.floor(Math.random() * 200) + 15}
+                  isVerified={ppjk.isVerified}
+                  services={ppjk.services}
+                  estimatedCost={idx % 2 === 0 ? "Rp 500rb - 2Jt" : "Sesuai Negosiasi"}
+                />
+              </div>
             ))}
           </div>
         )}
