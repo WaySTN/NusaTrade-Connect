@@ -3,27 +3,40 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { Mail, Lock, ArrowRight } from 'lucide-react';
+import { Mail, Lock, ArrowRight, Ship, AlertCircle } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
+import { getMockPPJKUser } from '@/lib/mock-data';
 
 export default function LoginPage() {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [loginError, setLoginError] = useState('');
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    
-    // Simulate API call
+    setLoginError('');
+
     setTimeout(() => {
-      // Dummy auth persistence
       if (typeof window !== 'undefined') {
+        // ── Cek apakah akun adalah Mitra PPJK ──────────────────
+        const ppjkUser = getMockPPJKUser(email, password);
+        if (ppjkUser) {
+          localStorage.setItem('isLoggedIn', 'true');
+          localStorage.setItem('userRole', 'ppjk');
+          localStorage.setItem('ppjkId', ppjkUser.ppjkId);
+          router.push('/ppjk/dashboard');
+          return;
+        }
+
+        // ── Fallback: akun Seller / Buyer (dummy, semua bisa masuk) ─
         localStorage.setItem('isLoggedIn', 'true');
+        localStorage.setItem('userRole', 'seller');
+        router.push('/overview');
       }
-      router.push('/overview');
     }, 1200);
   };
 
@@ -66,11 +79,18 @@ export default function LoginPage() {
           />
         </div>
 
+        {loginError && (
+          <div className="flex items-center gap-2 text-sm font-medium text-[var(--color-error)] bg-[var(--color-error-light)] px-4 py-3 rounded-xl animate-slide-up">
+            <AlertCircle className="w-4 h-4 shrink-0" />
+            {loginError}
+          </div>
+        )}
+
         <div className="pt-4">
-          <Button 
-            type="submit" 
-            variant="primary" 
-            size="lg" 
+          <Button
+            type="submit"
+            variant="primary"
+            size="lg"
             className="w-full shadow-lg shadow-[var(--color-primary)]/20 text-base"
             isLoading={isLoading}
             rightIcon={!isLoading && <ArrowRight className="w-5 h-5" />}
@@ -79,6 +99,22 @@ export default function LoginPage() {
           </Button>
         </div>
       </form>
+
+      {/* Hint untuk Mitra PPJK */}
+      <div className="mt-6 p-4 rounded-2xl border border-[var(--color-accent)]/20 bg-[var(--color-accent)]/5">
+        <div className="flex items-start gap-3">
+          <div className="w-8 h-8 rounded-lg bg-[var(--color-accent)]/10 flex items-center justify-center shrink-0">
+            <Ship className="w-4 h-4 text-[var(--color-accent)]" />
+          </div>
+          <div>
+            <p className="text-xs font-bold text-[var(--color-accent)] mb-1">Mitra PPJK</p>
+            <p className="text-xs text-[var(--color-text-secondary)] font-medium leading-relaxed">
+              Akun Mitra PPJK menggunakan email & kata sandi yang didaftarkan saat registrasi instansi.
+              Setelah login, Anda akan diarahkan ke dashboard khusus PPJK.
+            </p>
+          </div>
+        </div>
+      </div>
 
       <div className="mt-8 pt-8 border-t border-[var(--color-border)] text-center">
         <p className="text-sm font-medium text-[var(--color-text-secondary)]">
@@ -91,3 +127,4 @@ export default function LoginPage() {
     </>
   );
 }
+
