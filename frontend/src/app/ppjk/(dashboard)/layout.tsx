@@ -49,10 +49,16 @@ export default function PPJKDashboardLayout({
 
       // Load Company Data
       if (ppjkId) {
-        const ppjkData = getMockPPJK(ppjkId);
-        if (ppjkData) {
-          setCompanyName(ppjkData.name);
-          setIsVerified(ppjkData.isVerified);
+        const registeredName = localStorage.getItem('ppjk_registered_name');
+        if (ppjkId === 'p1' && registeredName) {
+          setCompanyName(registeredName);
+          setIsVerified(true);
+        } else {
+          const ppjkData = getMockPPJK(ppjkId);
+          if (ppjkData) {
+            setCompanyName(ppjkData.name);
+            setIsVerified(ppjkData.isVerified);
+          }
         }
       }
     }

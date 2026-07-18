@@ -10,6 +10,8 @@ import { Input } from '@/components/ui/Input';
 export default function RegisterBuyerPage() {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   const handleRegister = (e: React.FormEvent) => {
     e.preventDefault();
@@ -18,6 +20,10 @@ export default function RegisterBuyerPage() {
     setTimeout(() => {
       if (typeof window !== 'undefined') {
         localStorage.setItem('isLoggedIn', 'true');
+        localStorage.setItem('userRole', 'buyer');
+        localStorage.setItem('registered_user_email', email);
+        localStorage.setItem('registered_user_password', password);
+        localStorage.setItem('registered_user_role', 'buyer');
       }
       router.push('/overview');
     }, 1500);
@@ -53,6 +59,8 @@ export default function RegisterBuyerPage() {
           type="email"
           placeholder="john@company.com"
           startIcon={Mail}
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
           required
         />
 
@@ -85,6 +93,8 @@ export default function RegisterBuyerPage() {
           placeholder="Minimal 8 karakter"
           startIcon={Lock}
           minLength={8}
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
           required
         />
         

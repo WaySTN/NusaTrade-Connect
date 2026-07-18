@@ -76,7 +76,37 @@ export default function PPJKDashboardOverviewPage() {
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const ppjkId = localStorage.getItem('ppjkId') || 'p1';
-      const data = getMockPPJK(ppjkId);
+      let data = getMockPPJK(ppjkId);
+
+      // Cek apakah data p1 ditimpa dengan data registrasi dari localStorage
+      const registeredEmail = localStorage.getItem('ppjk_registered_email');
+      if (ppjkId === 'p1' && registeredEmail) {
+        data = {
+          id: 'p1',
+          name: localStorage.getItem('ppjk_registered_name') || 'PT Sinar Jaya Dok',
+          slug: 'pt-sinar-jaya-dok',
+          city: localStorage.getItem('ppjk_registered_city') || 'Jakarta Utara',
+          province: localStorage.getItem('ppjk_registered_province') || 'DKI Jakarta',
+          fullAddress: localStorage.getItem('ppjk_registered_address') || 'Alamat Terdaftar',
+          email: registeredEmail,
+          whatsapp: localStorage.getItem('ppjk_registered_whatsapp') || '6281234567890',
+          services: JSON.parse(localStorage.getItem('ppjk_registered_services') || '["PEB", "Bea Cukai"]'),
+          rating: 5.0,
+          reviewCount: 0,
+          isVerified: true,
+          description: localStorage.getItem('ppjk_registered_desc') || 'Perusahaan kepabeanan tepercaya yang melayani pengurusan dokumen ekspor impor.',
+          estimatedCostMin: Number(localStorage.getItem('ppjk_registered_cost_min') || '500000'),
+          estimatedCostMax: Number(localStorage.getItem('ppjk_registered_cost_max') || '2000000'),
+          costUnit: localStorage.getItem('ppjk_registered_cost_unit') || 'per dokumen',
+          establishedYear: Number(localStorage.getItem('ppjk_registered_year') || '2026'),
+          employeeCount: '10-50 karyawan',
+          certifications: ['ISO 9001:2015', 'AEO Certified'],
+          coverageArea: ['Jawa', 'Bali'],
+          portfolioCount: 1,
+          operationalHours: localStorage.getItem('ppjk_registered_hours') || 'Senin–Jumat, 08.00–17.00 WIB'
+        };
+      }
+
       if (data) {
         setPpjk(data);
       }

@@ -449,6 +449,22 @@ export const MOCK_PPJK_USERS: MockPPJKUser[] = [
   { email: 'info@andalanekspor.co.id',   password: 'andalan567',    ppjkId: 'p6' },
 ];
 
+export interface MockUser {
+  email: string;
+  password: string;
+  role: 'seller' | 'buyer';
+}
+
+export const MOCK_SELLER_USERS: MockUser[] = [
+  { email: 'seller@nusatrade.com', password: 'seller123', role: 'seller' },
+  { email: 'eksportir@nusatrade.com', password: 'seller123', role: 'seller' }
+];
+
+export const MOCK_BUYER_USERS: MockUser[] = [
+  { email: 'buyer@nusatrade.com', password: 'buyer123', role: 'buyer' },
+  { email: 'importir@nusatrade.com', password: 'buyer123', role: 'buyer' }
+];
+
 // ─── Shared Seller Profile & Stats ──────────────────────────────────────────
 
 export const MOCK_SELLER_PROFILE = {
@@ -485,5 +501,9 @@ export const getMockInvoice = (id: string) => MOCK_INVOICES.find(i => i.id === i
 export const getMockMessages = (conversationId: string) => MOCK_MESSAGES[conversationId] || [];
 export const getMockPPJK = (id: string) => MOCK_PPJK.find(p => p.id === id);
 export const getMockPPJKUser = (email: string, password: string) =>
-  MOCK_PPJK_USERS.find(u => u.email === email && u.password === password);
+  MOCK_PPJK_USERS.find(u => u.email.toLowerCase().trim() === email.toLowerCase().trim() && u.password.trim() === password.trim());
+export const getMockSellerUser = (email: string, password: string) =>
+  MOCK_SELLER_USERS.find(u => u.email.toLowerCase().trim() === email.toLowerCase().trim() && u.password.trim() === password.trim());
+export const getMockBuyerUser = (email: string, password: string) =>
+  MOCK_BUYER_USERS.find(u => u.email.toLowerCase().trim() === email.toLowerCase().trim() && u.password.trim() === password.trim());
 

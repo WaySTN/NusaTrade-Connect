@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 import { Mail, Lock, ArrowRight, Ship, AlertCircle } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
-import { getMockPPJKUser } from '@/lib/mock-data';
+import { getMockPPJKUser, getMockSellerUser, getMockBuyerUser } from '@/lib/mock-data';
 
 export default function LoginPage() {
   const router = useRouter();
@@ -22,22 +22,85 @@ export default function LoginPage() {
 
     setTimeout(() => {
       if (typeof window !== 'undefined') {
-        // ── Cek apakah akun adalah Mitra PPJK ──────────────────
-        const ppjkUser = getMockPPJKUser(email, password);
-        if (ppjkUser) {
+        const trimmedEmail = email.toLowerCase().trim();
+        const trimmedPassword = password.trim();
+
+        // 1. Cek apakah cocok dengan Mitra PPJK (Registrasi Baru / Mock)
+        const registeredPpjkEmail = localStorage.getItem('ppjk_registered_email');
+        const registeredPpjkPassword = localStorage.getItem('ppjk_registered_password');
+        
+        let isPPJK = false;
+        let activePPJKId = '';
+
+        if (registeredPpjkEmail && registeredPpjkPassword && 
+            registeredPpjkEmail.toLowerCase().trim() === trimmedEmail && 
+            registeredPpjkPassword.trim() === trimmedPassword) {
+          isPPJK = true;
+          activePPJKId = 'p1';
+        } else {
+          const ppjkUser = getMockPPJKUser(trimmedEmail, trimmedPassword);
+          if (ppjkUser) {
+            isPPJK = true;
+            activePPJKId = ppjkUser.ppjkId;
+          }
+        }
+
+        if (isPPJK) {
           localStorage.setItem('isLoggedIn', 'true');
           localStorage.setItem('userRole', 'ppjk');
-          localStorage.setItem('ppjkId', ppjkUser.ppjkId);
+          localStorage.setItem('ppjkId', activePPJKId);
+          setIsLoading(false);
           router.push('/ppjk/dashboard');
           return;
         }
 
-        // ── Fallback: akun Seller / Buyer (dummy, semua bisa masuk) ─
-        localStorage.setItem('isLoggedIn', 'true');
-        localStorage.setItem('userRole', 'seller');
-        router.push('/overview');
+        // 2. Cek apakah cocok dengan Eksportir / Seller (Registrasi Baru / Mock)
+        const registeredSellerEmail = localStorage.getItem('registered_user_email');
+        const registeredSellerPassword = localStorage.getItem('registered_user_password');
+        const registeredSellerRole = localStorage.getItem('registered_user_role');
+        
+        let isSeller = false;
+        if (registeredSellerEmail && registeredSellerPassword && registeredSellerRole === 'seller' &&
+            registeredSellerEmail.toLowerCase().trim() === trimmedEmail &&
+            registeredSellerPassword.trim() === trimmedPassword) {
+          isSeller = true;
+        } else {
+          const sellerUser = getMockSellerUser(trimmedEmail, trimmedPassword);
+          if (sellerUser) isSeller = true;
+        }
+
+        if (isSeller) {
+          localStorage.setItem('isLoggedIn', 'true');
+          localStorage.setItem('userRole', 'seller');
+          setIsLoading(false);
+          router.push('/overview');
+          return;
+        }
+
+        // 3. Cek apakah cocok dengan Importir / Buyer (Registrasi Baru / Mock)
+        let isBuyer = false;
+        if (registeredSellerEmail && registeredSellerPassword && registeredSellerRole === 'buyer' &&
+            registeredSellerEmail.toLowerCase().trim() === trimmedEmail &&
+            registeredSellerPassword.trim() === trimmedPassword) {
+          isBuyer = true;
+        } else {
+          const buyerUser = getMockBuyerUser(trimmedEmail, trimmedPassword);
+          if (buyerUser) isBuyer = true;
+        }
+
+        if (isBuyer) {
+          localStorage.setItem('isLoggedIn', 'true');
+          localStorage.setItem('userRole', 'buyer');
+          setIsLoading(false);
+          router.push('/overview');
+          return;
+        }
+
+        // 4. Jika tidak cocok sama sekali, tampilkan error
+        setLoginError('Surel (email) atau kata sandi yang Anda masukkan salah.');
+        setIsLoading(false);
       }
-    }, 1200);
+    }, 1000);
   };
 
   return (
@@ -91,7 +154,7 @@ export default function LoginPage() {
             type="submit"
             variant="primary"
             size="lg"
-            className="w-full shadow-lg shadow-[var(--color-primary)]/20 text-base"
+            className="w-full shadow-lg shadow-[var(--color-primary)]/20 text-base font-bold"
             isLoading={isLoading}
             rightIcon={!isLoading && <ArrowRight className="w-5 h-5" />}
           >
@@ -100,18 +163,32 @@ export default function LoginPage() {
         </div>
       </form>
 
-      {/* Hint untuk Mitra PPJK */}
-      <div className="mt-6 p-4 rounded-2xl border border-[var(--color-accent)]/20 bg-[var(--color-accent)]/5">
-        <div className="flex items-start gap-3">
-          <div className="w-8 h-8 rounded-lg bg-[var(--color-accent)]/10 flex items-center justify-center shrink-0">
-            <Ship className="w-4 h-4 text-[var(--color-accent)]" />
+      {/* Panduan Akun Uji Coba (Dummy Accounts Guide) */}
+      <div className="mt-6 p-4 rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-subtle)] text-xs space-y-2">
+        <p className="font-bold text-[var(--color-text-primary)] flex items-center gap-1">
+          💡 Gunakan akun uji coba di bawah atau buat akun baru:
+        </p>
+        <div className="grid grid-cols-1 gap-2 pt-1 font-medium text-[var(--color-text-secondary)]">
+          <div className="flex justify-between items-center border-b border-[var(--color-border)] pb-1.5">
+            <div>
+              <span className="font-bold text-[var(--color-accent)]">Mitra PPJK</span>
+              <p>info@sinarjayadok.co.id</p>
+            </div>
+            <span className="font-mono bg-[var(--color-bg-base)] px-2 py-0.5 rounded border border-[var(--color-border-strong)]">sinarjaya123</span>
           </div>
-          <div>
-            <p className="text-xs font-bold text-[var(--color-accent)] mb-1">Mitra PPJK</p>
-            <p className="text-xs text-[var(--color-text-secondary)] font-medium leading-relaxed">
-              Akun Mitra PPJK menggunakan email & kata sandi yang didaftarkan saat registrasi instansi.
-              Setelah login, Anda akan diarahkan ke dashboard khusus PPJK.
-            </p>
+          <div className="flex justify-between items-center border-b border-[var(--color-border)] pb-1.5">
+            <div>
+              <span className="font-bold text-[var(--color-primary)]">Eksportir (Seller)</span>
+              <p>seller@nusatrade.com</p>
+            </div>
+            <span className="font-mono bg-[var(--color-bg-base)] px-2 py-0.5 rounded border border-[var(--color-border-strong)]">seller123</span>
+          </div>
+          <div className="flex justify-between items-center">
+            <div>
+              <span className="font-bold text-[var(--color-warning-hover)]">Importir (Buyer)</span>
+              <p>buyer@nusatrade.com</p>
+            </div>
+            <span className="font-mono bg-[var(--color-bg-base)] px-2 py-0.5 rounded border border-[var(--color-border-strong)]">buyer123</span>
           </div>
         </div>
       </div>

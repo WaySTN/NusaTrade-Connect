@@ -18,6 +18,12 @@ export default function DashboardLayout({
     if (typeof window !== 'undefined') {
       if (localStorage.getItem('isLoggedIn') !== 'true') {
         router.push('/login');
+        return;
+      }
+      
+      const role = localStorage.getItem('userRole');
+      if (role === 'ppjk') {
+        router.push('/ppjk/dashboard');
       }
     }
   }, [router, pathname]);

@@ -12,6 +12,8 @@ export default function RegisterSellerPage() {
   const router = useRouter();
   const [step, setStep] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   const nextStep = () => setStep(2);
   const prevStep = () => setStep(1);
@@ -23,6 +25,10 @@ export default function RegisterSellerPage() {
     setTimeout(() => {
       if (typeof window !== 'undefined') {
         localStorage.setItem('isLoggedIn', 'true');
+        localStorage.setItem('userRole', 'seller');
+        localStorage.setItem('registered_user_email', email);
+        localStorage.setItem('registered_user_password', password);
+        localStorage.setItem('registered_user_role', 'seller');
       }
       router.push('/overview');
     }, 1500);
@@ -63,6 +69,8 @@ export default function RegisterSellerPage() {
             type="email"
             placeholder="nama@perusahaan.com"
             startIcon={Mail}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             required
           />
           <Input
@@ -71,6 +79,8 @@ export default function RegisterSellerPage() {
             placeholder="Minimal 8 karakter"
             startIcon={Lock}
             minLength={8}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
             required
           />
           <Button type="submit" variant="primary" size="lg" className="w-full shadow-lg shadow-[var(--color-primary)]/20 mt-4 text-base" rightIcon={<ArrowRight className="w-5 h-5" />}>
