@@ -80,20 +80,29 @@ export default function PPJKDirectoryPage() {
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredPPJK.map((ppjk, idx) => (
-              <div key={ppjk.id} className="animate-slide-up h-full" style={{ animationDelay: `${Math.min(idx * 75, 600)}ms` }}>
-                <PPJKCard 
-                  id={ppjk.id}
-                  name={ppjk.name}
-                  location={ppjk.city + ", Indonesia"}
-                  rating={ppjk.rating}
-                  reviews={Math.floor(Math.random() * 200) + 15}
-                  isVerified={ppjk.isVerified}
-                  services={ppjk.services}
-                  estimatedCost={idx % 2 === 0 ? "Rp 500rb - 2Jt" : "Sesuai Negosiasi"}
-                />
-              </div>
-            ))}
+            {filteredPPJK.map((ppjk, idx) => {
+              // Helper to format cost range
+              const formatMilOrRb = (val: number) => {
+                if (val >= 1000000) return `${(val / 1000000).toFixed(val % 1000000 === 0 ? 0 : 1)} Jt`;
+                return `${(val / 1000).toFixed(0)}rb`;
+              };
+              const costString = `Rp ${formatMilOrRb(ppjk.estimatedCostMin)} - ${formatMilOrRb(ppjk.estimatedCostMax)}`;
+              
+              return (
+                <div key={ppjk.id} className="animate-slide-up h-full" style={{ animationDelay: `${Math.min(idx * 75, 600)}ms` }}>
+                  <PPJKCard 
+                    id={ppjk.id}
+                    name={ppjk.name}
+                    location={`${ppjk.city}, ${ppjk.province}`}
+                    rating={ppjk.rating}
+                    reviews={ppjk.reviewCount}
+                    isVerified={ppjk.isVerified}
+                    services={ppjk.services}
+                    estimatedCost={costString}
+                  />
+                </div>
+              );
+            })}
           </div>
         )}
       </main>
