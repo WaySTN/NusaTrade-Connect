@@ -359,13 +359,21 @@ export default function PPJKDetailPage() {
                   <h2 className="text-xl font-display font-extrabold text-[var(--color-text-primary)] border-b border-[var(--color-border)] pb-4 mb-5">
                     Sertifikasi Resmi
                   </h2>
-                  <div className="flex flex-wrap gap-2.5">
-                    {ppjk.certifications.map((cert, idx) => (
-                      <span key={idx} className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-amber-50 text-amber-700 border border-amber-200 text-xs font-bold shadow-sm">
-                        <Award className="w-4 h-4 shrink-0 text-amber-500" />
-                        {cert}
-                      </span>
-                    ))}
+                  <div className="flex flex-wrap gap-3">
+                    {ppjk.certifications.map((cert, idx) => {
+                      const certName = typeof cert === 'string' ? cert : (cert as any).name;
+                      const certImage = typeof cert === 'string' ? null : (cert as any).imageUrl;
+                      return (
+                        <div key={idx} className="flex items-center gap-2.5 px-4 py-2 rounded-xl bg-amber-50/70 text-amber-800 border border-amber-200/80 text-xs font-bold shadow-sm">
+                          {certImage ? (
+                            <img src={certImage} alt={certName} className="w-5 h-5 object-cover rounded border border-amber-200 shrink-0" />
+                          ) : (
+                            <Award className="w-4 h-4 shrink-0 text-amber-500" />
+                          )}
+                          <span>{certName}</span>
+                        </div>
+                      );
+                    })}
                   </div>
                 </div>
               )}

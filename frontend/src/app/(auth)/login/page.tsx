@@ -36,7 +36,7 @@ export default function LoginPage() {
             registeredPpjkEmail.toLowerCase().trim() === trimmedEmail && 
             registeredPpjkPassword.trim() === trimmedPassword) {
           isPPJK = true;
-          activePPJKId = 'p1';
+          activePPJKId = 'profil-ppjk'; // Gunakan ID khusus agar data registrasi terbaca
         } else {
           const ppjkUser = getMockPPJKUser(trimmedEmail, trimmedPassword);
           if (ppjkUser) {
