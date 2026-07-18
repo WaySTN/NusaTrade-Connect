@@ -232,14 +232,224 @@ export const MOCK_INVOICES: MockInvoice[] = [
   }
 ];
 
-export const MOCK_PPJK = [
-  { id: 'p1', name: 'PT Logistik Global Mandiri', city: 'Jakarta', services: ['PEB', 'PIB', 'Logistik'], rating: 4.8, isVerified: true },
-  { id: 'p2', name: 'CV Lintas Samudra', city: 'Surabaya', services: ['PEB', 'Cukai'], rating: 4.5, isVerified: false },
-  { id: 'p3', name: 'PT Ekspor Indo Jaya', city: 'Semarang', services: ['PEB', 'PIB', 'Logistik', 'Gudang'], rating: 4.9, isVerified: true },
-  { id: 'p4', name: 'Bali Cargo Express', city: 'Denpasar', services: ['PEB', 'Logistik Udara'], rating: 4.7, isVerified: true },
-  { id: 'p5', name: 'Makassar Transindo', city: 'Makassar', services: ['PEB', 'PIB'], rating: 4.2, isVerified: false },
-  { id: 'p6', name: 'PT Andalan Ekspor', city: 'Medan', services: ['PEB', 'Logistik Laut'], rating: 4.6, isVerified: true }
+// ─── PPJK Interface & Data ──────────────────────────────────────────────────
+
+export interface MockPPJK {
+  id: string;
+  name: string;             // Nama Instansi
+  slug: string;             // untuk URL /ppjk/[id]
+  city: string;
+  province: string;
+  fullAddress: string;      // Alamat lengkap instansi
+  email: string;            // Email bisnis
+  whatsapp: string;         // Nomor WhatsApp (format: 628xxx)
+  services: string[];       // Daftar layanan yang disediakan
+  rating: number;
+  reviewCount: number;
+  isVerified: boolean;
+  logoUrl?: string;         // URL logo instansi (opsional, fallback ke inisial)
+  description: string;      // Deskripsi perusahaan
+  estimatedCostMin: number; // Estimasi biaya minimum (Rupiah)
+  estimatedCostMax: number; // Estimasi biaya maksimum (Rupiah)
+  costUnit: string;         // misal: "per dokumen", "per pengiriman"
+  establishedYear: number;  // Tahun berdiri
+  employeeCount: string;    // misal: "10-50 karyawan"
+  certifications: string[]; // misal: ['ISO 9001:2015', 'AEO Certified']
+  coverageArea: string[];   // misal: ['Jawa', 'Bali', 'Sumatera']
+  portfolioCount: number;   // Jumlah dokumen/pengiriman yang sudah ditangani
+  operationalHours: string; // misal: "Senin-Jumat, 08.00-17.00 WIB"
+  socialMedia?: {
+    instagram?: string;
+    linkedin?: string;
+    website?: string;
+  };
+}
+
+export const MOCK_PPJK: MockPPJK[] = [
+  {
+    id: 'p1',
+    name: 'PT Logistik Global Mandiri',
+    slug: 'pt-logistik-global-mandiri',
+    city: 'Jakarta Utara',
+    province: 'DKI Jakarta',
+    fullAddress: 'Jl. Enggano No. 14-15, Tanjung Priok, Jakarta Utara 14310',
+    email: 'info@sinarjayadok.co.id',
+    whatsapp: '6281234567890',
+    services: ['PEB', 'PIB', 'Bea Cukai', 'Logistik Laut', 'Asuransi Kargo'],
+    rating: 4.8,
+    reviewCount: 142,
+    isVerified: true,
+    description: 'PT Logistik Global Mandiri adalah perusahaan PPJK terpercaya dengan pengalaman lebih dari 15 tahun dalam pengurusan dokumen kepabeanan dan logistik internasional. Kami memiliki tim yang berpengalaman dan bersertifikat untuk memastikan kelancaran proses ekspor dan impor Anda. Dengan jaringan luas di seluruh Indonesia dan koneksi ke lebih dari 50 negara tujuan ekspor, kami siap menjadi mitra andalan bisnis ekspor Anda.',
+    estimatedCostMin: 500000,
+    estimatedCostMax: 2000000,
+    costUnit: 'per dokumen',
+    establishedYear: 2008,
+    employeeCount: '50-100 karyawan',
+    certifications: ['ISO 9001:2015', 'AEO Certified', 'IICL Certified'],
+    coverageArea: ['Jawa', 'Bali', 'Sumatera', 'Kalimantan'],
+    portfolioCount: 8500,
+    operationalHours: 'Senin–Jumat, 08.00–17.00 WIB',
+    socialMedia: {
+      website: 'https://logistikglobalmandiri.co.id',
+      linkedin: 'https://linkedin.com/company/logistik-global-mandiri',
+    },
+  },
+  {
+    id: 'p2',
+    name: 'CV Lintas Samudra',
+    slug: 'cv-lintas-samudra',
+    city: 'Surabaya',
+    province: 'Jawa Timur',
+    fullAddress: 'Jl. Perak Barat No. 57, Krembangan, Surabaya 60177',
+    email: 'admin@lintassamudra.id',
+    whatsapp: '6285678901234',
+    services: ['PEB', 'Bea Cukai', 'Logistik Laut', 'Fumigasi'],
+    rating: 4.5,
+    reviewCount: 87,
+    isVerified: false,
+    description: 'CV Lintas Samudra bergerak di bidang jasa kepabeanan dan logistik laut dengan spesialisasi pengiriman komoditas agrikultur dan makanan. Berbasis di Surabaya, kami melayani eksportir di seluruh Jawa Timur dan sekitarnya dengan pelayanan yang cepat, transparan, dan terpercaya.',
+    estimatedCostMin: 350000,
+    estimatedCostMax: 1500000,
+    costUnit: 'per pengiriman',
+    establishedYear: 2014,
+    employeeCount: '10-50 karyawan',
+    certifications: ['IATA Certified'],
+    coverageArea: ['Jawa Timur', 'Jawa Tengah', 'Bali'],
+    portfolioCount: 3200,
+    operationalHours: 'Senin–Sabtu, 08.00–16.00 WIB',
+    socialMedia: {
+      instagram: 'https://instagram.com/lintassamudra',
+    },
+  },
+  {
+    id: 'p3',
+    name: 'PT Ekspor Indo Jaya',
+    slug: 'pt-ekspor-indo-jaya',
+    city: 'Semarang',
+    province: 'Jawa Tengah',
+    fullAddress: 'Jl. Coaster No. 8, Pelabuhan Tanjung Emas, Semarang 50174',
+    email: 'cs@eksporindojaya.com',
+    whatsapp: '6287890123456',
+    services: ['PEB', 'PIB', 'Bea Cukai', 'Logistik Laut', 'Pergudangan', 'Asuransi Kargo', 'Certificate of Origin (COO)'],
+    rating: 4.9,
+    reviewCount: 218,
+    isVerified: true,
+    description: 'PT Ekspor Indo Jaya adalah perusahaan PPJK dengan layanan paling lengkap di Jawa Tengah. Kami menawarkan solusi ekspor end-to-end mulai dari pengurusan dokumen PEB, PIB, hingga layanan pergudangan dan pengiriman. Dengan rating tertinggi di antara mitra PPJK kami, kepercayaan klien adalah prioritas utama.',
+    estimatedCostMin: 600000,
+    estimatedCostMax: 3000000,
+    costUnit: 'per dokumen',
+    establishedYear: 2005,
+    employeeCount: '100-200 karyawan',
+    certifications: ['ISO 9001:2015', 'ISO 14001:2015', 'AEO Certified'],
+    coverageArea: ['Jawa Tengah', 'Jawa Barat', 'DI Yogyakarta'],
+    portfolioCount: 15200,
+    operationalHours: 'Senin–Jumat, 07.30–17.30 WIB',
+    socialMedia: {
+      website: 'https://eksporindojaya.com',
+      linkedin: 'https://linkedin.com/company/ekspor-indo-jaya',
+      instagram: 'https://instagram.com/eksporindojaya',
+    },
+  },
+  {
+    id: 'p4',
+    name: 'Bali Cargo Express',
+    slug: 'bali-cargo-express',
+    city: 'Denpasar',
+    province: 'Bali',
+    fullAddress: 'Jl. Bypass Ngurah Rai No. 23, Tuban, Kuta, Badung, Bali 80361',
+    email: 'hello@balicargoexpress.id',
+    whatsapp: '6281357924680',
+    services: ['PEB', 'Logistik Udara', 'Asuransi Kargo', 'Karantina'],
+    rating: 4.7,
+    reviewCount: 113,
+    isVerified: true,
+    description: 'Bali Cargo Express adalah mitra ekspor terpercaya untuk produk-produk kerajinan, fashion, dan komoditas Bali. Spesialisasi kami adalah logistik udara untuk pengiriman cepat ke seluruh dunia, didukung oleh tim berpengalaman yang memahami regulasi ekspor barang seni dan kerajinan tangan.',
+    estimatedCostMin: 800000,
+    estimatedCostMax: 4000000,
+    costUnit: 'per pengiriman',
+    establishedYear: 2011,
+    employeeCount: '20-50 karyawan',
+    certifications: ['IATA Certified', 'FIATA Member'],
+    coverageArea: ['Bali', 'Lombok', 'Nusa Tenggara'],
+    portfolioCount: 5700,
+    operationalHours: 'Senin–Sabtu, 08.00–18.00 WITA',
+    socialMedia: {
+      website: 'https://balicargoexpress.id',
+      instagram: 'https://instagram.com/balicargoexpress',
+    },
+  },
+  {
+    id: 'p5',
+    name: 'Makassar Transindo',
+    slug: 'makassar-transindo',
+    city: 'Makassar',
+    province: 'Sulawesi Selatan',
+    fullAddress: 'Jl. Nusantara No. 45, Wajo, Makassar 90113',
+    email: 'ops@makassartransindo.id',
+    whatsapp: '6281290876543',
+    services: ['PEB', 'PIB', 'Bea Cukai', 'Logistik Laut'],
+    rating: 4.2,
+    reviewCount: 64,
+    isVerified: false,
+    description: 'Makassar Transindo melayani kebutuhan kepabeanan dan logistik untuk eksportir di kawasan Indonesia Timur. Dengan posisi strategis di Makassar sebagai hub perdagangan Sulawesi, kami siap membantu proses ekspor berbagai komoditas mulai dari kakao, rumput laut, hingga produk perikanan.',
+    estimatedCostMin: 300000,
+    estimatedCostMax: 1200000,
+    costUnit: 'per dokumen',
+    establishedYear: 2017,
+    employeeCount: '10-20 karyawan',
+    certifications: [],
+    coverageArea: ['Sulawesi Selatan', 'Sulawesi Tenggara', 'Maluku'],
+    portfolioCount: 1800,
+    operationalHours: 'Senin–Jumat, 08.00–17.00 WITA',
+    socialMedia: {},
+  },
+  {
+    id: 'p6',
+    name: 'PT Andalan Ekspor Medan',
+    slug: 'pt-andalan-ekspor-medan',
+    city: 'Medan',
+    province: 'Sumatera Utara',
+    fullAddress: 'Jl. Pelabuhan Belawan No. 12, Medan Belawan, Medan 20411',
+    email: 'info@andalanekspor.co.id',
+    whatsapp: '6285211223344',
+    services: ['PEB', 'Bea Cukai', 'Logistik Laut', 'Fumigasi', 'Certificate of Origin (COO)'],
+    rating: 4.6,
+    reviewCount: 96,
+    isVerified: true,
+    description: 'PT Andalan Ekspor Medan berpengalaman dalam pengurusan dokumen ekspor komoditas unggulan Sumatera seperti sawit, karet, kopi, dan produk hutan. Berbasis di Belawan, pelabuhan ekspor terbesar di Sumatera, kami menjamin proses kepabeanan yang cepat dan sesuai regulasi.',
+    estimatedCostMin: 400000,
+    estimatedCostMax: 1800000,
+    costUnit: 'per pengiriman',
+    establishedYear: 2010,
+    employeeCount: '20-50 karyawan',
+    certifications: ['ISO 9001:2015', 'SVLK Certified'],
+    coverageArea: ['Sumatera Utara', 'Aceh', 'Riau', 'Sumatera Barat'],
+    portfolioCount: 6300,
+    operationalHours: 'Senin–Jumat, 08.00–17.00 WIB',
+    socialMedia: {
+      website: 'https://andalanekspor.co.id',
+    },
+  },
 ];
+
+// ─── Auth Dummy untuk Mitra PPJK ────────────────────────────────────────────
+
+export interface MockPPJKUser {
+  email: string;
+  password: string;
+  ppjkId: string;
+}
+
+export const MOCK_PPJK_USERS: MockPPJKUser[] = [
+  { email: 'info@sinarjayadok.co.id',    password: 'sinarjaya123',  ppjkId: 'p1' },
+  { email: 'admin@lintassamudra.id',     password: 'lintas456',     ppjkId: 'p2' },
+  { email: 'cs@eksporindojaya.com',      password: 'ekspor789',     ppjkId: 'p3' },
+  { email: 'hello@balicargoexpress.id',  password: 'balicargo321',  ppjkId: 'p4' },
+  { email: 'ops@makassartransindo.id',   password: 'mksr2024',      ppjkId: 'p5' },
+  { email: 'info@andalanekspor.co.id',   password: 'andalan567',    ppjkId: 'p6' },
+];
+
+// ─── Shared Seller Profile & Stats ──────────────────────────────────────────
 
 export const MOCK_SELLER_PROFILE = {
   name: 'Budi Santoso',
@@ -268,6 +478,12 @@ export const MOCK_CATEGORIES = [
   'Others'
 ];
 
+// ─── Helper Functions ────────────────────────────────────────────────────────
+
 export const getMockProduct = (slug: string) => MOCK_PRODUCTS.find(p => p.slug === slug);
 export const getMockInvoice = (id: string) => MOCK_INVOICES.find(i => i.id === id);
 export const getMockMessages = (conversationId: string) => MOCK_MESSAGES[conversationId] || [];
+export const getMockPPJK = (id: string) => MOCK_PPJK.find(p => p.id === id);
+export const getMockPPJKUser = (email: string, password: string) =>
+  MOCK_PPJK_USERS.find(u => u.email === email && u.password === password);
+
