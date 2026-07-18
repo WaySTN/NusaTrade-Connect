@@ -35,8 +35,12 @@ export default function RootLayout({
     <html
       lang="id"
       className={`${inter.variable} ${plusJakartaSans.variable} ${jetbrainsMono.variable} antialiased`}
+      suppressHydrationWarning
     >
-      <body className="min-h-screen flex flex-col font-body bg-[var(--color-bg-base)] text-[var(--color-text-primary)] overflow-x-hidden">
+      <body
+        className="min-h-screen flex flex-col font-body bg-[var(--color-bg-base)] text-[var(--color-text-primary)] overflow-x-hidden"
+        suppressHydrationWarning
+      >
         {children}
         <ToastProvider />
       </body>
