@@ -351,7 +351,7 @@ export default function RegisterPPJKPage() {
       if (typeof window !== 'undefined') {
         localStorage.setItem('isLoggedIn', 'true');
         localStorage.setItem('userRole', 'ppjk');
-        localStorage.setItem('ppjkId', 'p1');
+        localStorage.setItem('ppjkId', 'profil-ppjk');
         localStorage.setItem('ppjk_registered_email', email);
         localStorage.setItem('ppjk_registered_password', password);
         localStorage.setItem('ppjk_registered_name', companyName);

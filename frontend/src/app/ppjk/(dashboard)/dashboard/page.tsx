@@ -78,11 +78,11 @@ export default function PPJKDashboardOverviewPage() {
       const ppjkId = localStorage.getItem('ppjkId') || 'p1';
       let data = getMockPPJK(ppjkId);
 
-      // Cek apakah data p1 ditimpa dengan data registrasi dari localStorage
+      // Cek apakah data profil-ppjk ditimpa dengan data registrasi dari localStorage
       const registeredEmail = localStorage.getItem('ppjk_registered_email');
-      if (ppjkId === 'p1' && registeredEmail) {
+      if (ppjkId === 'profil-ppjk' && registeredEmail) {
         data = {
-          id: 'p1',
+          id: 'profil-ppjk',
           name: localStorage.getItem('ppjk_registered_name') || 'PT Sinar Jaya Dok',
           slug: 'pt-sinar-jaya-dok',
           city: localStorage.getItem('ppjk_registered_city') || 'Jakarta Utara',

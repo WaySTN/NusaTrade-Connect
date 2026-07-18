@@ -38,34 +38,36 @@ export const PPJKCard = ({
           </div>
           
           <div className="flex-1 min-w-0">
-            <div className="flex items-center gap-2 mb-1.5">
-              <h3 className="font-display font-bold text-base text-[var(--color-text-primary)] truncate group-hover:text-[var(--color-primary)] transition-colors duration-200">
+            <div className="flex items-start justify-between gap-1 mb-1">
+              <h3 className="font-display font-bold text-sm sm:text-base text-[var(--color-text-primary)] line-clamp-2 leading-snug min-h-[2.5rem] group-hover:text-[var(--color-primary)] transition-colors duration-200">
                 {name}
               </h3>
               {isVerified && (
-                <ShieldCheck className="w-4 h-4 text-[#C8941A] shrink-0" />
+                <ShieldCheck className="w-4 h-4 text-[#C8941A] shrink-0 mt-1" />
               )}
             </div>
             
             <div className="flex items-center gap-1.5 text-xs font-medium text-[var(--color-text-secondary)] mb-2">
-              <MapPin className="w-3.5 h-3.5" />
+              <MapPin className="w-3.5 h-3.5 text-[var(--color-text-muted)]" />
               <span className="truncate">{location}</span>
             </div>
             
             <div className="flex items-center gap-2">
               <div className="flex items-center gap-1 text-[#D97706] bg-[#FEF3C7] px-1.5 py-0.5 rounded-md">
                 <Star className="w-3.5 h-3.5 fill-current" />
-                <span className="text-xs font-bold">{rating}</span>
+                <span className="text-xs font-bold">{rating > 0 ? rating.toFixed(1) : 'New'}</span>
               </div>
-              <span className="text-xs font-medium text-[var(--color-text-muted)]">({reviews} ulasan)</span>
+              <span className="text-xs font-medium text-[var(--color-text-muted)]">
+                {reviews > 0 ? `(${reviews} ulasan)` : 'Belum ada ulasan'}
+              </span>
             </div>
           </div>
         </div>
 
         {/* Services Tags */}
-        <div className="px-5 pb-5 flex-1">
-          <div className="flex flex-wrap gap-2">
-            {services.map((service, i) => (
+        <div className="px-5 pb-5 flex-1 flex flex-col justify-end">
+          <div className="flex flex-wrap gap-1.5">
+            {services.slice(0, 4).map((service, i) => (
               <span 
                 key={i} 
                 className="text-[10px] font-bold px-2 py-1 rounded-md bg-[var(--color-bg-subtle)] text-[var(--color-text-secondary)] border border-[var(--color-border)] group-hover:border-[var(--color-primary-subtle)] transition-colors duration-200"
@@ -73,19 +75,24 @@ export const PPJKCard = ({
                 {service}
               </span>
             ))}
+            {services.length > 4 && (
+              <span className="text-[10px] font-bold px-2 py-1 rounded-md bg-[var(--color-accent)]/8 text-[var(--color-accent)] border border-[var(--color-accent)]/15">
+                +{services.length - 4} Lainnya
+              </span>
+            )}
           </div>
         </div>
 
         {/* Footer */}
         <div className="mt-auto p-4 border-t border-[var(--color-border)] bg-slate-50/50 flex items-center justify-between">
-          <div className="flex flex-col">
-            <span className="text-[10px] text-[var(--color-text-muted)] uppercase tracking-wider font-bold mb-0.5">Estimasi Biaya</span>
-            <span className="font-mono text-sm font-bold text-[var(--color-primary)]">{estimatedCost}</span>
+          <div className="flex flex-col min-w-0 pr-2">
+            <span className="text-[9px] text-[var(--color-text-muted)] uppercase tracking-wider font-extrabold mb-0.5">Estimasi Biaya</span>
+            <span className="font-mono text-xs sm:text-sm font-bold text-[var(--color-primary)] truncate">{estimatedCost}</span>
           </div>
           <Button 
             variant="outline" 
             size="sm" 
-            className="bg-white hover:bg-[var(--color-primary-light)] hover:text-[var(--color-primary)] hover:border-[var(--color-primary-light)] shadow-sm font-bold group-hover:bg-[var(--color-primary)] group-hover:text-white group-hover:border-[var(--color-primary)] transition-all duration-300"
+            className="bg-white hover:bg-[var(--color-primary-light)] hover:text-[var(--color-primary)] hover:border-[var(--color-primary-light)] shadow-sm font-bold shrink-0 group-hover:bg-[var(--color-primary)] group-hover:text-white group-hover:border-[var(--color-primary)] transition-all duration-300"
             rightIcon={<ArrowRight className="w-3.5 h-3.5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />}
           >
             Lihat Profil
