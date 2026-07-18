@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import { Store, ShoppingCart, ArrowRight } from 'lucide-react';
+import { Store, ShoppingCart, Ship, ArrowRight } from 'lucide-react';
 import { cn } from '@/lib/utils/cn';
 
 export default function RegisterRoleSelectPage() {
@@ -50,6 +50,25 @@ export default function RegisterRoleSelectPage() {
             </div>
             <div className="w-10 h-10 rounded-full flex items-center justify-center bg-transparent group-hover:bg-white/50 transition-colors duration-300">
               <ArrowRight className="w-5 h-5 text-[var(--color-text-muted)] group-hover:text-[var(--color-warning)] transition-colors transform group-hover:translate-x-1 duration-300 var(--ease-out-quart)" />
+            </div>
+          </div>
+        </Link>
+
+        <Link href="/register/ppjk" className="block group">
+          <div className="flex items-center p-6 border-2 border-[var(--color-border)] rounded-2xl bg-white hover:border-[var(--color-accent)] hover:bg-[var(--color-accent)]/5 hover:shadow-lg transition-all duration-300 var(--ease-out-quart)">
+            <div className="w-16 h-16 bg-[var(--color-bg-subtle)] border border-[var(--color-border)] rounded-full flex items-center justify-center shrink-0 group-hover:bg-[var(--color-accent)] group-hover:border-[var(--color-accent)] transition-colors duration-300">
+              <Ship className="w-8 h-8 text-[var(--color-accent)] group-hover:text-white transition-colors duration-300" />
+            </div>
+            <div className="ml-5 flex-1">
+              <h3 className="text-lg font-bold text-[var(--color-text-primary)] group-hover:text-[var(--color-accent)] transition-colors duration-200">
+                Sebagai Mitra PPJK
+              </h3>
+              <p className="text-sm font-medium text-[var(--color-text-secondary)] mt-1">
+                Saya adalah perusahaan jasa kepabeanan (PPJK) yang ingin menawarkan layanan logistik ekspor.
+              </p>
+            </div>
+            <div className="w-10 h-10 rounded-full flex items-center justify-center bg-transparent group-hover:bg-white/50 transition-colors duration-300">
+              <ArrowRight className="w-5 h-5 text-[var(--color-text-muted)] group-hover:text-[var(--color-accent)] transition-colors transform group-hover:translate-x-1 duration-300 var(--ease-out-quart)" />
             </div>
           </div>
         </Link>
