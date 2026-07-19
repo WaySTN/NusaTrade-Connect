@@ -8,6 +8,7 @@ import {
 } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { MOCK_UMKM, MockUMKM } from '@/lib/mock-data';
+import { useT } from '@/i18n/useT';
 
 interface ChatMessage {
   id: string;
@@ -21,6 +22,7 @@ interface ChatMessage {
 }
 
 export default function BuyerChatPage() {
+  const t = useT();
   const [selectedUmkm, setSelectedUmkm] = useState<MockUMKM>(MOCK_UMKM[0]);
   const [inputMessage, setInputMessage] = useState('');
   const [isAiProcessing, setIsAiProcessing] = useState(false);
@@ -123,14 +125,14 @@ export default function BuyerChatPage() {
           <div className="flex items-center justify-between mb-1">
             <h3 className="font-bold text-base text-[var(--color-text-primary)] font-display flex items-center gap-2">
               <MessageSquare className="w-4 h-4 text-[var(--color-primary)]" />
-              Pesan Negosiasi AI
+              {t('buyer_chat.title') || 'Pesan Negosiasi AI'}
             </h3>
             <span className="text-[10px] font-extrabold uppercase bg-[var(--color-primary-subtle)] text-[var(--color-primary)] px-2 py-0.5 rounded-full">
-              LIVE TRANSLATION
+              {t('buyer_chat.live_badge') || 'LIVE TRANSLATION'}
             </span>
           </div>
           <p className="text-xs text-[var(--color-text-secondary)] font-medium">
-            Otomatis diterjemahkan dalam bahasa Inggris & Indonesia baku.
+            {t('buyer_chat.desc') || 'Otomatis diterjemahkan dalam bahasa Inggris & Indonesia baku.'}
           </p>
         </div>
 
@@ -160,7 +162,7 @@ export default function BuyerChatPage() {
                       {umkm.isNibVerified && <ShieldCheck className="w-3.5 h-3.5 text-[var(--color-primary)] shrink-0" />}
                     </h4>
                     <span className="text-[10px] font-mono text-[var(--color-text-muted)] shrink-0">
-                      {lastMsg?.timestamp || 'Now'}
+                      {lastMsg?.timestamp || t('buyer_chat.now') || 'Now'}
                     </span>
                   </div>
 
@@ -191,7 +193,7 @@ export default function BuyerChatPage() {
                 </h3>
                 {selectedUmkm.isNibVerified && (
                   <span className="text-[10px] font-extrabold bg-[var(--color-primary-subtle)] text-[var(--color-primary)] px-2 py-0.5 rounded-full inline-flex items-center gap-1 shrink-0">
-                    <ShieldCheck className="w-3 h-3" /> NIB Verified
+                    <ShieldCheck className="w-3 h-3" /> {t('buyer_chat.nib_verified') || 'NIB Verified'}
                   </span>
                 )}
               </div>
@@ -205,7 +207,7 @@ export default function BuyerChatPage() {
 
           <Link href={`/umkm/${selectedUmkm.id}`}>
             <Button variant="outline" className="text-xs font-bold h-9 px-3 shrink-0 rounded-xl">
-              Lihat Profil UMKM
+              {t('buyer_chat.view_profile') || 'Lihat Profil UMKM'}
             </Button>
           </Link>
         </div>
@@ -214,10 +216,10 @@ export default function BuyerChatPage() {
         <div className="bg-[var(--color-primary-subtle)] px-4 py-2 border-b border-[var(--color-border)] flex items-center justify-between text-xs text-[var(--color-primary)] font-semibold">
           <div className="flex items-center gap-2">
             <Bot className="w-4 h-4 text-[var(--color-primary)] shrink-0" />
-            <span>NusaTrade AI Agent: Tone-Shifting & English-Indonesian Translation Active</span>
+            <span>{t('buyer_chat.ai_active') || 'NusaTrade AI Agent: Tone-Shifting & English-Indonesian Translation Active'}</span>
           </div>
           <span className="text-[10px] font-mono uppercase font-extrabold bg-white px-2 py-0.5 rounded-full shadow-xs">
-            Unlimited Free
+            {t('buyer_chat.unlimited') || 'Unlimited Free'}
           </span>
         </div>
 
@@ -244,9 +246,9 @@ export default function BuyerChatPage() {
                     isMe ? 'border-white/20 text-emerald-100' : 'border-[var(--color-border)] text-[var(--color-text-muted)]'
                   }`}>
                     {isMe ? (
-                      <span>✓ Translated to Indonesian for Seller</span>
+                      <span>✓ {t('buyer_chat.translated_for_seller') || 'Translated to Indonesian for Seller'}</span>
                     ) : (
-                      <span>Original Indonesian: &quot;{msg.originalText}&quot;</span>
+                      <span>{t('buyer_chat.original_id') || 'Original Indonesian'}: &quot;{msg.originalText}&quot;</span>
                     )}
                   </div>
 
@@ -255,14 +257,14 @@ export default function BuyerChatPage() {
                     <div className="mt-3 p-3.5 rounded-xl bg-white border border-[var(--color-border)] text-[var(--color-text-primary)] space-y-2">
                       <div className="flex items-center justify-between text-xs">
                         <span className="font-bold font-mono text-[var(--color-primary)]">{msg.invoiceId}</span>
-                        <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-100 text-amber-700">Persetujuan Harga</span>
+                        <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-100 text-amber-700">{t('buyer_chat.price_approval') || 'Persetujuan Harga'}</span>
                       </div>
                       <div className="text-xs text-[var(--color-text-secondary)] font-medium">
-                        Invoice Penawaran Resmi Produk {selectedUmkm.name}
+                        {t('buyer_chat.invoice_offer') || 'Invoice Penawaran Resmi Produk'} {selectedUmkm.name}
                       </div>
                       <Link href="/buyer/dashboard">
                         <Button variant="primary" className="w-full h-8 text-xs font-bold justify-center mt-2 rounded-lg">
-                          Bayar via QRIS Antarnegara
+                          {t('buyer_chat.pay_qris') || 'Bayar via QRIS Antarnegara'}
                         </Button>
                       </Link>
                     </div>
@@ -280,7 +282,7 @@ export default function BuyerChatPage() {
           {isAiProcessing && (
             <div className="flex items-center gap-2 text-xs font-bold text-[var(--color-primary)] bg-white p-3 rounded-2xl border border-[var(--color-border)] w-fit animate-pulse">
               <Sparkles className="w-4 h-4 text-[var(--color-primary)]" />
-              AI sedang menerjemahkan pesan Anda ke Bahasa Indonesia bisnis...
+              {t('buyer_chat.ai_translating') || 'AI sedang menerjemahkan pesan Anda ke Bahasa Indonesia bisnis...'}
             </div>
           )}
         </div>
@@ -292,7 +294,7 @@ export default function BuyerChatPage() {
               type="text"
               value={inputMessage}
               onChange={(e) => setInputMessage(e.target.value)}
-              placeholder={`Ketik pesan dalam Bahasa Inggris ke ${selectedUmkm.name}...`}
+              placeholder={`${t('buyer_chat.type_placeholder') || 'Ketik pesan dalam Bahasa Inggris ke'} ${selectedUmkm.name}...`}
               className="flex-1 px-4 py-3 rounded-xl border border-[var(--color-border)] text-sm font-medium focus:outline-none focus:border-[var(--color-primary)] focus:ring-2 focus:ring-[var(--color-primary-subtle)]"
             />
 
@@ -302,12 +304,12 @@ export default function BuyerChatPage() {
               className="h-11 px-6 font-bold rounded-xl shadow-md shadow-[var(--color-primary)]/20"
               leftIcon={<Send className="w-4 h-4" />}
             >
-              Kirim
+              {t('buyer_chat.send') || 'Kirim'}
             </Button>
           </div>
 
           <div className="flex items-center justify-between text-[11px] text-[var(--color-text-muted)] font-medium px-1">
-            <span>💡 Pesan yang Anda ketik dalam Bahasa Inggris otomatis dikonversi ke Bahasa Indonesia baku untuk UMKM.</span>
+            <span>💡 {t('buyer_chat.hint') || 'Pesan yang Anda ketik dalam Bahasa Inggris otomatis dikonversi ke Bahasa Indonesia baku untuk UMKM.'}</span>
           </div>
         </form>
 

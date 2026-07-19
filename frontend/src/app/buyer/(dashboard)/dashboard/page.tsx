@@ -9,8 +9,10 @@ import {
 import { Button } from '@/components/ui/Button';
 import { Badge } from '@/components/ui/Badge';
 import { MOCK_UMKM, MOCK_INVOICES, MockInvoice } from '@/lib/mock-data';
+import { useT } from '@/i18n/useT';
 
 export default function BuyerDashboardOverview() {
+  const t = useT();
   const [selectedInvoice, setSelectedInvoice] = useState<MockInvoice | null>(null);
   const [isQrModalOpen, setIsQrModalOpen] = useState(false);
   const [paymentSuccess, setPaymentSuccess] = useState(false);
@@ -50,13 +52,13 @@ export default function BuyerDashboardOverview() {
           <div className="space-y-2 max-w-xl">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/20 backdrop-blur-md text-white text-xs font-bold uppercase tracking-wider">
               <ShieldCheck className="w-4 h-4 text-emerald-300" />
-              Verified International B2B Buyer
+              {t('buyer_dashboard.verified') || 'Verified International B2B Buyer'}
             </div>
             <h2 className="text-2xl sm:text-3xl font-display font-extrabold tracking-tight">
-              Selamat Datang, Global Imports LLC
+              {t('buyer_dashboard.welcome') || 'Selamat Datang'}, Global Imports LLC
             </h2>
             <p className="text-emerald-100 text-sm font-medium leading-relaxed">
-              Kelola negosiasi berbantuan AI, bayar tagihan via QRIS Antarnegara, dan pantau pengiriman produk kreatif Indonesia.
+              {t('buyer_dashboard.welcome_desc') || 'Kelola negosiasi berbantuan AI, bayar tagihan via QRIS Antarnegara, dan pantau pengiriman produk kreatif Indonesia.'}
             </p>
           </div>
 
@@ -64,7 +66,7 @@ export default function BuyerDashboardOverview() {
             <Link href="/buyer/dashboard/chat">
               <Button variant="secondary" className="font-bold bg-white text-[var(--color-primary)] hover:bg-emerald-50 h-11 px-5 rounded-xl shadow-sm">
                 <MessageSquare className="w-4 h-4 mr-2" />
-                Buka Chat Negosiasi
+                {t('buyer_dashboard.open_chat') || 'Buka Chat Negosiasi'}
               </Button>
             </Link>
           </div>
@@ -76,7 +78,7 @@ export default function BuyerDashboardOverview() {
         
         <div className="bg-white p-6 rounded-3xl border border-[var(--color-border)] shadow-xs">
           <div className="flex items-center justify-between mb-3">
-            <span className="text-xs font-bold text-[var(--color-text-muted)] uppercase tracking-wider">Negosiasi Aktif</span>
+            <span className="text-xs font-bold text-[var(--color-text-muted)] uppercase tracking-wider">{t('buyer_dashboard.active_negotiation') || 'Negosiasi Aktif'}</span>
             <div className="w-10 h-10 rounded-2xl bg-[var(--color-primary-subtle)] text-[var(--color-primary)] flex items-center justify-center">
               <MessageSquare className="w-5 h-5" />
             </div>
@@ -89,7 +91,7 @@ export default function BuyerDashboardOverview() {
 
         <div className="bg-white p-6 rounded-3xl border border-[var(--color-border)] shadow-xs">
           <div className="flex items-center justify-between mb-3">
-            <span className="text-xs font-bold text-[var(--color-text-muted)] uppercase tracking-wider">Total Tagihan</span>
+            <span className="text-xs font-bold text-[var(--color-text-muted)] uppercase tracking-wider">{t('buyer_dashboard.total_invoice') || 'Total Tagihan'}</span>
             <div className="w-10 h-10 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center">
               <Receipt className="w-5 h-5" />
             </div>
@@ -102,7 +104,7 @@ export default function BuyerDashboardOverview() {
 
         <div className="bg-white p-6 rounded-3xl border border-[var(--color-border)] shadow-xs">
           <div className="flex items-center justify-between mb-3">
-            <span className="text-xs font-bold text-[var(--color-text-muted)] uppercase tracking-wider">Estimasi Deal</span>
+            <span className="text-xs font-bold text-[var(--color-text-muted)] uppercase tracking-wider">{t('buyer_dashboard.estimated_deal') || 'Estimasi Deal'}</span>
             <div className="w-10 h-10 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center">
               <Globe className="w-5 h-5" />
             </div>
@@ -115,7 +117,7 @@ export default function BuyerDashboardOverview() {
 
         <div className="bg-white p-6 rounded-3xl border border-[var(--color-border)] shadow-xs">
           <div className="flex items-center justify-between mb-3">
-            <span className="text-xs font-bold text-[var(--color-text-muted)] uppercase tracking-wider">Mitra UMKM</span>
+            <span className="text-xs font-bold text-[var(--color-text-muted)] uppercase tracking-wider">{t('buyer_dashboard.msme_partners') || 'Mitra UMKM'}</span>
             <div className="w-10 h-10 rounded-2xl bg-purple-50 text-purple-600 flex items-center justify-center">
               <Building2 className="w-5 h-5" />
             </div>
@@ -138,16 +140,16 @@ export default function BuyerDashboardOverview() {
               <div>
                 <h3 className="text-lg font-bold font-display text-[var(--color-text-primary)] flex items-center gap-2">
                   <MessageSquare className="w-5 h-5 text-[var(--color-primary)]" />
-                  Negosiasi Chat Terpopuler (AI Translation)
+                  {t('buyer_dashboard.popular_chat') || 'Negosiasi Chat Terpopuler (AI Translation)'}
                 </h3>
                 <p className="text-xs text-[var(--color-text-secondary)] font-medium mt-0.5">
-                  Pesan bahasa Indonesia otomatis diterjemahkan ke Bahasa Inggris bisnis untuk Anda.
+                  {t('buyer_dashboard.chat_desc') || 'Pesan bahasa Indonesia otomatis diterjemahkan ke Bahasa Inggris bisnis untuk Anda.'}
                 </p>
               </div>
 
               <Link href="/buyer/dashboard/chat">
                 <Button variant="ghost" className="text-xs font-bold text-[var(--color-primary)]">
-                  Lihat Semua Chat <ChevronRight className="w-4 h-4 ml-1 inline" />
+                  {t('buyer_dashboard.view_all_chat') || 'Lihat Semua Chat'} <ChevronRight className="w-4 h-4 ml-1 inline" />
                 </Button>
               </Link>
             </div>
@@ -190,7 +192,7 @@ export default function BuyerDashboardOverview() {
                 <div className="mt-3 flex justify-end">
                   <Link href="/buyer/dashboard/chat">
                     <Button variant="outline" className="h-8 text-xs font-bold rounded-lg px-3">
-                      Balas Negosiasi
+                      {t('buyer_dashboard.reply_chat') || 'Balas Negosiasi'}
                     </Button>
                   </Link>
                 </div>
@@ -234,7 +236,7 @@ export default function BuyerDashboardOverview() {
           <div className="bg-white border border-[var(--color-border)] rounded-3xl p-6 shadow-xs">
             <h3 className="text-lg font-bold font-display text-[var(--color-text-primary)] mb-4 flex items-center gap-2">
               <Receipt className="w-5 h-5 text-[var(--color-primary)]" />
-              Tagihan & QRIS Antarnegara
+              {t('buyer_dashboard.invoice_title') || 'Tagihan & QRIS Antarnegara'}
             </h3>
 
             <div className="space-y-4">
@@ -262,11 +264,11 @@ export default function BuyerDashboardOverview() {
                       leftIcon={<QrCode className="w-4 h-4" />}
                       onClick={() => handleOpenQrModal(inv)}
                     >
-                      Bayar via QRIS Antarnegara
+                      {t('buyer_dashboard.pay_qris') || 'Bayar via QRIS Antarnegara'}
                     </Button>
                   ) : (
                     <div className="text-[11px] font-semibold text-emerald-600 flex items-center gap-1">
-                      <CheckCircle2 className="w-3.5 h-3.5" /> Terkonfirmasi Lunas
+                      <CheckCircle2 className="w-3.5 h-3.5" /> {t('buyer_dashboard.paid') || 'Terkonfirmasi Lunas'}
                     </div>
                   )}
                 </div>
@@ -291,13 +293,13 @@ export default function BuyerDashboardOverview() {
 
             <div className="text-center space-y-2">
               <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[var(--color-primary-subtle)] text-[var(--color-primary)] text-xs font-bold uppercase tracking-wider">
-                <QrCode className="w-4 h-4" /> QRIS Antarnegara BI
+                <QrCode className="w-4 h-4" /> {t('buyer_dashboard.qris_badge') || 'QRIS Antarnegara BI'}
               </div>
               <h3 className="text-2xl font-display font-extrabold text-[var(--color-text-primary)]">
-                Pembayaran Tagihan
+                {t('buyer_dashboard.payment_title') || 'Pembayaran Tagihan'}
               </h3>
               <p className="text-xs text-[var(--color-text-secondary)] font-medium">
-                Scan kode QRIS di bawah menggunakan aplikasi e-wallet / bank internasional Anda.
+                {t('buyer_dashboard.payment_desc') || 'Scan kode QRIS di bawah menggunakan aplikasi e-wallet / bank internasional Anda.'}
               </p>
             </div>
 
@@ -308,9 +310,9 @@ export default function BuyerDashboardOverview() {
                   <div className="w-16 h-16 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mb-3">
                     <CheckCircle2 className="w-10 h-10" />
                   </div>
-                  <h4 className="text-lg font-bold text-emerald-700">Pembayaran Berhasil!</h4>
+                  <h4 className="text-lg font-bold text-emerald-700">{t('buyer_dashboard.payment_success') || 'Pembayaran Berhasil!'}</h4>
                   <p className="text-xs text-[var(--color-text-secondary)] font-medium mt-1">
-                    Status tagihan {selectedInvoice.id} otomatis diperbarui menjadi LUNAS.
+                    {t('buyer_dashboard.payment_success_desc') || 'Status tagihan'} {selectedInvoice.id} {t('buyer_dashboard.payment_success_desc2') || 'otomatis diperbarui menjadi LUNAS.'}
                   </p>
                 </div>
               ) : (
@@ -343,15 +345,15 @@ export default function BuyerDashboardOverview() {
             {/* Amount Breakdown */}
             <div className="bg-[var(--color-bg-subtle)] p-4 rounded-2xl space-y-2 text-xs font-semibold">
               <div className="flex justify-between text-[var(--color-text-secondary)]">
-                <span>Nilai Invoice ({selectedInvoice.id}):</span>
+                <span>{t('buyer_dashboard.invoice_value') || 'Nilai Invoice'} ({selectedInvoice.id}):</span>
                 <span className="font-mono text-[var(--color-text-primary)]">{formatRupiah(selectedInvoice.amount)}</span>
               </div>
               <div className="flex justify-between text-[var(--color-text-secondary)]">
-                <span>Platform Service Fee (1.5%):</span>
-                <span className="font-mono text-[var(--color-primary)]">Terpisah</span>
+                <span>{t('buyer_dashboard.platform_fee') || 'Platform Service Fee'} (1.5%):</span>
+                <span className="font-mono text-[var(--color-primary)]">{t('buyer_dashboard.fee_separate') || 'Terpisah'}</span>
               </div>
               <div className="border-t border-[var(--color-border)] pt-2 flex justify-between text-sm font-bold text-[var(--color-text-primary)]">
-                <span>Total Bayar:</span>
+                <span>{t('buyer_dashboard.total_pay') || 'Total Bayar'}:</span>
                 <span className="font-mono text-[var(--color-primary)]">{formatRupiah(selectedInvoice.amount)}</span>
               </div>
             </div>
@@ -362,7 +364,7 @@ export default function BuyerDashboardOverview() {
                 className="w-full h-12 text-sm font-bold rounded-xl justify-center shadow-lg shadow-[var(--color-primary)]/20"
                 onClick={handleSimulatePayment}
               >
-                Simulasi Pembayaran Selesai
+                {t('buyer_dashboard.simulate_payment') || 'Simulasi Pembayaran Selesai'}
               </Button>
             ) : (
               <Button 
@@ -370,7 +372,7 @@ export default function BuyerDashboardOverview() {
                 className="w-full h-12 text-sm font-bold rounded-xl justify-center"
                 onClick={() => setIsQrModalOpen(false)}
               >
-                Tutup Modal
+                {t('buyer_dashboard.close_modal') || 'Tutup Modal'}
               </Button>
             )}
 

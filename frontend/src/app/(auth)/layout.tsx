@@ -1,8 +1,13 @@
+'use client';
+
 import React from 'react';
 import Link from 'next/link';
 import { PublicNavbar } from '@/components/layout/PublicNavbar';
+import { useT } from '@/i18n/useT';
 
 export default function AuthLayout({ children }: { children: React.ReactNode }) {
+  const t = useT();
+
   return (
     <div className="h-screen flex flex-row overflow-hidden bg-white">
 
@@ -16,16 +21,16 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
 
         <div className="z-10 animate-fade-in max-w-lg mb-12">
           <div className="inline-block px-3 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-xs font-bold uppercase tracking-widest mb-6">
-            Platform Ekspor B2B
+            {t('auth.left_badge')}
           </div>
           <h1 className="text-4xl lg:text-5xl font-display font-extrabold leading-tight mb-6 tracking-tight">
-            Buka Peluang Bisnis Anda ke{' '}
+            {t('auth.left_title1')}{' '}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-orange-500">
-              Pasar Global
+              {t('auth.left_title2')}
             </span>
           </h1>
           <p className="text-[var(--color-primary-light)] text-lg font-medium leading-relaxed opacity-90">
-            Bergabung dengan ribuan eksportir Indonesia yang telah sukses melakukan transaksi lintas negara dengan mudah dan aman.
+            {t('auth.left_subtitle')}
           </p>
         </div>
 
@@ -34,7 +39,7 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
           <div className="z-10 flex gap-4 text-sm font-semibold text-[var(--color-primary-light)]/70">
             <span>&copy; 2026 NusaTrade Connect.</span>
             <Link href="/terms" className="hover:text-white transition-colors duration-200">
-              Syarat &amp; Ketentuan
+              {t('auth.terms')}
             </Link>
           </div>
         </div>

@@ -4,6 +4,8 @@ import { cn } from '@/lib/utils/cn';
 import { Badge } from '@/components/ui/Badge';
 import { MockProduct } from '@/lib/mock-data';
 import { Package } from 'lucide-react';
+import { DynamicText } from '@/components/ui/DynamicText';
+import { useT } from '@/i18n/useT';
 
 export interface ProductCardProps {
   product: MockProduct;
@@ -11,6 +13,8 @@ export interface ProductCardProps {
 }
 
 export const ProductCard = ({ product, className }: ProductCardProps) => {
+  const t = useT();
+
   const formatRupiah = (amount: number) => {
     return new Intl.NumberFormat('id-ID', {
       style: 'currency',
@@ -59,23 +63,23 @@ export const ProductCard = ({ product, className }: ProductCardProps) => {
         {/* Content */}
         <div className="p-4 flex flex-col flex-1">
           <div className="text-xs text-[var(--color-primary)] mb-1.5 font-bold tracking-wide uppercase truncate">
-            {product.category}
+            <DynamicText text={product.category} />
           </div>
           
           <h3 className="font-bold text-[var(--color-text-primary)] leading-snug mb-1.5 line-clamp-2 min-h-[2.75rem] group-hover:text-[var(--color-primary)] transition-colors duration-200">
-            {product.name}
+            <DynamicText text={product.name} />
           </h3>
           
           <div className="text-xs text-[var(--color-text-secondary)] mb-4 truncate flex items-center gap-2 font-medium">
             <div className="w-5 h-5 rounded-md bg-[var(--color-primary-light)] text-[var(--color-primary)] flex items-center justify-center text-[10px] font-bold border border-[var(--color-primary-subtle)]">
               {product.sellerName.charAt(0)}
             </div>
-            {product.sellerName}
+            <DynamicText text={product.sellerName} />
           </div>
           
           <div className="mt-auto pt-3 border-t border-[var(--color-border)]">
             <div className="text-[10px] text-[var(--color-text-muted)] font-semibold uppercase tracking-wider mb-1">
-              Estimasi Harga
+              {t('landing.est_price') || 'Estimasi Harga'}
             </div>
             <div className="font-mono font-bold text-[var(--color-primary)] text-sm flex items-baseline truncate">
               {formatRupiah(product.minPrice)}

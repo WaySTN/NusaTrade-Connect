@@ -14,8 +14,11 @@ import {
 } from 'lucide-react';
 
 import { AuthModal } from '@/components/ui/AuthModal';
+import { DynamicText } from '@/components/ui/DynamicText';
+import { useT } from '@/i18n/useT';
 
 export default function UMKMDetailPage() {
+  const t = useT();
   const params = useParams();
   const router = useRouter();
   const idOrSlug = typeof params.id === 'string' ? params.id : '';
@@ -117,7 +120,7 @@ export default function UMKMDetailPage() {
             
             <div className="absolute top-4 right-4">
               <span className="text-xs font-extrabold uppercase tracking-wider bg-white/90 backdrop-blur-md text-[var(--color-text-primary)] px-3.5 py-1.5 rounded-full shadow-sm">
-                {umkm.category}
+                <DynamicText text={umkm.category} />
               </span>
             </div>
           </div>
@@ -135,7 +138,7 @@ export default function UMKMDetailPage() {
                 <div>
                   <div className="flex flex-wrap items-center gap-3 mb-2">
                     <h1 className="text-2xl sm:text-4xl font-display font-extrabold text-[var(--color-text-primary)] tracking-tight">
-                      {umkm.name}
+                      <DynamicText text={umkm.name} />
                     </h1>
                     {umkm.isNibVerified && (
                       <Badge variant="verified" className="px-3 py-1 font-bold text-xs">
@@ -147,7 +150,7 @@ export default function UMKMDetailPage() {
                   <div className="flex flex-wrap items-center gap-y-2 gap-x-4 text-xs sm:text-sm font-medium text-[var(--color-text-secondary)]">
                     <span className="flex items-center gap-1.5">
                       <MapPin className="w-4 h-4 text-[var(--color-primary)]" />
-                      {umkm.fullAddress}
+                      <DynamicText text={umkm.fullAddress} />
                     </span>
                     <span>•</span>
                     <span className="font-mono text-[var(--color-text-muted)]">
@@ -166,7 +169,7 @@ export default function UMKMDetailPage() {
                   leftIcon={<MessageCircle className="w-5 h-5" />}
                   onClick={handleContactSeller}
                 >
-                  Hubungi Penjual
+                  {t('katalog.contact_seller') || 'Hubungi Penjual'}
                 </Button>
               </div>
 
@@ -177,37 +180,37 @@ export default function UMKMDetailPage() {
               <div className="p-4 rounded-2xl bg-[var(--color-bg-subtle)] border border-[var(--color-border)]">
                 <div className="flex items-center gap-2 text-xs font-semibold text-[var(--color-text-muted)] mb-1">
                   <Calendar className="w-4 h-4 text-[var(--color-primary)]" />
-                  Tahun Berdiri
+                  {t('umkm.established') || 'Tahun Berdiri'}
                 </div>
                 <div className="text-lg font-bold text-[var(--color-text-primary)] font-mono">
-                  {umkm.establishedYear} ({new Date().getFullYear() - umkm.establishedYear} Tahun)
+                  {umkm.establishedYear} ({new Date().getFullYear() - umkm.establishedYear} {t('umkm.years') || 'Tahun'})
                 </div>
               </div>
 
               <div className="p-4 rounded-2xl bg-[var(--color-bg-subtle)] border border-[var(--color-border)]">
                 <div className="flex items-center gap-2 text-xs font-semibold text-[var(--color-text-muted)] mb-1">
                   <Factory className="w-4 h-4 text-[var(--color-primary)]" />
-                  Kapasitas Produksi
+                  {t('katalog.production_capacity') || 'Kapasitas Produksi'}
                 </div>
                 <div className="text-lg font-bold text-[var(--color-text-primary)] font-mono">
-                  {umkm.productionCapacity}
+                  <DynamicText text={umkm.productionCapacity} />
                 </div>
               </div>
 
               <div className="p-4 rounded-2xl bg-[var(--color-bg-subtle)] border border-[var(--color-border)]">
                 <div className="flex items-center gap-2 text-xs font-semibold text-[var(--color-text-muted)] mb-1">
                   <Users className="w-4 h-4 text-[var(--color-primary)]" />
-                  Jumlah Tenaga Kerja
+                  {t('umkm.employee_count') || 'Jumlah Tenaga Kerja'}
                 </div>
                 <div className="text-lg font-bold text-[var(--color-text-primary)] font-mono">
-                  {umkm.employeeCount}
+                  <DynamicText text={umkm.employeeCount} />
                 </div>
               </div>
 
               <div className="p-4 rounded-2xl bg-[var(--color-bg-subtle)] border border-[var(--color-border)]">
                 <div className="flex items-center gap-2 text-xs font-semibold text-[var(--color-text-muted)] mb-1">
                   <Globe className="w-4 h-4 text-[var(--color-primary)]" />
-                  Tujuan Ekspor Utama
+                  {t('umkm.export_dest') || 'Tujuan Ekspor Utama'}
                 </div>
                 <div className="text-sm font-bold text-[var(--color-text-primary)] truncate">
                   {umkm.exportCountries.join(', ')}
@@ -228,15 +231,15 @@ export default function UMKMDetailPage() {
             <div className="bg-white border border-[var(--color-border)] rounded-3xl p-6 shadow-sm">
               <h3 className="text-lg font-bold text-[var(--color-text-primary)] mb-4 flex items-center gap-2">
                 <Building2 className="w-5 h-5 text-[var(--color-primary)]" />
-                Tentang Usaha
+                {t('umkm.about') || 'Tentang Usaha'}
               </h3>
               <p className="text-sm text-[var(--color-text-secondary)] leading-relaxed font-medium mb-6">
-                {umkm.description}
+                <DynamicText text={umkm.description} />
               </p>
               
               <div className="pt-4 border-t border-[var(--color-border)] space-y-2">
-                <div className="text-xs font-semibold text-[var(--color-text-muted)]">Pemilik / Penanggung Jawab:</div>
-                <div className="text-sm font-bold text-[var(--color-text-primary)]">{umkm.ownerName}</div>
+                <div className="text-xs font-semibold text-[var(--color-text-muted)]">{t('umkm.owner') || 'Pemilik / Penanggung Jawab:'}</div>
+                <div className="text-sm font-bold text-[var(--color-text-primary)]"><DynamicText text={umkm.ownerName} /></div>
               </div>
             </div>
 
@@ -244,7 +247,7 @@ export default function UMKMDetailPage() {
             <div className="bg-white border border-[var(--color-border)] rounded-3xl p-6 shadow-sm">
               <h3 className="text-lg font-bold text-[var(--color-text-primary)] mb-4 flex items-center gap-2">
                 <Award className="w-5 h-5 text-[var(--color-primary)]" />
-                Legalitas & Sertifikasi
+                {t('umkm.legalities') || 'Legalitas & Sertifikasi'}
               </h3>
 
               <div className="space-y-3 mb-6">
@@ -252,12 +255,12 @@ export default function UMKMDetailPage() {
                   <div className="flex items-center gap-2.5">
                     <ShieldCheck className="w-5 h-5 text-[var(--color-primary)] shrink-0" />
                     <div>
-                      <div className="text-xs font-extrabold text-[var(--color-primary)] uppercase">Nomor Induk Berusaha (NIB)</div>
+                      <div className="text-xs font-extrabold text-[var(--color-primary)] uppercase">{t('umkm.nib') || 'Nomor Induk Berusaha (NIB)'}</div>
                       <div className="text-xs font-mono font-bold text-[var(--color-text-primary)]">{maskNib(umkm.nibNumber)}</div>
                     </div>
                   </div>
                   <span className="text-[10px] font-extrabold bg-white text-[var(--color-primary)] px-2 py-0.5 rounded-full shadow-xs">
-                    TERVERIFIKASI
+                    {t('umkm.verified_tag') || 'TERVERIFIKASI'}
                   </span>
                 </div>
 
@@ -270,14 +273,14 @@ export default function UMKMDetailPage() {
               </div>
 
               <div className="text-[11px] text-[var(--color-text-muted)] font-medium leading-normal bg-[var(--color-bg-subtle)] p-3 rounded-xl">
-                ✓ Data verifikasi legalitas divalidasi langsung sesuai pendaftaran OSS Kemenkop RI.
+                {t('umkm.oss_validated') || '✓ Data verifikasi legalitas divalidasi langsung sesuai pendaftaran OSS Kemenkop RI.'}
               </div>
             </div>
 
             {/* Contact Info Card */}
             <div className="bg-white border border-[var(--color-border)] rounded-3xl p-6 shadow-sm">
               <h3 className="text-lg font-bold text-[var(--color-text-primary)] mb-4">
-                Informasi Kontak
+                {t('umkm.contact_info') || 'Informasi Kontak'}
               </h3>
 
               <div className="space-y-4 text-xs font-medium">
@@ -310,10 +313,10 @@ export default function UMKMDetailPage() {
               <div>
                 <h2 className="text-xl font-bold font-display text-[var(--color-text-primary)] flex items-center gap-2">
                   <Package className="w-5 h-5 text-[var(--color-primary)]" />
-                  Katalog Produk ({products.length})
+                  {t('umkm.product_catalog') || 'Katalog Produk'} ({products.length})
                 </h2>
                 <p className="text-xs text-[var(--color-text-secondary)] font-medium mt-0.5">
-                  Daftar produk siap ekspor buatan {umkm.name}
+                  <DynamicText text={`Daftar produk siap ekspor buatan ${umkm.name}`} />
                 </p>
               </div>
             </div>
@@ -321,8 +324,8 @@ export default function UMKMDetailPage() {
             {products.length === 0 ? (
               <div className="bg-white border border-[var(--color-border)] rounded-3xl p-12 text-center">
                 <Package className="w-12 h-12 text-[var(--color-text-muted)] mx-auto mb-3" />
-                <h4 className="font-bold text-[var(--color-text-primary)] mb-1">Belum Ada Listing Produk</h4>
-                <p className="text-xs text-[var(--color-text-secondary)] font-medium">UMKM ini belum memperbarui daftar katalog produknya.</p>
+                <h4 className="font-bold text-[var(--color-text-primary)] mb-1">{t('umkm.no_products') || 'Belum Ada Listing Produk'}</h4>
+                <p className="text-xs text-[var(--color-text-secondary)] font-medium">{t('umkm.no_products_desc') || 'UMKM ini belum memperbarui daftar katalog produknya.'}</p>
               </div>
             ) : (
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
@@ -339,7 +342,7 @@ export default function UMKMDetailPage() {
                       />
                       <div className="absolute top-3 left-3">
                         <span className="text-[10px] font-extrabold uppercase tracking-wider bg-white/90 backdrop-blur-md text-[var(--color-primary)] px-2.5 py-1 rounded-full shadow-sm">
-                          {prod.category}
+                          <DynamicText text={prod.category} />
                         </span>
                       </div>
                     </div>
@@ -347,15 +350,15 @@ export default function UMKMDetailPage() {
                     <div className="p-5 flex-1 flex flex-col justify-between">
                       <div>
                         <h3 className="font-bold text-base text-[var(--color-text-primary)] mb-2 group-hover:text-[var(--color-primary)] transition-colors line-clamp-1">
-                          {prod.name}
+                          <DynamicText text={prod.name} />
                         </h3>
                         
                         <div className="flex items-center justify-between text-xs text-[var(--color-text-secondary)] mb-4">
-                          <span>MOQ: <strong className="text-[var(--color-text-primary)] font-mono">{prod.moq} Unit</strong></span>
+                          <span>{t('katalog.moq') || 'MOQ'}: <strong className="text-[var(--color-text-primary)] font-mono">{prod.moq} {t('katalog.unit') || 'Unit'}</strong></span>
                         </div>
 
                         <div className="text-xs text-[var(--color-text-muted)] uppercase font-extrabold tracking-wider mb-1">
-                          Estimasi Harga
+                          {t('landing.est_price') || 'Estimasi Harga'}
                         </div>
                         <div className="font-mono font-bold text-[var(--color-primary)] text-base mb-4">
                           {formatRupiah(prod.minPrice)} - {formatRupiah(prod.maxPrice)}
@@ -368,7 +371,7 @@ export default function UMKMDetailPage() {
                           className="w-full justify-between font-bold text-xs h-10 rounded-xl hover:border-[var(--color-primary)] hover:text-[var(--color-primary)]"
                           rightIcon={<ArrowUpRight className="w-4 h-4" />}
                         >
-                          Lihat Detail Produk
+                          {t('katalog.product_details') || 'Lihat Detail Produk'}
                         </Button>
                       </Link>
                     </div>

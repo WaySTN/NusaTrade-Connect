@@ -7,6 +7,7 @@ import { PublicFooter } from '@/components/layout/PublicFooter';
 import { MOCK_PPJK, MockPPJK } from '@/lib/mock-data';
 import { SearchBar } from '@/components/katalog/SearchBar';
 import { Ship, Sparkles } from 'lucide-react';
+import { useT } from '@/i18n/useT';
 
 // ─── Helper: Read registered PPJK from localStorage ─────────────────────────
 function getRegisteredPPJKFromStorage(): MockPPJK[] {
@@ -56,6 +57,7 @@ function getRegisteredPPJKFromStorage(): MockPPJK[] {
 }
 
 export default function PPJKDirectoryPage() {
+  const t = useT();
   const [searchQuery, setSearchQuery] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   const [registeredPPJK, setRegisteredPPJK] = useState<MockPPJK[]>([]);
@@ -104,13 +106,13 @@ export default function PPJKDirectoryPage() {
           <div className="max-w-2xl animate-fade-in">
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/20 backdrop-blur-md border border-white/30 text-white text-xs font-bold uppercase tracking-widest mb-4">
               <Ship className="w-3.5 h-3.5" />
-              Layanan Ekspor Terintegrasi
+              {t('ppjk.badge') || 'Layanan Ekspor Terintegrasi'}
             </div>
             <h1 className="text-4xl md:text-5xl font-display font-extrabold text-white mb-4 tracking-tight">
-              Direktori Mitra PPJK
+              {t('ppjk.title') || 'Direktori Mitra PPJK'}
             </h1>
             <p className="text-[var(--color-primary-light)] text-lg md:text-xl font-medium">
-              Temukan Perusahaan Pengurusan Jasa Kepabeanan (PPJK) dan logistik terbaik untuk kelancaran ekspor Anda.
+              {t('ppjk.subtitle') || 'Temukan Perusahaan Pengurusan Jasa Kepabeanan (PPJK) dan logistik terbaik untuk kelancaran ekspor Anda.'}
             </p>
           </div>
         </div>
@@ -122,7 +124,7 @@ export default function PPJKDirectoryPage() {
           <SearchBar
             value={searchQuery}
             onChange={setSearchQuery}
-            placeholder="Cari nama PPJK atau kota..."
+            placeholder={t('ppjk.search_placeholder') || "Cari nama PPJK atau kota..."}
           />
         </div>
 
@@ -137,9 +139,9 @@ export default function PPJKDirectoryPage() {
         ) : filteredPPJK.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-24 px-4 text-center border border-dashed border-[var(--color-border-strong)] rounded-3xl bg-[var(--color-bg-subtle)]">
             <Ship className="w-16 h-16 text-[var(--color-text-muted)] mb-4" />
-            <h3 className="text-xl font-bold text-[var(--color-text-primary)] mb-2">PPJK Tidak Ditemukan</h3>
+            <h3 className="text-xl font-bold text-[var(--color-text-primary)] mb-2">{t('ppjk.not_found') || 'PPJK Tidak Ditemukan'}</h3>
             <p className="text-[var(--color-text-secondary)] max-w-md font-medium">
-              Kami tidak dapat menemukan mitra PPJK yang sesuai dengan pencarian Anda &quot;{searchQuery}&quot;.
+              {t('ppjk.not_found_desc') || 'Kami tidak dapat menemukan mitra PPJK yang sesuai dengan pencarian Anda'} &quot;{searchQuery}&quot;.
             </p>
           </div>
         ) : (
@@ -152,7 +154,7 @@ export default function PPJKDirectoryPage() {
                 ? `Rp ${minStr} - ${maxStr}`
                 : minStr
                 ? `Rp ${minStr}`
-                : 'Hubungi kami';
+                : t('ppjk.contact_us') || 'Hubungi kami';
 
               return (
                 <div
@@ -164,7 +166,7 @@ export default function PPJKDirectoryPage() {
                   {isNew && (
                     <div className="absolute -top-3 left-4 z-10 flex items-center gap-1.5 px-3 py-1 rounded-full bg-gradient-to-r from-emerald-500 to-teal-500 text-white text-[10px] font-bold uppercase tracking-wider shadow-lg shadow-emerald-500/30">
                       <Sparkles className="w-3 h-3" />
-                      Baru Bergabung
+                      {t('ppjk.newly_joined') || 'Baru Bergabung'}
                     </div>
                   )}
                   <PPJKCard

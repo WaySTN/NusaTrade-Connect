@@ -4,12 +4,15 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { PublicNavbar } from '@/components/layout/PublicNavbar';
 import { PublicFooter } from '@/components/layout/PublicFooter';
-import { MOCK_UMKM, getMockUMKMProducts, MOCK_CATEGORIES } from '@/lib/mock-data';
 import { SearchBar } from '@/components/katalog/SearchBar';
 import { Button } from '@/components/ui/Button';
-import { Building2, ShieldCheck, MapPin, Package, Award, ArrowRight, Filter } from 'lucide-react';
+import { MapPin, Building2, Package, Award, ArrowRight, ShieldCheck, Search, Filter } from 'lucide-react';
+import { MOCK_UMKM, MOCK_CATEGORIES, getMockUMKMProducts } from '@/lib/mock-data';
+import { DynamicText } from '@/components/ui/DynamicText';
+import { useT } from '@/i18n/useT';
 
 export default function UMKMDirectoryPage() {
+  const t = useT();
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
   const [verifiedOnly, setVerifiedOnly] = useState<boolean>(false);
@@ -53,13 +56,13 @@ export default function UMKMDirectoryPage() {
           <div className="max-w-2xl animate-fade-in">
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/20 backdrop-blur-md border border-white/30 text-white text-xs font-bold uppercase tracking-widest mb-4">
               <Building2 className="w-3.5 h-3.5" />
-              Direktori Ekspor Indonesia
+              {t('umkm.badge') || 'Direktori Ekspor Indonesia'}
             </div>
             <h1 className="text-4xl md:text-5xl font-display font-extrabold text-white mb-4 tracking-tight">
-              Mitra UMKM Ekspor
+              {t('umkm.title') || 'Mitra UMKM Ekspor'}
             </h1>
             <p className="text-[var(--color-primary-light)] text-lg md:text-xl font-medium">
-              Jelajahi profil produsen dan UMKM Ekonomi Kreatif Indonesia yang terverifikasi legalitas NIB dan siap bersaing di pasar global.
+              {t('umkm.subtitle') || 'Jelajahi profil produsen dan UMKM Ekonomi Kreatif Indonesia yang terverifikasi legalitas NIB dan siap bersaing di pasar global.'}
             </p>
           </div>
         </div>
@@ -74,7 +77,7 @@ export default function UMKMDirectoryPage() {
               <SearchBar
                 value={searchQuery}
                 onChange={setSearchQuery}
-                placeholder="Cari nama UMKM, kota, atau nama pemilik..."
+                placeholder={t('umkm.search_placeholder') || "Cari nama UMKM, kota, atau nama pemilik..."}
               />
             </div>
 
@@ -88,7 +91,7 @@ export default function UMKMDirectoryPage() {
                 }`}
               >
                 <ShieldCheck className="w-4 h-4 text-[var(--color-primary)]" />
-                Terverifikasi NIB
+                {t('umkm.verified_nib') || 'Terverifikasi NIB'}
               </button>
             </div>
           </div>
@@ -96,7 +99,7 @@ export default function UMKMDirectoryPage() {
           {/* Category Filter Pills */}
           <div className="flex items-center gap-2 overflow-x-auto pt-2 pb-1 no-scrollbar border-t border-[var(--color-border)]">
             <span className="text-xs font-bold text-[var(--color-text-muted)] uppercase tracking-wider shrink-0 mr-1 flex items-center gap-1">
-              <Filter className="w-3.5 h-3.5" /> Kategori:
+              <Filter className="w-3.5 h-3.5" /> {t('umkm.category') || 'Kategori'}:
             </span>
             <button
               onClick={() => setSelectedCategory('All')}
@@ -106,7 +109,7 @@ export default function UMKMDirectoryPage() {
                   : 'bg-[var(--color-bg-subtle)] text-[var(--color-text-secondary)] hover:bg-[var(--color-border)]'
               }`}
             >
-              Semua Kategori
+              {t('umkm.all_categories') || 'Semua Kategori'}
             </button>
             {MOCK_CATEGORIES.map(cat => (
               <button
@@ -118,7 +121,7 @@ export default function UMKMDirectoryPage() {
                     : 'bg-[var(--color-bg-subtle)] text-[var(--color-text-secondary)] hover:bg-[var(--color-border)]'
                 }`}
               >
-                {cat}
+                <DynamicText text={cat} />
               </button>
             ))}
           </div>
@@ -134,9 +137,9 @@ export default function UMKMDirectoryPage() {
         ) : filteredUMKM.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-24 px-4 text-center border border-dashed border-[var(--color-border-strong)] rounded-3xl bg-[var(--color-bg-subtle)]">
             <Building2 className="w-16 h-16 text-[var(--color-text-muted)] mb-4" />
-            <h3 className="text-xl font-bold text-[var(--color-text-primary)] mb-2">UMKM Tidak Ditemukan</h3>
+            <h3 className="text-xl font-bold text-[var(--color-text-primary)] mb-2">{t('umkm.not_found') || 'UMKM Tidak Ditemukan'}</h3>
             <p className="text-[var(--color-text-secondary)] max-w-md font-medium mb-6">
-              Tidak ada mitra UMKM yang sesuai dengan kriteria pencarian atau filter yang Anda pilih.
+              {t('umkm.not_found_desc') || 'Tidak ada mitra UMKM yang sesuai dengan kriteria pencarian atau filter yang Anda pilih.'}
             </p>
             <Button
               variant="outline"
@@ -146,7 +149,7 @@ export default function UMKMDirectoryPage() {
                 setVerifiedOnly(false);
               }}
             >
-              Reset Filter
+              {t('umkm.reset_filter') || 'Reset Filter'}
             </Button>
           </div>
         ) : (
@@ -169,7 +172,7 @@ export default function UMKMDirectoryPage() {
                     
                     <div className="absolute top-3 right-3">
                       <span className="text-[10px] font-extrabold uppercase tracking-wider bg-white/90 backdrop-blur-md text-[var(--color-text-primary)] px-2.5 py-1 rounded-full shadow-sm">
-                        {umkm.category}
+                        <DynamicText text={umkm.category} />
                       </span>
                     </div>
                   </div>
@@ -185,37 +188,37 @@ export default function UMKMDirectoryPage() {
                       {umkm.isNibVerified && (
                         <div className="bg-[var(--color-primary-subtle)] text-[var(--color-primary)] px-3 py-1 rounded-full text-xs font-bold inline-flex items-center gap-1.5 border border-[var(--color-primary-subtle)]">
                           <ShieldCheck className="w-4 h-4 shrink-0 text-[var(--color-primary)]" />
-                          <span>Verified NIB</span>
+                          <span>{t('umkm.verified_nib') || 'Verified NIB'}</span>
                         </div>
                       )}
                     </div>
 
                     <h3 className="text-xl font-bold font-display text-[var(--color-text-primary)] mb-1 group-hover:text-[var(--color-primary)] transition-colors">
-                      {umkm.name}
+                      <DynamicText text={umkm.name} />
                     </h3>
 
                     <div className="flex items-center gap-1.5 text-xs text-[var(--color-text-secondary)] font-medium mb-3">
                       <MapPin className="w-3.5 h-3.5 text-[var(--color-text-muted)]" />
-                      <span>{umkm.city}, {umkm.province}</span>
+                      <span><DynamicText text={umkm.city} />, <DynamicText text={umkm.province} /></span>
                     </div>
 
                     <p className="text-xs text-[var(--color-text-secondary)] line-clamp-2 leading-relaxed mb-5 flex-1 font-medium">
-                      {umkm.description}
+                      <DynamicText text={umkm.description} />
                     </p>
 
                     {/* Features Badges */}
                     <div className="pt-4 border-t border-[var(--color-border)] space-y-3 mb-5">
                       <div className="flex items-center justify-between text-xs font-semibold text-[var(--color-text-secondary)]">
                         <span className="flex items-center gap-1.5 text-[var(--color-text-muted)]">
-                          <Package className="w-3.5 h-3.5" /> Produk Aktif
+                          <Package className="w-3.5 h-3.5" /> {t('umkm.active_products') || 'Produk Aktif'}
                         </span>
-                        <span className="font-mono text-[var(--color-text-primary)]">{products.length} Produk</span>
+                        <span className="font-mono text-[var(--color-text-primary)]">{products.length} {t('umkm.products_count') || 'Produk'}</span>
                       </div>
                       <div className="flex items-center justify-between text-xs font-semibold text-[var(--color-text-secondary)]">
                         <span className="flex items-center gap-1.5 text-[var(--color-text-muted)]">
-                          <Award className="w-3.5 h-3.5" /> Sertifikasi
+                          <Award className="w-3.5 h-3.5" /> {t('umkm.certification') || 'Sertifikasi'}
                         </span>
-                        <span className="font-mono text-[var(--color-primary)]">{umkm.certifications.length} Sertifikat</span>
+                        <span className="font-mono text-[var(--color-primary)]">{umkm.certifications.length} {t('umkm.cert_count') || 'Sertifikat'}</span>
                       </div>
                     </div>
 
@@ -226,7 +229,7 @@ export default function UMKMDirectoryPage() {
                         className="w-full justify-center font-bold text-xs h-11 rounded-xl group-hover:emerald-gradient"
                         rightIcon={<ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />}
                       >
-                        Lihat Profil UMKM
+                        {t('umkm.view_profile') || 'Lihat Profil UMKM'}
                       </Button>
                     </Link>
                   </div>

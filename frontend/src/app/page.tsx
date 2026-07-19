@@ -13,11 +13,15 @@ import { PublicFooter } from '@/components/layout/PublicFooter';
 import { MOCK_STATS, MOCK_UMKM, MOCK_PRODUCTS } from '@/lib/mock-data';
 import { LiveAiDemo } from '@/components/landing/LiveAiDemo';
 import { AnimatedCounter } from '@/components/landing/AnimatedCounter';
+import { useT } from '@/i18n/useT';
+import { useLanguage } from '@/i18n/LanguageContext';
+import { DynamicText } from '@/components/ui/DynamicText';
 
 export default function Home() {
   const [activePillar, setActivePillar] = React.useState<number>(0);
   const [currentProductIndex, setCurrentProductIndex] = React.useState(0);
   const [isCarouselPaused, setIsCarouselPaused] = React.useState(false);
+  const t = useT();
 
   // Auto-advance step-by-step product slider every 3.5 seconds
   React.useEffect(() => {
@@ -70,21 +74,21 @@ export default function Home() {
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[var(--color-primary)] opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-[var(--color-primary)]"></span>
               </span>
-              <span>🇮🇩 Platform Ekspor B2B Ekonomi Kreatif Indonesia</span>
+              <span>🇮🇩 {t('hero.badge')}</span>
             </div>
 
             {/* Headline */}
             <h1 className="text-4xl sm:text-6xl xl:text-7xl font-display font-black text-[var(--color-text-primary)] leading-[1.08] tracking-tight animate-slide-up">
-              Bawa Produk <br className="hidden sm:block" />
+              {t('hero.title1')} <br className="hidden sm:block" />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-[var(--color-primary)] via-[#008f6b] to-[var(--color-accent)]">
-                Kreatif Nusantara
+                {t('hero.title2')}
               </span> <br />
-              ke Panggung Dunia
+              {t('hero.title3')}
             </h1>
 
             {/* Subtitle */}
             <p className="text-base sm:text-lg text-[var(--color-text-secondary)] max-w-xl mx-auto lg:mx-0 leading-relaxed font-medium animate-slide-up">
-              Menghubungkan UMKM Indonesia dengan pembeli internasional melalui verifikasi legalitas NIB, AI Chat Auto-Translation, dan QRIS Antarnegara.
+              {t('hero.subtitle')}
             </p>
 
             {/* Action Buttons */}
@@ -96,7 +100,7 @@ export default function Home() {
                   className="w-full sm:w-auto text-sm font-bold emerald-gradient h-14 px-8 rounded-2xl shadow-xl shadow-[var(--color-primary)]/20 hover:scale-[1.02] transition-transform"
                   rightIcon={<ArrowRight className="w-5 h-5" />}
                 >
-                  Jelajahi Katalog
+                  {t('hero.cta_katalog')}
                 </Button>
               </Link>
 
@@ -107,7 +111,7 @@ export default function Home() {
                   className="w-full sm:w-auto text-sm font-bold h-14 px-8 rounded-2xl bg-white/80 backdrop-blur-sm border-[var(--color-border)] hover:bg-white hover:border-[var(--color-primary-subtle)]"
                   leftIcon={<Building2 className="w-5 h-5 text-[var(--color-primary)]" />}
                 >
-                  Masuk / Daftar
+                  {t('hero.cta_login')}
                 </Button>
               </Link>
             </div>
@@ -122,7 +126,7 @@ export default function Home() {
                 ))}
               </div>
               <div className="text-xs sm:text-sm font-semibold text-[var(--color-text-secondary)] text-left">
-                Bergabung bersama <span className="text-[var(--color-primary)] font-bold">1,200+ UMKM Eksportir</span> & 850+ International Buyers
+                {t('hero.social_proof')}
               </div>
             </div>
 
@@ -137,8 +141,8 @@ export default function Home() {
             <div className="absolute -top-6 -left-6 z-20 hidden sm:flex items-center gap-3 bg-white/85 backdrop-blur-md border border-white/90 p-3 px-4 rounded-2xl shadow-xl animate-float-slow hover:scale-105 transition-transform">
               <div className="w-9 h-9 rounded-xl bg-amber-50 text-amber-800 flex items-center justify-center text-lg font-bold shadow-xs">☕</div>
               <div>
-                <div className="text-xs font-bold text-[var(--color-text-primary)]">Kopi Specialty Gayo</div>
-                <div className="text-[10px] text-[var(--color-primary)] font-extrabold uppercase tracking-wider">Komoditas Aceh</div>
+                <div className="text-xs font-bold text-[var(--color-text-primary)]">{t('hero_mockup.badge_1_title') || 'Kopi Specialty Gayo'}</div>
+                <div className="text-[10px] text-[var(--color-primary)] font-extrabold uppercase tracking-wider">{t('hero_mockup.badge_1_subtitle') || 'Komoditas Aceh'}</div>
               </div>
             </div>
 
@@ -146,8 +150,8 @@ export default function Home() {
             <div className="absolute -top-8 -right-6 z-20 hidden sm:flex items-center gap-3 bg-white/85 backdrop-blur-md border border-white/90 p-3 px-4 rounded-2xl shadow-xl animate-float-delayed hover:scale-105 transition-transform">
               <div className="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-800 flex items-center justify-center text-lg font-bold shadow-xs">🛋️</div>
               <div>
-                <div className="text-xs font-bold text-[var(--color-text-primary)]">Rotan Alami Bali</div>
-                <div className="text-[10px] text-amber-600 font-extrabold uppercase tracking-wider">Furniture & Craft</div>
+                <div className="text-xs font-bold text-[var(--color-text-primary)]">{t('hero_mockup.badge_2_title') || 'Rotan Alami Bali'}</div>
+                <div className="text-[10px] text-amber-600 font-extrabold uppercase tracking-wider">{t('hero_mockup.badge_2_subtitle') || 'Furniture & Craft'}</div>
               </div>
             </div>
 
@@ -155,8 +159,8 @@ export default function Home() {
             <div className="absolute top-1/2 -right-8 -translate-y-1/2 z-20 hidden md:flex items-center gap-3 bg-white/85 backdrop-blur-md border border-white/90 p-3 px-4 rounded-2xl shadow-xl animate-float-slow hover:scale-105 transition-transform">
               <div className="w-9 h-9 rounded-xl bg-purple-50 text-purple-800 flex items-center justify-center text-lg font-bold shadow-xs">🥋</div>
               <div>
-                <div className="text-xs font-bold text-[var(--color-text-primary)]">Batik Sutra Solo</div>
-                <div className="text-[10px] text-purple-600 font-extrabold uppercase tracking-wider">Fashion & Textile</div>
+                <div className="text-xs font-bold text-[var(--color-text-primary)]">{t('hero_mockup.badge_3_title') || 'Batik Sutra Solo'}</div>
+                <div className="text-[10px] text-purple-600 font-extrabold uppercase tracking-wider">{t('hero_mockup.badge_3_subtitle') || 'Fashion & Textile'}</div>
               </div>
             </div>
 
@@ -164,8 +168,8 @@ export default function Home() {
             <div className="absolute -bottom-6 -left-6 z-20 hidden sm:flex items-center gap-3 bg-white/85 backdrop-blur-md border border-white/90 p-3 px-4 rounded-2xl shadow-xl animate-float-delayed hover:scale-105 transition-transform">
               <div className="w-9 h-9 rounded-xl bg-orange-50 text-orange-800 flex items-center justify-center text-lg font-bold shadow-xs">🌶️</div>
               <div>
-                <div className="text-xs font-bold text-[var(--color-text-primary)]">Pala & Rempah Banda</div>
-                <div className="text-[10px] text-orange-600 font-extrabold uppercase tracking-wider">Agrikultur Maluku</div>
+                <div className="text-xs font-bold text-[var(--color-text-primary)]">{t('hero_mockup.badge_4_title') || 'Pala & Rempah Banda'}</div>
+                <div className="text-[10px] text-orange-600 font-extrabold uppercase tracking-wider">{t('hero_mockup.badge_4_subtitle') || 'Agrikultur Maluku'}</div>
               </div>
             </div>
 
@@ -173,8 +177,8 @@ export default function Home() {
             <div className="absolute -bottom-8 -right-4 z-20 hidden sm:flex items-center gap-3 bg-white/85 backdrop-blur-md border border-white/90 p-3 px-4 rounded-2xl shadow-xl animate-float-slow hover:scale-105 transition-transform">
               <div className="w-9 h-9 rounded-xl bg-teal-50 text-teal-800 flex items-center justify-center text-lg font-bold shadow-xs">🌿</div>
               <div>
-                <div className="text-xs font-bold text-[var(--color-text-primary)]">Minyak Atsiri Nilam</div>
-                <div className="text-[10px] text-teal-600 font-extrabold uppercase tracking-wider">Essential Sumatera</div>
+                <div className="text-xs font-bold text-[var(--color-text-primary)]">{t('hero_mockup.badge_5_title') || 'Minyak Atsiri Nilam'}</div>
+                <div className="text-[10px] text-teal-600 font-extrabold uppercase tracking-wider">{t('hero_mockup.badge_5_subtitle') || 'Essential Sumatera'}</div>
               </div>
             </div>
 
@@ -189,7 +193,7 @@ export default function Home() {
                   <span className="text-xs font-mono text-[var(--color-text-muted)] font-bold ml-2">nusatrade-connect.id</span>
                 </div>
                 <div className="bg-[var(--color-primary-subtle)] text-[var(--color-primary)] text-[10px] font-extrabold px-3 py-1 rounded-full uppercase tracking-wider">
-                  LIVE DASHBOARD
+                  {t('hero_mockup.live_dashboard') || 'LIVE DASHBOARD'}
                 </div>
               </div>
 
@@ -198,21 +202,21 @@ export default function Home() {
 
                 <div className="bg-[var(--color-bg-subtle)] p-4 rounded-2xl border border-[var(--color-border)] space-y-2">
                   <div className="flex items-center gap-2 text-xs font-extrabold text-[var(--color-primary)]">
-                    <ShieldCheck className="w-4 h-4" /> Legalitas NIB
+                    <ShieldCheck className="w-4 h-4" /> {t('hero_mockup.nib_legality') || 'Legalitas NIB'}
                   </div>
                   <div className="text-sm font-bold font-mono text-[var(--color-text-primary)]">9120****7364</div>
                   <div className="text-[10px] font-semibold text-emerald-600 bg-emerald-100 px-2 py-0.5 rounded-md w-fit">
-                    Terverifikasi OSS
+                    {t('hero_mockup.oss_verified') || 'Terverifikasi OSS'}
                   </div>
                 </div>
 
                 <div className="bg-[var(--color-bg-subtle)] p-4 rounded-2xl border border-[var(--color-border)] space-y-2">
                   <div className="flex items-center gap-2 text-xs font-extrabold text-amber-600">
-                    <QrCode className="w-4 h-4" /> QRIS Antarnegara
+                    <QrCode className="w-4 h-4" /> {t('hero_mockup.qris') || 'QRIS Antarnegara'}
                   </div>
                   <div className="text-sm font-bold font-mono text-[var(--color-text-primary)]">DuitNow / PayNow</div>
                   <div className="text-[10px] font-semibold text-amber-600 bg-amber-100 px-2 py-0.5 rounded-md w-fit">
-                    Settlement Real-Time
+                    {t('hero_mockup.realtime') || 'Settlement Real-Time'}
                   </div>
                 </div>
 
@@ -222,9 +226,9 @@ export default function Home() {
               <div className="bg-gradient-to-r from-slate-900 to-slate-800 text-white p-5 rounded-2xl space-y-3 shadow-md">
                 <div className="flex items-center justify-between text-xs border-b border-slate-700 pb-2">
                   <span className="font-bold flex items-center gap-1.5 text-emerald-400">
-                    <Sparkles className="w-4 h-4" /> AI Negotiation Assistant
+                    <Sparkles className="w-4 h-4" /> {t('hero_mockup.ai_assistant') || 'AI Negotiation Assistant'}
                   </span>
-                  <span className="text-[10px] font-mono text-slate-400">Buyer from USA</span>
+                  <span className="text-[10px] font-mono text-slate-400">{t('hero_mockup.buyer_usa') || 'Buyer from USA'}</span>
                 </div>
 
                 <div className="text-xs space-y-2 font-medium">
@@ -243,8 +247,8 @@ export default function Home() {
                   <CheckCircle2 className="w-6 h-6" />
                 </div>
                 <div>
-                  <div className="text-xs sm:text-sm font-bold text-[var(--color-text-primary)]">Transaksi Ekspor Berhasil</div>
-                  <div className="text-xs text-[var(--color-text-secondary)] font-medium">Pembeli dari Singapura • $15,000 USD</div>
+                  <div className="text-xs sm:text-sm font-bold text-[var(--color-text-primary)]">{t('hero_mockup.success_title') || 'Transaksi Ekspor Berhasil'}</div>
+                  <div className="text-xs text-[var(--color-text-secondary)] font-medium">{t('hero_mockup.success_desc') || 'Pembeli dari Singapura • $15,000 USD'}</div>
                 </div>
               </div>
 
@@ -258,7 +262,7 @@ export default function Home() {
       <section className="border-y border-[var(--color-border)] bg-white py-10 relative z-10 overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-6">
           <p className="text-xs font-extrabold text-[var(--color-text-muted)] uppercase tracking-widest">
-            Didukung Oleh Ekosistem Perdagangan & Instansi Resmi Indonesia
+            {t('landing.supported_by') || 'Didukung Oleh Ekosistem Perdagangan & Instansi Resmi Indonesia'}
           </p>
 
           {/* Marquee Outer Container with Gradient Mask */}
@@ -309,13 +313,13 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
           <div className="text-center max-w-2xl mx-auto space-y-3">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[var(--color-primary-subtle)] text-[var(--color-primary)] text-xs font-bold uppercase tracking-wider">
-              <Sparkles className="w-4 h-4" /> Solusi Kendala Bahasa
+              <Sparkles className="w-4 h-4" /> {t('landing.ai_solution_title') || 'Solusi Kendala Bahasa'}
             </div>
             <h2 className="text-3xl sm:text-4xl font-display font-extrabold text-[var(--color-text-primary)] tracking-tight">
-              Tanpa Hambatan Bahasa Dalam Bernegosiasi
+              {t('landing.ai_solution_subtitle') || 'Tanpa Hambatan Bahasa Dalam Bernegosiasi'}
             </h2>
             <p className="text-sm sm:text-base text-[var(--color-text-secondary)] font-medium">
-              Uji coba langsung bagaimana AI NusaTrade mengubah kalimat informal UMKM lokal menjadi bahasa Inggris profesional.
+              {t('landing.ai_solution_desc') || 'Uji coba langsung bagaimana AI NusaTrade mengubah kalimat informal UMKM lokal menjadi bahasa Inggris profesional.'}
             </p>
           </div>
 
@@ -330,10 +334,10 @@ export default function Home() {
           <div className="flex flex-col md:flex-row items-start md:items-end justify-between gap-4">
             <div>
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[var(--color-primary-subtle)] text-[var(--color-primary)] text-xs font-bold uppercase tracking-wider mb-2">
-                <Award className="w-4 h-4" /> Produk Ekspor Unggulan
+                <Award className="w-4 h-4" /> {t('landing.products_title') || 'Produk Ekspor Unggulan'}
               </div>
               <h2 className="text-3xl sm:text-4xl font-display font-extrabold text-[var(--color-text-primary)] tracking-tight">
-                Karya Kreatif Nusantara Pilihan
+                {t('landing.products_subtitle') || 'Karya Kreatif Nusantara Pilihan'}
               </h2>
             </div>
 
@@ -359,7 +363,7 @@ export default function Home() {
 
               <Link href="/katalog">
                 <Button variant="outline" className="font-bold text-xs h-10 px-5 rounded-xl hover:border-[var(--color-primary)] hover:text-[var(--color-primary)]">
-                  Lihat Seluruh Katalog <ArrowRight className="w-4 h-4 ml-1 inline" />
+                  {t('landing.view_all_catalog') || 'Lihat Seluruh Katalog'} <ArrowRight className="w-4 h-4 ml-1 inline" />
                 </Button>
               </Link>
             </div>
@@ -394,7 +398,7 @@ export default function Home() {
                     />
                     <div className="absolute top-3 left-3">
                       <span className="text-[10px] font-extrabold uppercase tracking-wider bg-white/90 backdrop-blur-md text-[var(--color-primary)] px-2.5 py-1 rounded-full shadow-sm">
-                        {product.category}
+                        <DynamicText text={product.category} />
                       </span>
                     </div>
                   </div>
@@ -402,16 +406,16 @@ export default function Home() {
                   <div className="p-5 flex-1 flex flex-col justify-between space-y-4">
                     <div>
                       <h3 className="font-bold text-base text-[var(--color-text-primary)] group-hover:text-[var(--color-primary)] transition-colors line-clamp-1 mb-1">
-                        {product.name}
+                        <DynamicText text={product.name} />
                       </h3>
 
                       <div className="text-xs text-[var(--color-text-secondary)] font-medium flex items-center gap-1.5 mb-3">
                         <Building2 className="w-3.5 h-3.5 text-[var(--color-primary)] shrink-0" />
-                        <span className="truncate">{product.sellerName}</span>
+                        <span className="truncate"><DynamicText text={product.sellerName} /></span>
                       </div>
 
                       <div className="text-[10px] text-[var(--color-text-muted)] uppercase font-extrabold tracking-wider">
-                        Estimasi Harga B2B
+                        {t('landing.est_price') || 'Estimasi Harga B2B'}
                       </div>
                       <div className="font-mono font-bold text-[var(--color-primary)] text-sm">
                         {formatRupiah(product.minPrice)} - {formatRupiah(product.maxPrice)}
@@ -424,7 +428,7 @@ export default function Home() {
                         className="w-full justify-between font-bold text-xs h-10 rounded-xl group-hover:border-[var(--color-primary)] group-hover:text-[var(--color-primary)]"
                         rightIcon={<ArrowUpRight className="w-4 h-4" />}
                       >
-                        Detail Produk
+                        {t('landing.product_details') || 'Detail Produk'}
                       </Button>
                     </Link>
                   </div>
@@ -458,10 +462,10 @@ export default function Home() {
 
           <div className="text-center max-w-2xl mx-auto space-y-3">
             <h2 className="text-3xl sm:text-5xl font-display font-extrabold text-[var(--color-text-primary)] tracking-tight">
-              Kenapa Memilih <span className="text-[var(--color-primary)]">NusaTrade</span>?
+              {t('features.title')}
             </h2>
             <p className="text-base text-[var(--color-text-secondary)] font-medium">
-              Solusi end-to-end memecahkan kendala utama ekspor: Legalitas, Komunikasi, dan Logistik Kepabeanan.
+              {t('features.subtitle')}
             </p>
           </div>
 
@@ -485,19 +489,19 @@ export default function Home() {
               </div>
 
               <h3 className="text-xl font-bold font-display text-[var(--color-text-primary)]">
-                Verifikasi Legalitas NIB OSS
+                {t('features.f1_title')}
               </h3>
 
               <p className="text-xs sm:text-sm text-[var(--color-text-secondary)] font-medium leading-relaxed">
-                Seluruh profil UMKM terhubung langsung dengan validasi NIB Kemenkop/OSS RI untuk menjamin legalitas bisnis di mata buyer internasional.
+                {t('features.f1_desc')}
               </p>
 
               <ul className="space-y-2 pt-2 text-xs font-semibold text-[var(--color-text-secondary)] w-full">
                 <li className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-[var(--color-primary)]" /> Lencana Verified NIB Resmi
+                  <CheckCircle2 className="w-4 h-4 text-[var(--color-primary)]" /> {t('features.f1_b1')}
                 </li>
                 <li className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-[var(--color-primary)]" /> Pengurusan Sertifikat Organik & ISO
+                  <CheckCircle2 className="w-4 h-4 text-[var(--color-primary)]" /> {t('features.f1_b2')}
                 </li>
               </ul>
             </div>
@@ -520,19 +524,19 @@ export default function Home() {
               </div>
 
               <h3 className="text-xl font-bold font-display text-[var(--color-text-primary)]">
-                AI Business Chat & Translation
+                {t('features.f2_title')}
               </h3>
 
               <p className="text-xs sm:text-sm text-[var(--color-text-secondary)] font-medium leading-relaxed">
-                Negosiasi harga dan spesifikasi tanpa kendala bahasa. AI secara otomatis mengonversi kalimat kasual menjadi terjemahan bisnis profesional.
+                {t('features.f2_desc')}
               </p>
 
               <ul className="space-y-2 pt-2 text-xs font-semibold text-[var(--color-text-secondary)] w-full">
                 <li className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-[var(--color-accent)]" /> Terjemahan Real-Time 50+ Bahasa
+                  <CheckCircle2 className="w-4 h-4 text-[var(--color-accent)]" /> {t('features.f2_b1')}
                 </li>
                 <li className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-[var(--color-accent)]" /> Penyesuaian Tone Bisnis B2B
+                  <CheckCircle2 className="w-4 h-4 text-[var(--color-accent)]" /> {t('features.f2_b2')}
                 </li>
               </ul>
             </div>
@@ -555,19 +559,19 @@ export default function Home() {
               </div>
 
               <h3 className="text-xl font-bold font-display text-[var(--color-text-primary)]">
-                QRIS Antarnegara & PPJK Hub
+                {t('features.f3_title')}
               </h3>
 
               <p className="text-xs sm:text-sm text-[var(--color-text-secondary)] font-medium leading-relaxed">
-                Kemudahan pembayaran lintas negara menggunakan QRIS BI serta integrasi langsung dengan mitra Perusahaan Pengurusan Jasa Kepabeanan (PPJK).
+                {t('features.f3_desc')}
               </p>
 
               <ul className="space-y-2 pt-2 text-xs font-semibold text-[var(--color-text-secondary)] w-full">
                 <li className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-blue-600" /> QRIS Cross-Border (MY, SG, CN)
+                  <CheckCircle2 className="w-4 h-4 text-blue-600" /> {t('features.f3_b1')}
                 </li>
                 <li className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-blue-600" /> Pengurusan Dokumen PEB / PIB
+                  <CheckCircle2 className="w-4 h-4 text-blue-600" /> {t('features.f3_b2')}
                 </li>
               </ul>
             </div>
@@ -593,7 +597,7 @@ export default function Home() {
                 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-mono font-black mb-1 whitespace-nowrap tracking-tight"
               />
               <div className="text-[10px] sm:text-xs font-extrabold uppercase tracking-widest text-emerald-200">
-                Nilai Transaksi Ekspor
+                {t('stats.title1')}
               </div>
             </div>
 
@@ -606,7 +610,7 @@ export default function Home() {
                 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-mono font-black mb-1 whitespace-nowrap tracking-tight"
               />
               <div className="text-[10px] sm:text-xs font-extrabold uppercase tracking-widest text-emerald-200">
-                Eksportir UMKM Terdaftar
+                {t('stats.title2')}
               </div>
             </div>
 
@@ -618,7 +622,7 @@ export default function Home() {
                 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-mono font-black mb-1 whitespace-nowrap tracking-tight"
               />
               <div className="text-[10px] sm:text-xs font-extrabold uppercase tracking-widest text-emerald-200">
-                Mitra PPJK Terverifikasi
+                {t('stats.title3')}
               </div>
             </div>
 
@@ -630,7 +634,7 @@ export default function Home() {
                 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-mono font-black mb-1 whitespace-nowrap tracking-tight"
               />
               <div className="text-[10px] sm:text-xs font-extrabold uppercase tracking-widest text-emerald-200">
-                Negara Tujuan Ekspor
+                {t('stats.title4')}
               </div>
             </div>
 
@@ -645,11 +649,11 @@ export default function Home() {
             <div className="absolute inset-0 batik-pattern opacity-10 pointer-events-none"></div>
 
             <h2 className="text-3xl sm:text-5xl font-display font-extrabold tracking-tight max-w-3xl mx-auto">
-              Siap Membawa Produk Anda Menguasai Pasar Dunia?
+              {t('cta_bottom.title')}
             </h2>
 
             <p className="text-slate-300 text-sm sm:text-base font-medium max-w-xl mx-auto leading-relaxed">
-              Bergabunglah bersama ribuan UMKM Ekonomi Kreatif Indonesia dan rasakan kemudahan ekspor B2B berbasis AI.
+              {t('cta_bottom.subtitle')}
             </p>
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
@@ -660,7 +664,7 @@ export default function Home() {
                   className="w-full sm:w-auto font-bold text-sm h-14 px-8 rounded-2xl emerald-gradient shadow-xl shadow-[var(--color-primary)]/30"
                   rightIcon={<ArrowRight className="w-5 h-5" />}
                 >
-                  Daftar Akun Gratis Sekarang
+                  {t('cta_bottom.btn_register')}
                 </Button>
               </Link>
 
@@ -670,7 +674,7 @@ export default function Home() {
                   size="lg"
                   className="w-full sm:w-auto font-bold text-sm h-14 px-8 rounded-2xl bg-white/10 text-white border-white/20 hover:bg-white/20"
                 >
-                  Jelajahi Mitra UMKM
+                  {t('cta_bottom.btn_umkm')}
                 </Button>
               </Link>
             </div>

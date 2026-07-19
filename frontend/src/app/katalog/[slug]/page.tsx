@@ -10,8 +10,11 @@ import { Package, ShieldCheck, MessageCircle, MapPin, ArrowLeft, CheckCircle2, C
 import Link from 'next/link';
 
 import { AuthModal } from '@/components/ui/AuthModal';
+import { DynamicText } from '@/components/ui/DynamicText';
+import { useT } from '@/i18n/useT';
 
 export default function ProductDetailPage() {
+  const t = useT();
   const params = useParams();
   const router = useRouter();
   const slug = typeof params.slug === 'string' ? params.slug : '';
@@ -127,12 +130,12 @@ export default function ProductDetailPage() {
             <div className="w-full lg:w-[55%] p-6 sm:p-10 flex flex-col">
               <div className="mb-4">
                 <span className="text-[11px] font-extrabold text-[var(--color-primary)] uppercase tracking-wider bg-[var(--color-primary-subtle)] px-3 py-1.5 rounded-full shadow-sm">
-                  {product.category}
+                  <DynamicText text={product.category} />
                 </span>
               </div>
               
               <h1 className="text-3xl sm:text-4xl font-display font-extrabold text-[var(--color-text-primary)] leading-tight tracking-tight mb-6">
-                {product.name}
+                <DynamicText text={product.name} />
               </h1>
               
               <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6 py-8 border-y border-[var(--color-border)] mb-8">
@@ -147,16 +150,16 @@ export default function ProductDetailPage() {
                   </div>
                 </div>
                 <div className="bg-[var(--color-bg-base)] px-5 py-4 rounded-2xl border border-[var(--color-border-strong)] shadow-sm">
-                  <div className="text-[10px] text-[var(--color-text-secondary)] mb-1.5 font-extrabold uppercase tracking-widest">Minimum Order (MOQ)</div>
-                  <div className="font-mono font-bold text-[var(--color-text-primary)] text-xl">{product.moq} Unit</div>
+                  <div className="text-[10px] text-[var(--color-text-secondary)] mb-1.5 font-extrabold uppercase tracking-widest">{t('katalog.moq') || 'Minimum Order (MOQ)'}</div>
+                  <div className="font-mono font-bold text-[var(--color-text-primary)] text-xl">{product.moq} {t('katalog.unit') || 'Unit'}</div>
                 </div>
               </div>
 
               <div className="space-y-8 mb-8 flex-1">
                 <div>
-                  <h3 className="font-bold text-[var(--color-text-primary)] text-lg mb-3">Deskripsi Produk</h3>
+                  <h3 className="font-bold text-[var(--color-text-primary)] text-lg mb-3">{t('landing.product_details') || 'Deskripsi Produk'}</h3>
                   <p className="text-[var(--color-text-secondary)] font-medium leading-relaxed text-[15px]">
-                    Produk kualitas ekspor terbaik dari Indonesia. Dibuat dengan standar internasional dan telah melewati proses quality control yang ketat. Cocok untuk pasar global dengan spesifikasi yang dapat disesuaikan dengan kebutuhan importir.
+                    <DynamicText text="Produk kualitas ekspor terbaik dari Indonesia. Dibuat dengan standar internasional dan telah melewati proses quality control yang ketat. Cocok untuk pasar global dengan spesifikasi yang dapat disesuaikan dengan kebutuhan importir." />
                   </p>
                 </div>
                 
@@ -164,15 +167,15 @@ export default function ProductDetailPage() {
                   <div className="flex items-start gap-4 p-4 rounded-2xl bg-[var(--color-bg-subtle)] border border-[var(--color-border)]">
                     <CheckCircle2 className="w-6 h-6 text-[var(--color-primary)] shrink-0" />
                     <div>
-                      <h4 className="text-[15px] font-bold text-[var(--color-text-primary)] mb-0.5">Sertifikasi</h4>
-                      <p className="text-[13px] font-medium text-[var(--color-text-secondary)]">ISO 9001, BPOM, Halal MUI</p>
+                      <h4 className="text-[15px] font-bold text-[var(--color-text-primary)] mb-0.5">{t('katalog.certifications') || 'Sertifikasi'}</h4>
+                      <p className="text-[13px] font-medium text-[var(--color-text-secondary)]"><DynamicText text="ISO 9001, BPOM, Halal MUI" /></p>
                     </div>
                   </div>
                   <div className="flex items-start gap-4 p-4 rounded-2xl bg-[var(--color-bg-subtle)] border border-[var(--color-border)]">
                     <CheckCircle2 className="w-6 h-6 text-[var(--color-primary)] shrink-0" />
                     <div>
-                      <h4 className="text-[15px] font-bold text-[var(--color-text-primary)] mb-0.5">Kapasitas Produksi</h4>
-                      <p className="text-[13px] font-medium text-[var(--color-text-secondary)]">10,000 unit / bulan</p>
+                      <h4 className="text-[15px] font-bold text-[var(--color-text-primary)] mb-0.5">{t('katalog.production_capacity') || 'Kapasitas Produksi'}</h4>
+                      <p className="text-[13px] font-medium text-[var(--color-text-secondary)]"><DynamicText text="10,000 unit / bulan" /></p>
                     </div>
                   </div>
                 </div>
@@ -195,18 +198,18 @@ export default function ProductDetailPage() {
                       </div>
                       <div>
                         <h4 className="font-bold text-[17px] text-[var(--color-text-primary)] group-hover:text-[var(--color-primary)] flex items-center gap-2 transition-colors">
-                          {product.sellerName}
+                          <DynamicText text={product.sellerName} />
                           {product.isVerified && <ShieldCheck className="w-5 h-5 text-[var(--color-primary)]" />}
                         </h4>
-                        <div className="flex items-center gap-1.5 text-[13px] font-medium text-[var(--color-text-secondary)] mt-1.5">
-                          <MapPin className="w-4 h-4 text-[var(--color-text-muted)]" />
-                          {locationText}
-                        </div>
+                        <p className="text-sm text-[var(--color-text-secondary)] font-medium mt-1 flex items-center gap-1.5">
+                          <MapPin className="w-3.5 h-3.5" />
+                          <DynamicText text={locationText} />
+                        </p>
                       </div>
                     </div>
 
                     <div className="flex items-center gap-1 text-xs font-bold text-[var(--color-primary)] group-hover:translate-x-1 transition-transform">
-                      <span>Lihat Profil UMKM</span>
+                      <span>{t('katalog.view_profile') || 'Lihat Profil UMKM'}</span>
                       <ChevronRight className="w-4 h-4" />
                     </div>
                   </Link>
@@ -221,10 +224,10 @@ export default function ProductDetailPage() {
                   leftIcon={<MessageCircle className="w-5 h-5" />}
                   onClick={handleContactSeller}
                 >
-                  Hubungi Penjual
+                  {t('katalog.contact_seller') || 'Hubungi Penjual'}
                 </Button>
                 <p className="text-center text-xs font-medium text-[var(--color-text-muted)] mt-4">
-                  Anda harus masuk/mendaftar untuk dapat mengirim pesan ke penjual.
+                  {t('katalog.contact_notice') || 'Anda harus masuk/mendaftar untuk dapat mengirim pesan ke penjual.'}
                 </p>
               </div>
 

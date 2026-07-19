@@ -2,6 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import { Globe2 } from 'lucide-react';
 import { cn } from '@/lib/utils/cn';
+import { useT } from '@/i18n/useT';
 
 interface PublicFooterProps {
   className?: string;
@@ -9,6 +10,7 @@ interface PublicFooterProps {
 }
 
 export const PublicFooter = ({ className, variant = 'light' }: PublicFooterProps) => {
+  const t = useT();
   const isDark = variant === 'dark';
   
   const bgClasses = {
@@ -27,7 +29,7 @@ export const PublicFooter = ({ className, variant = 'light' }: PublicFooterProps
               <span className="tracking-tight">Nusa<span className={isDark ? "text-emerald-400" : "text-[var(--color-primary)]"}>Trade</span></span>
             </Link>
             <p className={cn("text-sm leading-relaxed max-w-sm mb-6", isDark ? "text-slate-400" : "text-[var(--color-text-secondary)]")}>
-              Memberdayakan UMKM Indonesia melalui platform ekspor B2B yang aman, transparan, dan terintegrasi dengan ekosistem logistik.
+              {t('footer.tagline') || 'Memberdayakan UMKM Indonesia melalui platform ekspor B2B yang aman, transparan, dan terintegrasi dengan ekosistem logistik.'}
             </p>
             <div className="flex gap-4">
               <div className={cn("w-8 h-8 rounded-full flex items-center justify-center transition-colors cursor-pointer", isDark ? "bg-slate-800 text-slate-400 hover:bg-emerald-500 hover:text-white" : "bg-[var(--color-bg-subtle)] text-[var(--color-text-muted)] hover:bg-[var(--color-primary)] hover:text-white")}>
@@ -42,42 +44,38 @@ export const PublicFooter = ({ className, variant = 'light' }: PublicFooterProps
           </div>
           
           <div>
-            <h4 className={cn("font-bold text-sm uppercase tracking-wider mb-4", isDark ? "text-white" : "text-[var(--color-text-primary)]")}>Platform</h4>
+            <h4 className={cn("font-bold text-sm uppercase tracking-wider mb-4", isDark ? "text-white" : "text-[var(--color-text-primary)]")}>{t('footer.platform') || 'Platform'}</h4>
             <ul className={cn("space-y-3 text-sm font-medium", isDark ? "text-slate-400" : "text-[var(--color-text-secondary)]")}>
-              <li><Link href="/katalog" className={cn("transition-colors", isDark ? "hover:text-emerald-400" : "hover:text-[var(--color-primary)]")}>Katalog Produk</Link></li>
-              <li><Link href="/umkm" className={cn("transition-colors", isDark ? "hover:text-emerald-400" : "hover:text-[var(--color-primary)]")}>Mitra UMKM</Link></li>
-              <li><Link href="/ppjk" className={cn("transition-colors", isDark ? "hover:text-emerald-400" : "hover:text-[var(--color-primary)]")}>PPJK</Link></li>
-              <li><Link href="/cara-kerja" className={cn("transition-colors", isDark ? "hover:text-emerald-400" : "hover:text-[var(--color-primary)]")}>Cara Kerja</Link></li>
-              <li><Link href="/pricing" className={cn("transition-colors", isDark ? "hover:text-emerald-400" : "hover:text-[var(--color-primary)]")}>Biaya & Pricing</Link></li>
+              <li><Link href="/katalog" className={cn("transition-colors", isDark ? "hover:text-emerald-400" : "hover:text-[var(--color-primary)]")}>{t('footer.product_catalog') || 'Katalog Produk'}</Link></li>
+              <li><Link href="/umkm" className={cn("transition-colors", isDark ? "hover:text-emerald-400" : "hover:text-[var(--color-primary)]")}>{t('footer.msme_partners') || 'Mitra UMKM'}</Link></li>
+              <li><Link href="/ppjk" className={cn("transition-colors", isDark ? "hover:text-emerald-400" : "hover:text-[var(--color-primary)]")}>{t('footer.ppjk') || 'PPJK'}</Link></li>
+              <li><Link href="/cara-kerja" className={cn("transition-colors", isDark ? "hover:text-emerald-400" : "hover:text-[var(--color-primary)]")}>{t('footer.how_it_works') || 'Cara Kerja'}</Link></li>
+              <li><Link href="/pricing" className={cn("transition-colors", isDark ? "hover:text-emerald-400" : "hover:text-[var(--color-primary)]")}>{t('footer.pricing') || 'Biaya & Pricing'}</Link></li>
             </ul>
           </div>
           
           <div>
-            <h4 className={cn("font-bold text-sm uppercase tracking-wider mb-4", isDark ? "text-white" : "text-[var(--color-text-primary)]")}>Perusahaan</h4>
+            <h4 className={cn("font-bold text-sm uppercase tracking-wider mb-4", isDark ? "text-white" : "text-[var(--color-text-primary)]")}>{t('footer.company') || 'Perusahaan'}</h4>
             <ul className={cn("space-y-3 text-sm font-medium", isDark ? "text-slate-400" : "text-[var(--color-text-secondary)]")}>
-              <li><Link href="/tentang" className={cn("transition-colors", isDark ? "hover:text-emerald-400" : "hover:text-[var(--color-primary)]")}>Tentang Kami</Link></li>
-              <li><Link href="/karir" className={cn("transition-colors", isDark ? "hover:text-emerald-400" : "hover:text-[var(--color-primary)]")}>Karir</Link></li>
-              <li><Link href="/blog" className={cn("transition-colors", isDark ? "hover:text-emerald-400" : "hover:text-[var(--color-primary)]")}>Blog Edukasi Ekspor</Link></li>
-              <li><Link href="/contact" className={cn("transition-colors", isDark ? "hover:text-emerald-400" : "hover:text-[var(--color-primary)]")}>Hubungi Sales</Link></li>
+              <li><Link href="/tentang" className={cn("transition-colors", isDark ? "hover:text-emerald-400" : "hover:text-[var(--color-primary)]")}>{t('footer.about_us') || 'Tentang Kami'}</Link></li>
+              <li><Link href="/karir" className={cn("transition-colors", isDark ? "hover:text-emerald-400" : "hover:text-[var(--color-primary)]")}>{t('footer.career') || 'Karir'}</Link></li>
+              <li><Link href="/blog" className={cn("transition-colors", isDark ? "hover:text-emerald-400" : "hover:text-[var(--color-primary)]")}>{t('footer.blog') || 'Blog Edukasi Ekspor'}</Link></li>
+              <li><Link href="/contact" className={cn("transition-colors", isDark ? "hover:text-emerald-400" : "hover:text-[var(--color-primary)]")}>{t('footer.contact_sales') || 'Hubungi Sales'}</Link></li>
             </ul>
           </div>
 
           <div>
-            <h4 className={cn("font-bold text-sm uppercase tracking-wider mb-4", isDark ? "text-white" : "text-[var(--color-text-primary)]")}>Legal</h4>
+            <h4 className={cn("font-bold text-sm uppercase tracking-wider mb-4", isDark ? "text-white" : "text-[var(--color-text-primary)]")}>{t('footer.legal') || 'Legal'}</h4>
             <ul className={cn("space-y-3 text-sm font-medium", isDark ? "text-slate-400" : "text-[var(--color-text-secondary)]")}>
-              <li><Link href="/terms" className={cn("transition-colors", isDark ? "hover:text-emerald-400" : "hover:text-[var(--color-primary)]")}>Syarat & Ketentuan</Link></li>
-              <li><Link href="/privacy" className={cn("transition-colors", isDark ? "hover:text-emerald-400" : "hover:text-[var(--color-primary)]")}>Kebijakan Privasi</Link></li>
-              <li><Link href="/security" className={cn("transition-colors", isDark ? "hover:text-emerald-400" : "hover:text-[var(--color-primary)]")}>Keamanan Escrow</Link></li>
+              <li><Link href="/terms" className={cn("transition-colors", isDark ? "hover:text-emerald-400" : "hover:text-[var(--color-primary)]")}>{t('footer.terms') || 'Syarat & Ketentuan'}</Link></li>
+              <li><Link href="/privacy" className={cn("transition-colors", isDark ? "hover:text-emerald-400" : "hover:text-[var(--color-primary)]")}>{t('footer.privacy') || 'Kebijakan Privasi'}</Link></li>
+              <li><Link href="/security" className={cn("transition-colors", isDark ? "hover:text-emerald-400" : "hover:text-[var(--color-primary)]")}>{t('footer.escrow_security') || 'Keamanan Escrow'}</Link></li>
             </ul>
           </div>
         </div>
         
         <div className={cn("border-t pt-8 flex flex-col md:flex-row items-center justify-between text-xs font-medium", isDark ? "border-slate-800 text-slate-500" : "border-[var(--color-border)] text-[var(--color-text-muted)]")}>
-          <p>&copy; {new Date().getFullYear()} NusaTrade Connect. Hak Cipta Dilindungi.</p>
-          <div className="mt-4 md:mt-0 flex gap-6">
-            <span>Status Sistem: <span className={isDark ? "text-emerald-500" : "text-[var(--color-success)]"}>● Operasional</span></span>
-            <span>Terdaftar di Kominfo</span>
-          </div>
+          <p>&copy; {new Date().getFullYear()} {t('footer.copyright') || 'NusaTrade Connect. Hak Cipta Dilindungi.'}</p>
         </div>
       </div>
     </footer>

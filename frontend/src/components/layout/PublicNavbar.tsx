@@ -4,9 +4,11 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { cn } from '@/lib/utils/cn';
-import { Menu, X, Globe2, User, LogOut, LayoutDashboard, MessageSquare, ChevronDown } from 'lucide-react';
+import { Menu, X, Globe2, User, LogOut, LayoutDashboard, MessageSquare, ChevronDown, Languages } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { Dropdown } from '@/components/ui/Dropdown';
+import { useLanguage, Locale } from '@/i18n/LanguageContext';
+import { useT } from '@/i18n/useT';
 
 export const PublicNavbar = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -18,6 +20,18 @@ export const PublicNavbar = () => {
 
   const pathname = usePathname();
   const router = useRouter();
+
+  const { locale, setLocale } = useLanguage();
+  const t = useT();
+
+  const languages: { id: Locale; label: string; icon: string }[] = [
+    { id: 'id', label: 'Indonesia', icon: '🇮🇩' },
+    { id: 'en', label: 'English', icon: '🇬🇧' },
+    { id: 'zh', label: '中文', icon: '🇨🇳' },
+    { id: 'ja', label: '日本語', icon: '🇯🇵' },
+  ];
+
+  const currentLanguage = languages.find((l) => l.id === locale) || languages[0];
 
   useEffect(() => {
     const handleScroll = () => {
@@ -45,7 +59,6 @@ export const PublicNavbar = () => {
       localStorage.removeItem('userName');
       localStorage.removeItem('ppjkId');
       setIsLoggedIn(false);
-      setUserDropdownOpen(false);
       router.push('/');
     }
   };
@@ -63,9 +76,9 @@ export const PublicNavbar = () => {
   };
 
   const navLinks = [
-    { name: 'Katalog', href: '/katalog' },
-    { name: 'Mitra UMKM', href: '/umkm' },
-    { name: 'PPJK', href: '/ppjk' },
+    { name: t('nav.katalog'), href: '/katalog' },
+    { name: t('nav.mitra_umkm'), href: '/umkm' },
+    { name: t('nav.ppjk'), href: '/ppjk' },
   ];
 
   return (
@@ -118,11 +131,29 @@ export const PublicNavbar = () => {
 
             {/* Desktop CTA / User Profile Dropdown */}
             <div className="hidden md:flex items-center space-x-3 relative">
+              {/* Language Switcher */}
+              <Dropdown
+                align="right"
+                trigger={
+                  <div className="flex items-center gap-1.5 p-1.5 px-3 rounded-full bg-[var(--color-bg-subtle)] border border-[var(--color-border)] hover:border-[var(--color-primary-subtle)] transition-all shadow-xs cursor-pointer">
+                    <Languages className="w-4 h-4 text-[var(--color-text-muted)]" />
+                    <span className="text-xs font-bold text-[var(--color-text-primary)] uppercase">
+                      {locale}
+                    </span>
+                  </div>
+                }
+                items={languages.map(lang => ({
+                  id: lang.id,
+                  label: `${lang.icon} ${lang.label}`,
+                  onClick: () => setLocale(lang.id),
+                }))}
+              />
+
               {isLoggedIn ? (
                 <Dropdown
                   align="right"
                   trigger={
-                    <div className="flex items-center gap-2.5 p-1.5 pl-3 rounded-full bg-[var(--color-bg-subtle)] border border-[var(--color-border)] hover:border-[var(--color-primary-subtle)] transition-all shadow-xs">
+                    <div className="flex items-center gap-2.5 p-1.5 pl-3 rounded-full bg-[var(--color-bg-subtle)] border border-[var(--color-border)] hover:border-[var(--color-primary-subtle)] transition-all shadow-xs cursor-pointer">
                       <span className="text-xs font-bold text-[var(--color-text-primary)] max-w-[120px] truncate">
                         {userName}
                       </span>
@@ -136,26 +167,26 @@ export const PublicNavbar = () => {
                     <div className="flex flex-col">
                       <span className="text-xs font-bold text-[var(--color-text-primary)] truncate">{userName}</span>
                       <span className="text-[10px] font-extrabold uppercase tracking-wider text-[var(--color-primary)] mt-0.5">
-                        {userRole === 'buyer' ? 'Buyer / Importir' : userRole === 'ppjk' ? 'Mitra PPJK' : 'Eksportir UMKM'}
+                        {userRole === 'buyer' ? t('nav.buyer') : userRole === 'ppjk' ? t('nav.mitra_ppjk') : t('nav.eksportir_umkm')}
                       </span>
                     </div>
                   }
                   items={[
                     {
                       id: 'dashboard',
-                      label: 'Dashboard Saya',
+                      label: t('nav.dashboard'),
                       icon: <LayoutDashboard className="w-4 h-4 text-[var(--color-primary)]" />,
                       href: getDashboardUrl()
                     },
                     {
                       id: 'chat',
-                      label: 'Pesan Chat',
+                      label: t('nav.pesan_chat'),
                       icon: <MessageSquare className="w-4 h-4 text-[var(--color-primary)]" />,
                       href: getChatUrl()
                     },
                     {
                       id: 'logout',
-                      label: 'Keluar (Logout)',
+                      label: t('nav.logout'),
                       icon: <LogOut className="w-4 h-4" />,
                       onClick: handleLogout,
                       danger: true
@@ -165,11 +196,11 @@ export const PublicNavbar = () => {
               ) : (
                 <>
                   <Link href="/login">
-                    <Button variant="ghost" className="font-semibold px-5">Masuk</Button>
+                    <Button variant="ghost" className="font-semibold px-5">{t('nav.masuk')}</Button>
                   </Link>
                   <Link href="/register">
                     <Button variant="primary" className="emerald-gradient shadow-sm font-semibold px-5">
-                      Daftar Gratis
+                      {t('nav.daftar_gratis')}
                     </Button>
                   </Link>
                 </>
@@ -177,7 +208,22 @@ export const PublicNavbar = () => {
             </div>
 
             {/* Mobile menu button */}
-            <div className="flex items-center md:hidden">
+            <div className="flex items-center md:hidden gap-2">
+              <Dropdown
+                align="right"
+                trigger={
+                  <div className="flex items-center justify-center w-8 h-8 rounded-full bg-[var(--color-bg-subtle)] border border-[var(--color-border)] hover:border-[var(--color-primary-subtle)] transition-all shadow-xs cursor-pointer">
+                    <span className="text-[10px] font-bold text-[var(--color-text-primary)] uppercase">
+                      {locale}
+                    </span>
+                  </div>
+                }
+                items={languages.map(lang => ({
+                  id: lang.id,
+                  label: `${lang.icon} ${lang.label}`,
+                  onClick: () => setLocale(lang.id),
+                }))}
+              />
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                 className="p-2 -mr-2 rounded-lg text-[var(--color-text-secondary)] hover:text-[var(--color-text-primary)] hover:bg-[var(--color-bg-subtle)] transition-colors"
@@ -225,23 +271,23 @@ export const PublicNavbar = () => {
                 <>
                   <Link href={getDashboardUrl()} onClick={() => setMobileMenuOpen(false)} className="w-full">
                     <Button variant="primary" className="w-full justify-center emerald-gradient h-12 text-base font-semibold">
-                      Dashboard Saya
+                      {t('nav.dashboard')}
                     </Button>
                   </Link>
                   <Button variant="outline" onClick={handleLogout} className="w-full justify-center h-12 text-base font-semibold text-red-600 border-red-200">
-                    Keluar (Logout)
+                    {t('nav.logout')}
                   </Button>
                 </>
               ) : (
                 <>
                   <Link href="/login" onClick={() => setMobileMenuOpen(false)} className="w-full">
                     <Button variant="outline" className="w-full justify-center h-12 text-base font-semibold">
-                      Masuk
+                      {t('nav.masuk')}
                     </Button>
                   </Link>
                   <Link href="/register" onClick={() => setMobileMenuOpen(false)} className="w-full">
                     <Button variant="primary" className="w-full justify-center emerald-gradient h-12 text-base font-semibold">
-                      Daftar Gratis
+                      {t('nav.daftar_gratis')}
                     </Button>
                   </Link>
                 </>

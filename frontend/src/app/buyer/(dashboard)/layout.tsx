@@ -18,6 +18,7 @@ import {
   ShoppingBag
 } from 'lucide-react';
 import { cn } from '@/lib/utils/cn';
+import { useT } from '@/i18n/useT';
 
 export default function BuyerDashboardLayout({
   children,
@@ -29,6 +30,7 @@ export default function BuyerDashboardLayout({
   const [buyerName, setBuyerName] = useState('Global Imports LLC');
   const pathname = usePathname();
   const router = useRouter();
+  const t = useT();
 
   useEffect(() => {
     setIsClient(true);
@@ -62,33 +64,33 @@ export default function BuyerDashboardLayout({
 
   const navItems = [
     {
-      name: 'Dashboard Overview',
+      name: t('buyer_dashboard.nav_overview') || 'Dashboard Overview',
       href: '/buyer/dashboard',
       icon: LayoutDashboard,
     },
     {
-      name: 'Pesan & Negosiasi Chat',
+      name: t('buyer_dashboard.nav_chat') || 'Pesan & Negosiasi Chat',
       href: '/buyer/dashboard/chat',
       icon: MessageSquare,
       badge: '3',
     },
     {
-      name: 'Invoice & QRIS Pembayaran',
+      name: t('buyer_dashboard.nav_invoices') || 'Invoice & QRIS Pembayaran',
       href: '/buyer/dashboard/invoices',
       icon: Receipt,
     },
     {
-      name: 'Mitra UMKM Terhubung',
+      name: t('buyer_dashboard.nav_umkm') || 'Mitra UMKM Terhubung',
       href: '/buyer/dashboard/umkm',
       icon: Building2,
     },
   ];
 
   const getPageTitle = () => {
-    if (pathname.includes('/chat')) return 'Pesan & Negosiasi AI';
-    if (pathname.includes('/invoices')) return 'Tagihan & QRIS Pembayaran';
-    if (pathname.includes('/umkm')) return 'Mitra UMKM Terhubung';
-    return 'Dashboard Buyer / Importir';
+    if (pathname.includes('/chat')) return t('buyer_dashboard.title_chat') || 'Pesan & Negosiasi AI';
+    if (pathname.includes('/invoices')) return t('buyer_dashboard.title_invoices') || 'Tagihan & QRIS Pembayaran';
+    if (pathname.includes('/umkm')) return t('buyer_dashboard.title_umkm') || 'Mitra UMKM Terhubung';
+    return t('buyer_dashboard.title_overview') || 'Dashboard Buyer / Importir';
   };
 
   if (!isClient) return null;
@@ -138,7 +140,7 @@ export default function BuyerDashboardLayout({
                 </h4>
                 <div className="inline-flex items-center gap-1 text-[10px] font-extrabold uppercase tracking-wider text-[var(--color-primary)] bg-[var(--color-primary-subtle)] px-2 py-0.5 rounded-full mt-1">
                   <ShieldCheck className="w-3 h-3 text-[var(--color-primary)]" />
-                  Verified Buyer
+                  {t('buyer_dashboard.verified') || 'Verified Buyer'}
                 </div>
               </div>
             </div>
@@ -147,7 +149,7 @@ export default function BuyerDashboardLayout({
           {/* Nav Links */}
           <nav className="flex-1 px-4 space-y-1.5 overflow-y-auto">
             <div className="text-[10px] font-bold text-[var(--color-text-muted)] uppercase tracking-wider px-3 mb-2">
-              Menu Utama
+              {t('buyer_dashboard.main_menu') || 'Menu Utama'}
             </div>
             {navItems.map((item) => {
               const isActive = pathname === item.href || (item.href !== '/buyer/dashboard' && pathname.startsWith(item.href));
@@ -185,7 +187,7 @@ export default function BuyerDashboardLayout({
               className="w-full flex items-center gap-3 px-3.5 py-3 rounded-xl text-xs font-bold text-red-600 hover:bg-red-50 transition-colors"
             >
               <LogOut className="w-4 h-4" />
-              <span>Keluar dari Akun</span>
+              <span>{t('nav.logout') || 'Keluar dari Akun'}</span>
             </button>
           </div>
         </div>
@@ -208,7 +210,7 @@ export default function BuyerDashboardLayout({
                 {getPageTitle()}
               </h1>
               <p className="text-xs text-[var(--color-text-secondary)] font-medium hidden sm:block">
-                NusaTrade Connect — Importir B2B Hub
+                NusaTrade Connect — {t('buyer_dashboard.hub_subtitle') || 'Importir B2B Hub'}
               </p>
             </div>
           </div>
@@ -217,7 +219,7 @@ export default function BuyerDashboardLayout({
             <Link href="/katalog">
               <button className="hidden sm:inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-[var(--color-border)] text-xs font-bold text-[var(--color-text-secondary)] hover:bg-[var(--color-bg-subtle)] transition-colors">
                 <ShoppingBag className="w-4 h-4 text-[var(--color-primary)]" />
-                Browse Katalog
+                {t('buyer_dashboard.browse_catalog') || 'Browse Katalog'}
               </button>
             </Link>
 

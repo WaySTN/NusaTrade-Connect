@@ -26,6 +26,8 @@ export const metadata: Metadata = {
   description: "Indonesia Goes Global - The premium B2B export platform for Indonesian businesses.",
 };
 
+import { LanguageProvider } from "@/i18n/LanguageContext";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -41,8 +43,10 @@ export default function RootLayout({
         className="min-h-screen flex flex-col font-body bg-[var(--color-bg-base)] text-[var(--color-text-primary)] overflow-x-hidden"
         suppressHydrationWarning
       >
-        {children}
-        <ToastProvider />
+        <LanguageProvider>
+          {children}
+          <ToastProvider />
+        </LanguageProvider>
       </body>
     </html>
   );

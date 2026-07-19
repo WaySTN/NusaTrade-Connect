@@ -4,6 +4,8 @@ import React, { useState } from 'react';
 import { cn } from '@/lib/utils/cn';
 import { ChevronDown, ChevronUp, SlidersHorizontal, Check } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
+import { useT } from '@/i18n/useT';
+import { DynamicText } from '@/components/ui/DynamicText';
 
 export interface FilterState {
   categories: string[];
@@ -27,6 +29,7 @@ export const FilterPanel = ({
   onReset,
   className
 }: FilterPanelProps) => {
+  const t = useT();
   const [isExpanded, setIsExpanded] = useState(true);
 
   const toggleCategory = (category: string) => {
@@ -45,7 +48,7 @@ export const FilterPanel = ({
       >
         <div className="flex items-center gap-2 font-display font-bold text-[var(--color-text-primary)]">
           <SlidersHorizontal className="w-5 h-5 text-[var(--color-primary)]" />
-          Filter Katalog
+          {t('katalog.filter') || 'Filter Katalog'}
         </div>
         {isExpanded ? (
           <ChevronUp className="w-5 h-5 text-[var(--color-text-muted)]" />
@@ -79,7 +82,7 @@ export const FilterPanel = ({
                 )}></div>
               </div>
               <span className="text-sm font-bold text-[var(--color-text-primary)] group-hover:text-[var(--color-primary)] transition-colors duration-200">
-                Hanya Seller Terverifikasi
+                {t('katalog.only_verified') || 'Hanya Seller Terverifikasi'}
               </span>
             </label>
           </div>
@@ -87,7 +90,7 @@ export const FilterPanel = ({
           {/* Categories */}
           <div>
             <h4 className="text-xs font-bold text-[var(--color-text-muted)] mb-4 uppercase tracking-wider">
-              Kategori Produk
+              {t('katalog.category') || 'Kategori Produk'}
             </h4>
             <div className="space-y-3">
               {categories.map((category) => {
@@ -103,7 +106,7 @@ export const FilterPanel = ({
                       {isChecked && <Check className="w-3.5 h-3.5" />}
                     </div>
                     <span className="text-sm font-medium text-[var(--color-text-secondary)] group-hover:text-[var(--color-text-primary)] transition-colors duration-200">
-                      {category}
+                      <DynamicText text={category} />
                     </span>
                     <input 
                       type="checkbox"
@@ -120,7 +123,7 @@ export const FilterPanel = ({
           {/* Price Range (Simplified for mockup) */}
           <div>
             <h4 className="text-xs font-bold text-[var(--color-text-muted)] mb-4 uppercase tracking-wider">
-              Rentang Harga
+              {t('katalog.price_range') || 'Rentang Harga'}
             </h4>
             <div className="flex items-center gap-3">
               <input 
@@ -148,7 +151,7 @@ export const FilterPanel = ({
               className="w-full justify-center text-[var(--color-text-primary)] font-bold" 
               onClick={onReset}
             >
-              Reset Filter
+              {t('katalog.reset_filter') || 'Reset Filter'}
             </Button>
           </div>
         </div>
