@@ -9,6 +9,8 @@ import { Button } from '@/components/ui/Button';
 import { Package, ShieldCheck, MessageCircle, MapPin, ArrowLeft, CheckCircle2, ChevronRight } from 'lucide-react';
 import Link from 'next/link';
 
+import { AuthModal } from '@/components/ui/AuthModal';
+
 export default function ProductDetailPage() {
   const params = useParams();
   const router = useRouter();
@@ -16,6 +18,7 @@ export default function ProductDetailPage() {
   
   const [product, setProduct] = useState(getMockProduct(slug));
   const [isLoading, setIsLoading] = useState(true);
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
 
   useEffect(() => {
     // Simulate network delay
@@ -37,9 +40,9 @@ export default function ProductDetailPage() {
   const handleContactSeller = () => {
     const isLoggedIn = typeof window !== 'undefined' && localStorage.getItem('isLoggedIn') === 'true';
     if (isLoggedIn) {
-      router.push('/chat/c1'); // Mock conversation 1
+      router.push('/buyer/dashboard/chat');
     } else {
-      router.push('/login');
+      setIsAuthModalOpen(true);
     }
   };
 
@@ -230,6 +233,14 @@ export default function ProductDetailPage() {
         </div>
 
       </main>
+
+      <AuthModal
+        isOpen={isAuthModalOpen}
+        onClose={() => setIsAuthModalOpen(false)}
+        redirectUrl="/buyer/dashboard/chat"
+        title="Login Diperlukan"
+        description="Untuk mengirim pesan dan bernegosiasi langsung dengan UMKM ini, Anda harus masuk (login) sebagai Buyer / Importir terlebih dahulu."
+      />
     </div>
   );
 }

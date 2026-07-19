@@ -2,15 +2,22 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { cn } from '@/lib/utils/cn';
-import { Menu, X, Globe2 } from 'lucide-react';
+import { Menu, X, Globe2, User, LogOut, LayoutDashboard, MessageSquare, ChevronDown } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 
 export const PublicNavbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [userDropdownOpen, setUserDropdownOpen] = useState(false);
+
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userRole, setUserRole] = useState<string | null>(null);
+  const [userName, setUserName] = useState<string>('');
+
   const pathname = usePathname();
+  const router = useRouter();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -18,8 +25,42 @@ export const PublicNavbar = () => {
     };
     
     window.addEventListener('scroll', handleScroll);
+
+    // Check login state
+    if (typeof window !== 'undefined') {
+      const logged = localStorage.getItem('isLoggedIn') === 'true';
+      setIsLoggedIn(logged);
+      setUserRole(localStorage.getItem('userRole'));
+      setUserName(localStorage.getItem('userName') || 'User');
+    }
+
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  const handleLogout = () => {
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem('isLoggedIn');
+      localStorage.removeItem('userRole');
+      localStorage.removeItem('authToken');
+      localStorage.removeItem('userName');
+      localStorage.removeItem('ppjkId');
+      setIsLoggedIn(false);
+      setUserDropdownOpen(false);
+      router.push('/');
+    }
+  };
+
+  const getDashboardUrl = () => {
+    if (userRole === 'buyer') return '/buyer/dashboard';
+    if (userRole === 'ppjk') return '/ppjk/dashboard';
+    return '/overview';
+  };
+
+  const getChatUrl = () => {
+    if (userRole === 'buyer') return '/buyer/dashboard/chat';
+    if (userRole === 'ppjk') return '/ppjk/dashboard';
+    return '/chat';
+  };
 
   const navLinks = [
     { name: 'Katalog', href: '/katalog' },
@@ -75,8 +116,62 @@ export const PublicNavbar = () => {
               })}
             </div>
 
-            {/* Desktop CTA */}
-            <div className="hidden md:flex items-center space-x-3">
+            {/* Desktop CTA / User Profile Dropdown */}
+            <div className="hidden md:flex items-center space-x-3 relative">
+              {isLoggedIn ? (
+                <div className="relative">
+                  <button
+                    onClick={() => setUserDropdownOpen(!userDropdownOpen)}
+                    className="flex items-center gap-2.5 p-1.5 pl-3 rounded-full bg-[var(--color-bg-subtle)] border border-[var(--color-border)] hover:border-[var(--color-primary-subtle)] transition-all shadow-xs"
+                  >
+                    <span className="text-xs font-bold text-[var(--color-text-primary)] max-w-[120px] truncate">
+                      {userName}
+                    </span>
+                    <div className="w-8 h-8 rounded-full bg-[var(--color-primary)] text-white flex items-center justify-center text-xs font-black shadow-sm">
+                      {userName.charAt(0).toUpperCase()}
+                    </div>
+                    <ChevronDown className="w-3.5 h-3.5 text-[var(--color-text-muted)] pr-1" />
+                  </button>
+
+                  {/* Dropdown Menu */}
+                  {userDropdownOpen && (
+                    <div className="absolute right-0 mt-2 w-56 bg-white rounded-2xl shadow-xl border border-[var(--color-border)] p-2 z-50 animate-slide-up">
+                      <div className="px-3 py-2.5 border-b border-[var(--color-border)] mb-1">
+                        <div className="text-xs font-bold text-[var(--color-text-primary)] truncate">{userName}</div>
+                        <div className="text-[10px] font-extrabold uppercase tracking-wider text-[var(--color-primary)] mt-0.5">
+                          {userRole === 'buyer' ? 'Buyer / Importir' : userRole === 'ppjk' ? 'Mitra PPJK' : 'Eksportir UMKM'}
+                        </div>
+                      </div>
+
+                      <Link
+                        href={getDashboardUrl()}
+                        onClick={() => setUserDropdownOpen(false)}
+                        className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-bold text-[var(--color-text-secondary)] hover:bg-[var(--color-bg-subtle)] hover:text-[var(--color-primary)] transition-colors"
+                      >
+                        <LayoutDashboard className="w-4 h-4 text-[var(--color-primary)]" />
+                        <span>Dashboard Saya</span>
+                      </Link>
+
+                      <Link
+                        href={getChatUrl()}
+                        onClick={() => setUserDropdownOpen(false)}
+                        className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-bold text-[var(--color-text-secondary)] hover:bg-[var(--color-bg-subtle)] hover:text-[var(--color-primary)] transition-colors"
+                      >
+                        <MessageSquare className="w-4 h-4 text-[var(--color-primary)]" />
+                        <span>Pesan Chat</span>
+                      </Link>
+
+                      <button
+                        onClick={handleLogout}
+                        className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-bold text-red-600 hover:bg-red-50 transition-colors mt-1 border-t border-[var(--color-border)] pt-2"
+                      >
+                        <LogOut className="w-4 h-4" />
+                        <span>Keluar (Logout)</span>
+                      </button>
+                    </div>
+                  )}
+                </div>
+              ) : (
                 <>
                   <Link href="/login">
                     <Button variant="ghost" className="font-semibold px-5">Masuk</Button>
@@ -87,6 +182,7 @@ export const PublicNavbar = () => {
                     </Button>
                   </Link>
                 </>
+              )}
             </div>
 
             {/* Mobile menu button */}
@@ -133,18 +229,33 @@ export const PublicNavbar = () => {
               })}
             </div>
             
-              <div className="flex flex-col gap-3 pt-4 border-t border-[var(--color-border)]">
-                <Link href="/login" onClick={() => setMobileMenuOpen(false)} className="w-full">
-                  <Button variant="outline" className="w-full justify-center h-12 text-base font-semibold">
-                    Masuk
+            <div className="flex flex-col gap-3 pt-4 border-t border-[var(--color-border)]">
+              {isLoggedIn ? (
+                <>
+                  <Link href={getDashboardUrl()} onClick={() => setMobileMenuOpen(false)} className="w-full">
+                    <Button variant="primary" className="w-full justify-center emerald-gradient h-12 text-base font-semibold">
+                      Dashboard Saya
+                    </Button>
+                  </Link>
+                  <Button variant="outline" onClick={handleLogout} className="w-full justify-center h-12 text-base font-semibold text-red-600 border-red-200">
+                    Keluar (Logout)
                   </Button>
-                </Link>
-                <Link href="/register" onClick={() => setMobileMenuOpen(false)} className="w-full">
-                  <Button variant="primary" className="w-full justify-center emerald-gradient h-12 text-base font-semibold">
-                    Daftar Gratis
-                  </Button>
-                </Link>
-              </div>
+                </>
+              ) : (
+                <>
+                  <Link href="/login" onClick={() => setMobileMenuOpen(false)} className="w-full">
+                    <Button variant="outline" className="w-full justify-center h-12 text-base font-semibold">
+                      Masuk
+                    </Button>
+                  </Link>
+                  <Link href="/register" onClick={() => setMobileMenuOpen(false)} className="w-full">
+                    <Button variant="primary" className="w-full justify-center emerald-gradient h-12 text-base font-semibold">
+                      Daftar Gratis
+                    </Button>
+                  </Link>
+                </>
+              )}
+            </div>
           </div>
         </div>
       </nav>
@@ -153,3 +264,4 @@ export const PublicNavbar = () => {
     </>
   );
 };
+

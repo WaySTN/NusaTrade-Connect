@@ -13,6 +13,8 @@ import {
   Users, Factory, Globe, Award, CheckCircle2, Mail, Phone, ExternalLink, Package, ArrowUpRight 
 } from 'lucide-react';
 
+import { AuthModal } from '@/components/ui/AuthModal';
+
 export default function UMKMDetailPage() {
   const params = useParams();
   const router = useRouter();
@@ -21,6 +23,7 @@ export default function UMKMDetailPage() {
   const [umkm, setUmkm] = useState<MockUMKM | undefined>(getMockUMKM(idOrSlug));
   const [products, setProducts] = useState<MockProduct[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
 
   useEffect(() => {
     const data = getMockUMKM(idOrSlug);
@@ -49,9 +52,9 @@ export default function UMKMDetailPage() {
   const handleContactSeller = () => {
     const isLoggedIn = typeof window !== 'undefined' && localStorage.getItem('isLoggedIn') === 'true';
     if (isLoggedIn) {
-      router.push('/chat/c1');
+      router.push('/buyer/dashboard/chat');
     } else {
-      router.push('/login');
+      setIsAuthModalOpen(true);
     }
   };
 
@@ -379,6 +382,14 @@ export default function UMKMDetailPage() {
         </div>
 
       </main>
+
+      <AuthModal
+        isOpen={isAuthModalOpen}
+        onClose={() => setIsAuthModalOpen(false)}
+        redirectUrl="/buyer/dashboard/chat"
+        title="Login Diperlukan"
+        description="Untuk menginbox dan bernegosiasi langsung dengan UMKM ini, Anda harus masuk (login) sebagai Buyer / Importir terlebih dahulu."
+      />
 
       <PublicFooter />
     </div>

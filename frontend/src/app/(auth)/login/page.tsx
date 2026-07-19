@@ -91,8 +91,17 @@ export default function LoginPage() {
         if (isBuyer) {
           localStorage.setItem('isLoggedIn', 'true');
           localStorage.setItem('userRole', 'buyer');
+          localStorage.setItem('authToken', 'mock-buyer-jwt-token-987654321');
+          localStorage.setItem('userName', 'Global Imports LLC');
+
+          const urlParams = new URLSearchParams(window.location.search);
+          const redirectQuery = urlParams.get('redirect');
+          const storedRedirect = localStorage.getItem('redirectAfterLogin');
+          const targetRedirect = redirectQuery || storedRedirect || '/buyer/dashboard';
+          localStorage.removeItem('redirectAfterLogin');
+
           setIsLoading(false);
-          router.push('/overview');
+          router.push(targetRedirect);
           return;
         }
 
