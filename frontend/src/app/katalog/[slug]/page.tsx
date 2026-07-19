@@ -3,10 +3,10 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { PublicNavbar } from '@/components/layout/PublicNavbar';
-import { MOCK_PRODUCTS, getMockProduct } from '@/lib/mock-data';
+import { MOCK_PRODUCTS, getMockProduct, getMockUMKM } from '@/lib/mock-data';
 import { Badge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
-import { Package, ShieldCheck, MessageCircle, MapPin, ArrowLeft, CheckCircle2 } from 'lucide-react';
+import { Package, ShieldCheck, MessageCircle, MapPin, ArrowLeft, CheckCircle2, ChevronRight } from 'lucide-react';
 import Link from 'next/link';
 
 export default function ProductDetailPage() {
@@ -176,23 +176,39 @@ export default function ProductDetailPage() {
               </div>
 
               {/* Seller Box */}
-              <div className="bg-[var(--color-bg-subtle)] rounded-2xl p-6 border border-[var(--color-border)] mb-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-5 hover:shadow-sm transition-shadow">
-                <div className="flex items-center gap-5">
-                  <div className="w-14 h-14 rounded-full bg-white text-[var(--color-primary)] flex items-center justify-center text-2xl font-bold border-2 border-[var(--color-primary-light)] shrink-0 shadow-sm">
-                    {product.sellerName.charAt(0)}
-                  </div>
-                  <div>
-                    <h4 className="font-bold text-[17px] text-[var(--color-text-primary)] flex items-center gap-2">
-                      {product.sellerName}
-                      {product.isVerified && <ShieldCheck className="w-5 h-5 text-[var(--color-primary)]" />}
-                    </h4>
-                    <div className="flex items-center gap-1.5 text-[13px] font-medium text-[var(--color-text-secondary)] mt-1.5">
-                      <MapPin className="w-4 h-4" />
-                      Jakarta Raya, Indonesia
+              {(() => {
+                const targetUmkm = getMockUMKM(product.sellerId || '') || getMockUMKM(product.sellerName);
+                const umkmUrl = targetUmkm ? `/umkm/${targetUmkm.id}` : '/umkm';
+                const locationText = targetUmkm ? `${targetUmkm.city}, ${targetUmkm.province}` : 'Jakarta Raya, Indonesia';
+
+                return (
+                  <Link 
+                    href={umkmUrl}
+                    className="group bg-[var(--color-bg-subtle)] hover:bg-white rounded-2xl p-6 border border-[var(--color-border)] hover:border-[var(--color-primary-subtle)] mb-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-5 shadow-xs hover:shadow-md transition-all duration-300 cursor-pointer"
+                  >
+                    <div className="flex items-center gap-5">
+                      <div className="w-14 h-14 rounded-full bg-white text-[var(--color-primary)] flex items-center justify-center text-2xl font-bold border-2 border-[var(--color-primary-light)] group-hover:border-[var(--color-primary)] shrink-0 shadow-sm transition-colors font-display">
+                        {product.sellerName.charAt(0)}
+                      </div>
+                      <div>
+                        <h4 className="font-bold text-[17px] text-[var(--color-text-primary)] group-hover:text-[var(--color-primary)] flex items-center gap-2 transition-colors">
+                          {product.sellerName}
+                          {product.isVerified && <ShieldCheck className="w-5 h-5 text-[var(--color-primary)]" />}
+                        </h4>
+                        <div className="flex items-center gap-1.5 text-[13px] font-medium text-[var(--color-text-secondary)] mt-1.5">
+                          <MapPin className="w-4 h-4 text-[var(--color-text-muted)]" />
+                          {locationText}
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                </div>
-              </div>
+
+                    <div className="flex items-center gap-1 text-xs font-bold text-[var(--color-primary)] group-hover:translate-x-1 transition-transform">
+                      <span>Lihat Profil UMKM</span>
+                      <ChevronRight className="w-4 h-4" />
+                    </div>
+                  </Link>
+                );
+              })()}
 
               <div className="mt-auto pt-4 border-t border-[var(--color-border)]">
                 <Button 

@@ -23,7 +23,8 @@ export const PublicNavbar = () => {
 
   const navLinks = [
     { name: 'Katalog', href: '/katalog' },
-    { name: 'Mitra PPJK', href: '/ppjk' },
+    { name: 'Mitra UMKM', href: '/umkm' },
+    { name: 'PPJK', href: '/ppjk' },
   ];
 
   return (

@@ -2,6 +2,7 @@ export interface MockProduct {
   id: string;
   slug: string;
   name: string;
+  sellerId: string;
   sellerName: string;
   photoUrl: string;
   moq: number;
@@ -11,11 +12,209 @@ export interface MockProduct {
   isVerified: boolean;
 }
 
+export interface MockUMKM {
+  id: string;
+  slug: string;
+  name: string;
+  ownerName: string;
+  nibNumber: string;
+  isNibVerified: boolean;
+  category: string;
+  city: string;
+  province: string;
+  fullAddress: string;
+  description: string;
+  establishedYear: number;
+  employeeCount: string;
+  productionCapacity: string;
+  certifications: string[];
+  exportCountries: string[];
+  bannerUrl: string;
+  logoUrl?: string;
+  whatsapp: string;
+  email: string;
+  website?: string;
+}
+
+export const MOCK_UMKM: MockUMKM[] = [
+  {
+    id: 'umkm-001',
+    slug: 'kopi-nusantara-abadi',
+    name: 'Kopi Nusantara Abadi',
+    ownerName: 'Budi Santoso',
+    nibNumber: '9120001827364',
+    isNibVerified: true,
+    category: 'Food & Beverage',
+    city: 'Takengon',
+    province: 'Aceh',
+    fullAddress: 'Jl. Pegasing No. 45, Takengon, Aceh Tengah 24511',
+    description: 'Kopi Nusantara Abadi adalah produsen dan eksportir kopi arabika specialty unggulan dari Dataran Tinggi Gayo, Aceh. Kami mengelola perkebunan kopi organik seluas 25 hektar yang dikerjakan secara berkelanjutan bersama kelompok tani lokal.',
+    establishedYear: 2018,
+    employeeCount: '25-50 karyawan',
+    productionCapacity: '15,000 kg / bulan',
+    certifications: ['ISO 9001:2015', 'BPOM', 'Halal MUI', 'Fairtrade Certified', 'USDA Organic'],
+    exportCountries: ['Amerika Serikat', 'Jepang', 'Jerman', 'Singapura'],
+    bannerUrl: 'https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+    whatsapp: '6281234567890',
+    email: 'contact@kopinusantaraabadi.com',
+    website: 'https://kopinusantaraabadi.com'
+  },
+  {
+    id: 'umkm-002',
+    slug: 'bali-rattan-craft',
+    name: 'Bali Rattan Craft',
+    ownerName: 'I Wayan Sudarma',
+    nibNumber: '9120009876543',
+    isNibVerified: true,
+    category: 'Furniture',
+    city: 'Gianyar',
+    province: 'Bali',
+    fullAddress: 'Jl. Raya Tegallalang No. 88, Gianyar, Bali 80561',
+    description: 'Produsen kerajinan rotan alami dan mebel eco-friendly asli buatan perajin Bali. Spesialisasi kami adalah desain furnitur rotan kontemporer berkualitas tinggi yang siap ekspor.',
+    establishedYear: 2015,
+    employeeCount: '30-60 karyawan',
+    productionCapacity: '2,000 unit / bulan',
+    certifications: ['SVLK Certified', 'ISO 14001:2015'],
+    exportCountries: ['Australia', 'Prancis', 'Belanda', 'Amerika Serikat'],
+    bannerUrl: 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+    whatsapp: '6281987654321',
+    email: 'info@balirattancraft.id',
+    website: 'https://balirattancraft.id'
+  },
+  {
+    id: 'umkm-003',
+    slug: 'batik-pusaka-solo',
+    name: 'Batik Pusaka Solo',
+    ownerName: 'Siti Rahmawati',
+    nibNumber: '9120005544332',
+    isNibVerified: false,
+    category: 'Fashion & Textile',
+    city: 'Surakarta',
+    province: 'Jawa Tengah',
+    fullAddress: 'Jl. Laweyan No. 12, Solo, Jawa Tengah 57148',
+    description: 'Rumah produksi kain batik tulis sutra dan katun tradisional Solo dengan teknik pewarnaan alami eksklusif.',
+    establishedYear: 2012,
+    employeeCount: '15-30 karyawan',
+    productionCapacity: '500 lembar / bulan',
+    certifications: ['Batikmark Indonesia', 'OEKO-TEX Standard 100'],
+    exportCountries: ['Jepang', 'Malaysia', 'Singapura'],
+    bannerUrl: 'https://images.unsplash.com/photo-1544441893-675973e31985?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+    whatsapp: '6281345678901',
+    email: 'admin@batikpusakasolo.com'
+  },
+  {
+    id: 'umkm-004',
+    slug: 'rempah-maluku-jaya',
+    name: 'Rempah Maluku Jaya',
+    ownerName: 'Mas Darmawan',
+    nibNumber: '9120006677889',
+    isNibVerified: true,
+    category: 'Agriculture',
+    city: 'Banda Neira',
+    province: 'Maluku',
+    fullAddress: 'Jl. Pelabuhan Banda No. 3, Maluku Tengah 97586',
+    description: 'Pemasok dan pengolah rempah-rempah organik kualitas ekspor utama dari Kepulauan Banda (biji pala, mace, dan cengkeh).',
+    establishedYear: 2019,
+    employeeCount: '20-40 karyawan',
+    productionCapacity: '25,000 kg / bulan',
+    certifications: ['BPOM', 'Halal MUI', 'HACCP Certified'],
+    exportCountries: ['Uni Emirat Arab', 'India', 'Belanda'],
+    bannerUrl: 'https://images.unsplash.com/photo-1596647185078-433e2dd7bb84?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+    whatsapp: '6281456789012',
+    email: 'sales@rempahmalukujaya.com'
+  },
+  {
+    id: 'umkm-005',
+    slug: 'atsiri-sumatera',
+    name: 'Atsiri Sumatera',
+    ownerName: 'Taufik Hidayat',
+    nibNumber: '9120007788990',
+    isNibVerified: true,
+    category: 'Health & Beauty',
+    city: 'Medan',
+    province: 'Sumatera Utara',
+    fullAddress: 'Jl. Gatot Subroto No. 102, Medan, Sumatera Utara 20118',
+    description: 'Produsen minyak atsiri (essential oil) 100% murni khususnya Patchouli (Nilam) dari perkebunan Sumatera.',
+    establishedYear: 2017,
+    employeeCount: '15-25 karyawan',
+    productionCapacity: '3,000 liter / bulan',
+    certifications: ['ISO 9001:2015', 'Halal MUI'],
+    exportCountries: ['Prancis', 'Amerika Serikat', 'Singapura'],
+    bannerUrl: 'https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+    whatsapp: '6281567890123',
+    email: 'info@atsirisumatera.com'
+  },
+  {
+    id: 'umkm-006',
+    slug: 'garut-leather-craft',
+    name: 'Garut Leather Craft',
+    ownerName: 'Asep Ridwan',
+    nibNumber: '9120001122334',
+    isNibVerified: false,
+    category: 'Fashion & Textile',
+    city: 'Garut',
+    province: 'Jawa Barat',
+    fullAddress: 'Jl. Sukaregang No. 44, Garut, Jawa Barat 44111',
+    description: 'Pengrajin spesialis barang kulit sapi asli Garut secara handmade.',
+    establishedYear: 2014,
+    employeeCount: '20-35 karyawan',
+    productionCapacity: '1,500 unit / bulan',
+    certifications: ['SNI Leather'],
+    exportCountries: ['Malaysia', 'Brunei', 'Jepang'],
+    bannerUrl: 'https://images.unsplash.com/photo-1590874103328-eac38a683ce7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+    whatsapp: '6281678901234',
+    email: 'sales@garutleather.id'
+  },
+  {
+    id: 'umkm-007',
+    slug: 'cemilan-nusantara',
+    name: 'Cemilan Nusantara',
+    ownerName: 'Dewi Lestari',
+    nibNumber: '9120002233445',
+    isNibVerified: true,
+    category: 'Food & Beverage',
+    city: 'Malang',
+    province: 'Jawa Timur',
+    fullAddress: 'Jl. Raya Singosari No. 15, Malang, Jawa Timur 65153',
+    description: 'Produsen camilan olahan tempe dan buah-buahan lokal dengan teknologi vacuum frying modern.',
+    establishedYear: 2020,
+    employeeCount: '40-80 karyawan',
+    productionCapacity: '50,000 bungkus / bulan',
+    certifications: ['BPOM', 'Halal MUI'],
+    exportCountries: ['Hong Kong', 'Taiwan', 'Singapura'],
+    bannerUrl: 'https://images.unsplash.com/photo-1621939514649-280e2ee25f60?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+    whatsapp: '6281789012345',
+    email: 'export@cemilannusantara.co.id'
+  },
+  {
+    id: 'umkm-008',
+    slug: 'jepara-wood-art',
+    name: 'Jepara Wood Art',
+    ownerName: 'Bambang Utomo',
+    nibNumber: '9120003344556',
+    isNibVerified: true,
+    category: 'Furniture',
+    city: 'Jepara',
+    province: 'Jawa Tengah',
+    fullAddress: 'Jl. Tahunan No. 7, Jepara, Jawa Tengah 59427',
+    description: 'Sentra ukiran dan mebel kayu jati solid legendaris Jepara.',
+    establishedYear: 2010,
+    employeeCount: '50-100 karyawan',
+    productionCapacity: '500 set / bulan',
+    certifications: ['SVLK Certified'],
+    exportCountries: ['Amerika Serikat', 'Inggris', 'Uni Emirat Arab'],
+    bannerUrl: 'https://images.unsplash.com/photo-1611078810793-1e5b12361664?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80',
+    whatsapp: '6281890123456',
+    email: 'info@jeparawoodart.com'
+  }
+];
+
 export const MOCK_PRODUCTS: MockProduct[] = [
   {
     id: 'prod-001',
     slug: 'kopi-luwak-premium',
     name: 'Kopi Luwak Premium Gayo',
+    sellerId: 'umkm-001',
     sellerName: 'Kopi Nusantara Abadi',
     photoUrl: 'https://images.unsplash.com/photo-1559525839-b184a4d698c7?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60',
     moq: 50,
@@ -28,6 +227,7 @@ export const MOCK_PRODUCTS: MockProduct[] = [
     id: 'prod-002',
     slug: 'kerajinan-rotan-bali',
     name: 'Set Kursi Rotan Minimalis',
+    sellerId: 'umkm-002',
     sellerName: 'Bali Rattan Craft',
     photoUrl: 'https://images.unsplash.com/photo-1592078615290-033ee584e267?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60',
     moq: 10,
@@ -40,6 +240,7 @@ export const MOCK_PRODUCTS: MockProduct[] = [
     id: 'prod-003',
     slug: 'batik-tulis-sutra',
     name: 'Kain Batik Tulis Sutra Halus',
+    sellerId: 'umkm-003',
     sellerName: 'Batik Pusaka Solo',
     photoUrl: 'https://images.unsplash.com/photo-1605336110825-9f5e10e9f1a0?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60',
     moq: 20,
@@ -52,6 +253,7 @@ export const MOCK_PRODUCTS: MockProduct[] = [
     id: 'prod-004',
     slug: 'rempah-pala-banda',
     name: 'Biji Pala Organik Banda',
+    sellerId: 'umkm-004',
     sellerName: 'Rempah Maluku Jaya',
     photoUrl: 'https://images.unsplash.com/photo-1596647185078-433e2dd7bb84?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60',
     moq: 100,
@@ -64,6 +266,7 @@ export const MOCK_PRODUCTS: MockProduct[] = [
     id: 'prod-005',
     slug: 'minyak-atsiri-nilam',
     name: 'Patchouli Essential Oil 100% Pure',
+    sellerId: 'umkm-005',
     sellerName: 'Atsiri Sumatera',
     photoUrl: 'https://images.unsplash.com/photo-1608571423902-eed4a5ad8108?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60',
     moq: 5,
@@ -76,6 +279,7 @@ export const MOCK_PRODUCTS: MockProduct[] = [
     id: 'prod-006',
     slug: 'tas-kulit-garut',
     name: 'Tas Kulit Sapi Asli Handmade',
+    sellerId: 'umkm-006',
     sellerName: 'Garut Leather Craft',
     photoUrl: 'https://images.unsplash.com/photo-1590874103328-eac38a683ce7?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60',
     moq: 15,
@@ -88,6 +292,7 @@ export const MOCK_PRODUCTS: MockProduct[] = [
     id: 'prod-007',
     slug: 'keripik-tempe-ekspor',
     name: 'Keripik Tempe Aneka Rasa',
+    sellerId: 'umkm-007',
     sellerName: 'Cemilan Nusantara',
     photoUrl: 'https://images.unsplash.com/photo-1621939514649-280e2ee25f60?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60',
     moq: 200,
@@ -100,6 +305,7 @@ export const MOCK_PRODUCTS: MockProduct[] = [
     id: 'prod-008',
     slug: 'ukiran-kayu-jepara',
     name: 'Panel Kayu Ukir Relief',
+    sellerId: 'umkm-008',
     sellerName: 'Jepara Wood Art',
     photoUrl: 'https://images.unsplash.com/photo-1611078810793-1e5b12361664?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60',
     moq: 5,
@@ -497,6 +703,8 @@ export const MOCK_CATEGORIES = [
 // ─── Helper Functions ────────────────────────────────────────────────────────
 
 export const getMockProduct = (slug: string) => MOCK_PRODUCTS.find(p => p.slug === slug);
+export const getMockUMKM = (idOrSlug: string) => MOCK_UMKM.find(u => u.id === idOrSlug || u.slug === idOrSlug);
+export const getMockUMKMProducts = (sellerIdOrName: string) => MOCK_PRODUCTS.filter(p => p.sellerId === sellerIdOrName || p.sellerName === sellerIdOrName);
 export const getMockInvoice = (id: string) => MOCK_INVOICES.find(i => i.id === id);
 export const getMockMessages = (conversationId: string) => MOCK_MESSAGES[conversationId] || [];
 export const getMockPPJK = (id: string) => MOCK_PPJK.find(p => p.id === id);
@@ -506,4 +714,5 @@ export const getMockSellerUser = (email: string, password: string) =>
   MOCK_SELLER_USERS.find(u => u.email.toLowerCase().trim() === email.toLowerCase().trim() && u.password.trim() === password.trim());
 export const getMockBuyerUser = (email: string, password: string) =>
   MOCK_BUYER_USERS.find(u => u.email.toLowerCase().trim() === email.toLowerCase().trim() && u.password.trim() === password.trim());
+
 

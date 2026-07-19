@@ -45,7 +45,8 @@ export const PublicFooter = ({ className, variant = 'light' }: PublicFooterProps
             <h4 className={cn("font-bold text-sm uppercase tracking-wider mb-4", isDark ? "text-white" : "text-[var(--color-text-primary)]")}>Platform</h4>
             <ul className={cn("space-y-3 text-sm font-medium", isDark ? "text-slate-400" : "text-[var(--color-text-secondary)]")}>
               <li><Link href="/katalog" className={cn("transition-colors", isDark ? "hover:text-emerald-400" : "hover:text-[var(--color-primary)]")}>Katalog Produk</Link></li>
-              <li><Link href="/ppjk" className={cn("transition-colors", isDark ? "hover:text-emerald-400" : "hover:text-[var(--color-primary)]")}>Mitra PPJK</Link></li>
+              <li><Link href="/umkm" className={cn("transition-colors", isDark ? "hover:text-emerald-400" : "hover:text-[var(--color-primary)]")}>Mitra UMKM</Link></li>
+              <li><Link href="/ppjk" className={cn("transition-colors", isDark ? "hover:text-emerald-400" : "hover:text-[var(--color-primary)]")}>PPJK</Link></li>
               <li><Link href="/cara-kerja" className={cn("transition-colors", isDark ? "hover:text-emerald-400" : "hover:text-[var(--color-primary)]")}>Cara Kerja</Link></li>
               <li><Link href="/pricing" className={cn("transition-colors", isDark ? "hover:text-emerald-400" : "hover:text-[var(--color-primary)]")}>Biaya & Pricing</Link></li>
             </ul>
