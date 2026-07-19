@@ -112,6 +112,23 @@ export default function LoginPage() {
     }, 1000);
   };
 
+  const fillCredentials = (role: 'buyer' | 'seller' | 'ppjk') => {
+    switch (role) {
+      case 'buyer':
+        setEmail('buyer@nusatrade.com');
+        setPassword('buyer123');
+        break;
+      case 'seller':
+        setEmail('seller@nusatrade.com');
+        setPassword('seller123');
+        break;
+      case 'ppjk':
+        setEmail('info@sinarjayadok.co.id');
+        setPassword('sinarjaya123');
+        break;
+    }
+  };
+
   return (
     <>
       <div className="mb-10 text-center sm:text-left">
@@ -119,8 +136,35 @@ export default function LoginPage() {
           Selamat Datang
         </h2>
         <p className="text-[var(--color-text-secondary)] font-medium">
-          Masuk untuk mengelola aktivitas ekspor Anda.
+          Masuk untuk mengelola aktivitas ekspor atau impor Anda.
         </p>
+      </div>
+
+      <div className="mb-6">
+        <p className="text-xs font-bold text-[var(--color-text-secondary)] mb-3 uppercase tracking-wider">Pilih Akun Demo (Quick Login):</p>
+        <div className="flex flex-wrap gap-2">
+          <button 
+            type="button"
+            onClick={() => fillCredentials('seller')}
+            className="px-3 py-1.5 text-xs font-bold bg-[var(--color-primary-subtle)] text-[var(--color-primary)] hover:bg-[var(--color-primary)] hover:text-white border border-[var(--color-primary)]/20 rounded-full transition-colors duration-200"
+          >
+            Eksportir (UMKM)
+          </button>
+          <button 
+            type="button"
+            onClick={() => fillCredentials('buyer')}
+            className="px-3 py-1.5 text-xs font-bold bg-amber-50 text-[var(--color-warning-hover)] hover:bg-[var(--color-warning)] hover:text-white border border-[var(--color-warning)]/20 rounded-full transition-colors duration-200"
+          >
+            Importir (Buyer)
+          </button>
+          <button 
+            type="button"
+            onClick={() => fillCredentials('ppjk')}
+            className="px-3 py-1.5 text-xs font-bold bg-emerald-50 text-emerald-700 hover:bg-emerald-600 hover:text-white border border-emerald-200 rounded-full transition-colors duration-200"
+          >
+            Mitra PPJK
+          </button>
+        </div>
       </div>
 
       <form onSubmit={handleLogin} className="space-y-6">
@@ -137,7 +181,7 @@ export default function LoginPage() {
         <div className="space-y-2">
           <div className="flex items-center justify-between">
             <label className="text-sm font-bold text-[var(--color-text-primary)]">Kata Sandi</label>
-            <Link href="/lupa-sandi" className="text-sm font-bold text-[var(--color-primary)] hover:text-[var(--color-primary-light)] transition-colors duration-200">
+            <Link href="/lupa-sandi" className="text-sm font-bold text-[var(--color-primary)] hover:underline transition-colors duration-200">
               Lupa sandi?
             </Link>
           </div>
@@ -158,7 +202,7 @@ export default function LoginPage() {
           </div>
         )}
 
-        <div className="pt-4">
+        <div className="pt-4 space-y-3">
           <Button
             type="submit"
             variant="primary"
@@ -172,40 +216,10 @@ export default function LoginPage() {
         </div>
       </form>
 
-      {/* Panduan Akun Uji Coba (Dummy Accounts Guide) */}
-      <div className="mt-6 p-4 rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-subtle)] text-xs space-y-2">
-        <p className="font-bold text-[var(--color-text-primary)] flex items-center gap-1">
-          💡 Gunakan akun uji coba di bawah atau buat akun baru:
-        </p>
-        <div className="grid grid-cols-1 gap-2 pt-1 font-medium text-[var(--color-text-secondary)]">
-          <div className="flex justify-between items-center border-b border-[var(--color-border)] pb-1.5">
-            <div>
-              <span className="font-bold text-[var(--color-accent)]">Mitra PPJK</span>
-              <p>info@sinarjayadok.co.id</p>
-            </div>
-            <span className="font-mono bg-[var(--color-bg-base)] px-2 py-0.5 rounded border border-[var(--color-border-strong)]">sinarjaya123</span>
-          </div>
-          <div className="flex justify-between items-center border-b border-[var(--color-border)] pb-1.5">
-            <div>
-              <span className="font-bold text-[var(--color-primary)]">Eksportir (Seller)</span>
-              <p>seller@nusatrade.com</p>
-            </div>
-            <span className="font-mono bg-[var(--color-bg-base)] px-2 py-0.5 rounded border border-[var(--color-border-strong)]">seller123</span>
-          </div>
-          <div className="flex justify-between items-center">
-            <div>
-              <span className="font-bold text-[var(--color-warning-hover)]">Importir (Buyer)</span>
-              <p>buyer@nusatrade.com</p>
-            </div>
-            <span className="font-mono bg-[var(--color-bg-base)] px-2 py-0.5 rounded border border-[var(--color-border-strong)]">buyer123</span>
-          </div>
-        </div>
-      </div>
-
       <div className="mt-8 pt-8 border-t border-[var(--color-border)] text-center">
         <p className="text-sm font-medium text-[var(--color-text-secondary)]">
           Belum punya akun?{' '}
-          <Link href="/register" className="font-bold text-[var(--color-primary)] hover:text-[var(--color-primary-light)] transition-colors duration-200">
+          <Link href="/register" className="font-bold text-[var(--color-primary)] hover:underline transition-colors duration-200">
             Daftar Gratis
           </Link>
         </p>

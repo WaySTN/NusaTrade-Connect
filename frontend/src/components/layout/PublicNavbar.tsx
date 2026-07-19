@@ -6,11 +6,11 @@ import { usePathname, useRouter } from 'next/navigation';
 import { cn } from '@/lib/utils/cn';
 import { Menu, X, Globe2, User, LogOut, LayoutDashboard, MessageSquare, ChevronDown } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
+import { Dropdown } from '@/components/ui/Dropdown';
 
 export const PublicNavbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [userDropdownOpen, setUserDropdownOpen] = useState(false);
 
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userRole, setUserRole] = useState<string | null>(null);
@@ -119,58 +119,49 @@ export const PublicNavbar = () => {
             {/* Desktop CTA / User Profile Dropdown */}
             <div className="hidden md:flex items-center space-x-3 relative">
               {isLoggedIn ? (
-                <div className="relative">
-                  <button
-                    onClick={() => setUserDropdownOpen(!userDropdownOpen)}
-                    className="flex items-center gap-2.5 p-1.5 pl-3 rounded-full bg-[var(--color-bg-subtle)] border border-[var(--color-border)] hover:border-[var(--color-primary-subtle)] transition-all shadow-xs"
-                  >
-                    <span className="text-xs font-bold text-[var(--color-text-primary)] max-w-[120px] truncate">
-                      {userName}
-                    </span>
-                    <div className="w-8 h-8 rounded-full bg-[var(--color-primary)] text-white flex items-center justify-center text-xs font-black shadow-sm">
-                      {userName.charAt(0).toUpperCase()}
-                    </div>
-                    <ChevronDown className="w-3.5 h-3.5 text-[var(--color-text-muted)] pr-1" />
-                  </button>
-
-                  {/* Dropdown Menu */}
-                  {userDropdownOpen && (
-                    <div className="absolute right-0 mt-2 w-56 bg-white rounded-2xl shadow-xl border border-[var(--color-border)] p-2 z-50 animate-slide-up">
-                      <div className="px-3 py-2.5 border-b border-[var(--color-border)] mb-1">
-                        <div className="text-xs font-bold text-[var(--color-text-primary)] truncate">{userName}</div>
-                        <div className="text-[10px] font-extrabold uppercase tracking-wider text-[var(--color-primary)] mt-0.5">
-                          {userRole === 'buyer' ? 'Buyer / Importir' : userRole === 'ppjk' ? 'Mitra PPJK' : 'Eksportir UMKM'}
-                        </div>
+                <Dropdown
+                  align="right"
+                  trigger={
+                    <div className="flex items-center gap-2.5 p-1.5 pl-3 rounded-full bg-[var(--color-bg-subtle)] border border-[var(--color-border)] hover:border-[var(--color-primary-subtle)] transition-all shadow-xs">
+                      <span className="text-xs font-bold text-[var(--color-text-primary)] max-w-[120px] truncate">
+                        {userName}
+                      </span>
+                      <div className="w-8 h-8 rounded-full bg-[var(--color-primary)] text-white flex items-center justify-center text-xs font-black shadow-sm">
+                        {userName.charAt(0).toUpperCase()}
                       </div>
-
-                      <Link
-                        href={getDashboardUrl()}
-                        onClick={() => setUserDropdownOpen(false)}
-                        className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-bold text-[var(--color-text-secondary)] hover:bg-[var(--color-bg-subtle)] hover:text-[var(--color-primary)] transition-colors"
-                      >
-                        <LayoutDashboard className="w-4 h-4 text-[var(--color-primary)]" />
-                        <span>Dashboard Saya</span>
-                      </Link>
-
-                      <Link
-                        href={getChatUrl()}
-                        onClick={() => setUserDropdownOpen(false)}
-                        className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-bold text-[var(--color-text-secondary)] hover:bg-[var(--color-bg-subtle)] hover:text-[var(--color-primary)] transition-colors"
-                      >
-                        <MessageSquare className="w-4 h-4 text-[var(--color-primary)]" />
-                        <span>Pesan Chat</span>
-                      </Link>
-
-                      <button
-                        onClick={handleLogout}
-                        className="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-bold text-red-600 hover:bg-red-50 transition-colors mt-1 border-t border-[var(--color-border)] pt-2"
-                      >
-                        <LogOut className="w-4 h-4" />
-                        <span>Keluar (Logout)</span>
-                      </button>
+                      <ChevronDown className="w-3.5 h-3.5 text-[var(--color-text-muted)] pr-1" />
                     </div>
-                  )}
-                </div>
+                  }
+                  header={
+                    <div className="flex flex-col">
+                      <span className="text-xs font-bold text-[var(--color-text-primary)] truncate">{userName}</span>
+                      <span className="text-[10px] font-extrabold uppercase tracking-wider text-[var(--color-primary)] mt-0.5">
+                        {userRole === 'buyer' ? 'Buyer / Importir' : userRole === 'ppjk' ? 'Mitra PPJK' : 'Eksportir UMKM'}
+                      </span>
+                    </div>
+                  }
+                  items={[
+                    {
+                      id: 'dashboard',
+                      label: 'Dashboard Saya',
+                      icon: <LayoutDashboard className="w-4 h-4 text-[var(--color-primary)]" />,
+                      href: getDashboardUrl()
+                    },
+                    {
+                      id: 'chat',
+                      label: 'Pesan Chat',
+                      icon: <MessageSquare className="w-4 h-4 text-[var(--color-primary)]" />,
+                      href: getChatUrl()
+                    },
+                    {
+                      id: 'logout',
+                      label: 'Keluar (Logout)',
+                      icon: <LogOut className="w-4 h-4" />,
+                      onClick: handleLogout,
+                      danger: true
+                    }
+                  ]}
+                />
               ) : (
                 <>
                   <Link href="/login">

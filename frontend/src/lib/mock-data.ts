@@ -661,6 +661,13 @@ export interface MockUser {
   role: 'seller' | 'buyer';
 }
 
+export interface MockRegisteredUser extends MockUser {
+  nik?: string;
+  npwp?: string;
+  nib?: string;
+  isNibVerified?: boolean;
+}
+
 export const MOCK_SELLER_USERS: MockUser[] = [
   { email: 'seller@nusatrade.com', password: 'seller123', role: 'seller' },
   { email: 'eksportir@nusatrade.com', password: 'seller123', role: 'seller' }

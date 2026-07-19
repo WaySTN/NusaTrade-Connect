@@ -77,7 +77,7 @@ export default function RegisterRoleSelectPage() {
       <div className="mt-10 pt-8 border-t border-[var(--color-border)] text-center">
         <p className="text-sm font-medium text-[var(--color-text-secondary)]">
           Sudah punya akun?{' '}
-          <Link href="/login" className="font-bold text-[var(--color-primary)] hover:text-[var(--color-primary-light)] transition-colors duration-200">
+          <Link href="/login" className="font-bold text-[var(--color-primary)] hover:underline transition-colors duration-200">
             Masuk
           </Link>
         </p>

@@ -10,6 +10,7 @@ import {
 } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
+import { Select } from '@/components/ui/Select';
 import { cn } from '@/lib/utils/cn';
 
 // ── Data Provinsi & Kota Indonesia ──────────────────────────────────────────
@@ -643,15 +644,13 @@ export default function RegisterPPJKPage() {
             </div>
             <div className="flex flex-col gap-1.5">
               <label className="text-xs font-semibold text-[var(--color-text-secondary)]">Satuan Biaya</label>
-              <select
+              <Select
+                options={COST_UNITS.map(u => ({ label: u, value: u }))}
                 value={costUnit}
-                onChange={e => setCostUnit(e.target.value)}
-                className="w-full h-12 rounded-xl border border-[var(--color-border-strong)] bg-white px-4 text-sm text-[var(--color-text-primary)] focus:outline-none focus:ring-2 focus:ring-[var(--color-accent)]/50 focus:border-[var(--color-accent)] transition-all duration-300"
-              >
-                {COST_UNITS.map(u => (
-                  <option key={u} value={u}>{u}</option>
-                ))}
-              </select>
+                onChange={(val) => setCostUnit(val)}
+                placeholder="Pilih Satuan Biaya"
+                className="w-full h-12"
+              />
             </div>
           </div>
 

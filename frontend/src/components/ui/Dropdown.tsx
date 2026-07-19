@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useRef, useEffect } from 'react';
+import Link from 'next/link';
 import { cn } from '@/lib/utils/cn';
 import { ChevronDown } from 'lucide-react';
 
@@ -9,17 +10,19 @@ export interface DropdownItem {
   label: React.ReactNode;
   icon?: React.ReactNode;
   onClick?: () => void;
+  href?: string;
   danger?: boolean;
 }
 
 export interface DropdownProps {
   trigger: React.ReactNode | ((isOpen: boolean) => React.ReactNode);
   items: DropdownItem[];
+  header?: React.ReactNode;
   align?: 'left' | 'right';
   className?: string;
 }
 
-export const Dropdown = ({ trigger, items, align = 'left', className }: DropdownProps) => {
+export const Dropdown = ({ trigger, items, header, align = 'left', className }: DropdownProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -55,24 +58,50 @@ export const Dropdown = ({ trigger, items, align = 'left', className }: Dropdown
             align === 'left' ? 'left-0 origin-top-left' : 'right-0 origin-top-right'
           )}
         >
-          {items.map((item) => (
-            <button
-              key={item.id}
-              onClick={() => {
-                item.onClick?.();
-                setIsOpen(false);
-              }}
-              className={cn(
-                "w-full text-left px-3 py-2.5 text-sm font-bold flex items-center gap-2.5 rounded-xl transition-colors duration-200",
-                item.danger 
-                  ? "text-[var(--color-error)] hover:bg-[var(--color-error)]/10" 
-                  : "text-[var(--color-text-primary)] hover:bg-[var(--color-bg-subtle)] hover:text-[var(--color-primary)]"
-              )}
-            >
-              {item.icon && <span className="w-4 h-4">{item.icon}</span>}
-              {item.label}
-            </button>
-          ))}
+          {header && (
+            <div className="px-2 py-2 mb-1 border-b border-[var(--color-border)]">
+              {header}
+            </div>
+          )}
+          {items.map((item) => {
+            const itemClasses = cn(
+              "w-full text-left px-3 py-2.5 text-sm font-bold flex items-center gap-2.5 rounded-xl transition-colors duration-200",
+              item.danger 
+                ? "text-[var(--color-error)] hover:bg-[var(--color-error)]/10" 
+                : "text-[var(--color-text-primary)] hover:bg-[var(--color-bg-subtle)] hover:text-[var(--color-primary)]"
+            );
+
+            if (item.href) {
+              return (
+                <Link
+                  key={item.id}
+                  href={item.href}
+                  onClick={() => {
+                    item.onClick?.();
+                    setIsOpen(false);
+                  }}
+                  className={itemClasses}
+                >
+                  {item.icon && <span className="w-4 h-4 flex items-center justify-center">{item.icon}</span>}
+                  {item.label}
+                </Link>
+              );
+            }
+
+            return (
+              <button
+                key={item.id}
+                onClick={() => {
+                  item.onClick?.();
+                  setIsOpen(false);
+                }}
+                className={itemClasses}
+              >
+                {item.icon && <span className="w-4 h-4 flex items-center justify-center">{item.icon}</span>}
+                {item.label}
+              </button>
+            );
+          })}
         </div>
       )}
     </div>

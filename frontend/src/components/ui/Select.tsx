@@ -63,7 +63,7 @@ export function Select({
         disabled={disabled}
         onClick={() => !disabled && setIsOpen(!isOpen)}
         className={cn(
-          "flex h-11 w-full items-center justify-between rounded-lg border bg-white px-3 py-2 text-sm transition-colors",
+          "flex h-11 w-full items-center justify-between rounded-lg border bg-white px-3 py-2 text-sm transition-colors cursor-pointer",
           "focus:outline-none focus:ring-2 focus:ring-[#006B52] focus:border-transparent",
           "disabled:cursor-not-allowed disabled:bg-[var(--color-bg-subtle)] disabled:text-[var(--color-text-muted)]",
           error ? "border-red-500 focus:ring-red-500" : "border-[var(--color-border)] hover:border-[var(--color-border-strong)]",

@@ -6,12 +6,14 @@ import { useRouter } from 'next/navigation';
 import { Building, User, Mail, Globe, Lock, ArrowLeft, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
+import { Select } from '@/components/ui/Select';
 
 export default function RegisterBuyerPage() {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [country, setCountry] = useState('');
 
   const handleRegister = (e: React.FormEvent) => {
     e.preventDefault();
@@ -25,7 +27,7 @@ export default function RegisterBuyerPage() {
         localStorage.setItem('registered_user_password', password);
         localStorage.setItem('registered_user_role', 'buyer');
       }
-      router.push('/overview');
+      router.push('/buyer/dashboard');
     }, 1500);
   };
 
@@ -72,20 +74,24 @@ export default function RegisterBuyerPage() {
           required
         />
 
-        <div className="space-y-2">
-          <label className="block text-sm font-bold text-[var(--color-text-primary)]">Negara</label>
-          <div className="relative group">
-            <Globe className="absolute left-4 top-3.5 w-5 h-5 text-[var(--color-text-placeholder)] group-focus-within:text-[var(--color-warning)] transition-colors duration-200" />
-            <select className="w-full h-12 pl-12 pr-4 bg-white border border-[var(--color-border-strong)] rounded-xl focus:ring-2 focus:ring-[var(--color-warning)]/30 focus:border-[var(--color-warning)] hover:border-[var(--color-warning)] transition-colors duration-200 focus:outline-none appearance-none cursor-pointer text-sm font-medium" required defaultValue="">
-              <option value="" disabled className="text-[var(--color-text-placeholder)] font-normal">Pilih Negara Asal</option>
-              <option value="usa">Amerika Serikat (USA)</option>
-              <option value="sg">Singapura (SG)</option>
-              <option value="my">Malaysia (MY)</option>
-              <option value="jp">Jepang (JP)</option>
-              <option value="kr">Korea Selatan (KR)</option>
-            </select>
-          </div>
-        </div>
+        <Select
+          label="Negara"
+          value={country}
+          onChange={setCountry}
+          placeholder="Pilih Negara Asal"
+          options={[
+            { value: 'usa', label: 'Amerika Serikat (USA)' },
+            { value: 'sg', label: 'Singapura (SG)' },
+            { value: 'my', label: 'Malaysia (MY)' },
+            { value: 'jp', label: 'Jepang (JP)' },
+            { value: 'kr', label: 'Korea Selatan (KR)' },
+            { value: 'cn', label: 'Tiongkok (CN)' },
+            { value: 'au', label: 'Australia (AU)' },
+            { value: 'de', label: 'Jerman (DE)' },
+            { value: 'uk', label: 'Inggris (UK)' },
+            { value: 'ae', label: 'Uni Emirat Arab (AE)' }
+          ]}
+        />
 
         <Input
           label="Kata Sandi"

@@ -89,25 +89,25 @@ export default function Home() {
 
             {/* Action Buttons */}
             <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-2 animate-slide-up">
-              <Link href="/register" className="w-full sm:w-auto">
+              <Link href="/katalog" className="w-full sm:w-auto">
                 <Button
                   variant="primary"
                   size="lg"
                   className="w-full sm:w-auto text-sm font-bold emerald-gradient h-14 px-8 rounded-2xl shadow-xl shadow-[var(--color-primary)]/20 hover:scale-[1.02] transition-transform"
                   rightIcon={<ArrowRight className="w-5 h-5" />}
                 >
-                  Mulai Ekspor Sekarang
+                  Jelajahi Katalog
                 </Button>
               </Link>
 
-              <Link href="/umkm" className="w-full sm:w-auto">
+              <Link href="/login" className="w-full sm:w-auto">
                 <Button
                   variant="outline"
                   size="lg"
                   className="w-full sm:w-auto text-sm font-bold h-14 px-8 rounded-2xl bg-white/80 backdrop-blur-sm border-[var(--color-border)] hover:bg-white hover:border-[var(--color-primary-subtle)]"
                   leftIcon={<Building2 className="w-5 h-5 text-[var(--color-primary)]" />}
                 >
-                  Lihat Mitra UMKM
+                  Masuk / Daftar
                 </Button>
               </Link>
             </div>
