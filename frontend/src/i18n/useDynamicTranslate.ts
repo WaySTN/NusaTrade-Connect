@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { useLanguage } from './LanguageContext';
 
 export function useDynamicTranslate() {
-  const { language } = useLanguage();
+  const { locale } = useLanguage();
 
   const tDynamic = (text: string) => {
     // For synchronous initial render, we return the original text, 

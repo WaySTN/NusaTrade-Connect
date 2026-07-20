@@ -3,17 +3,31 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { Mail, Lock, ArrowRight, Ship, AlertCircle } from 'lucide-react';
+import { Mail, Lock, ArrowRight, Store, Globe, AlertCircle, ShieldCheck } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { getMockPPJKUser, getMockSellerUser, getMockBuyerUser } from '@/lib/mock-data';
 
 export default function LoginPage() {
   const router = useRouter();
+  const [activeRole, setActiveRole] = useState<'seller' | 'buyer'>('seller');
   const [isLoading, setIsLoading] = useState(false);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('seller@nusatrade.com');
+  const [password, setPassword] = useState('seller123');
   const [loginError, setLoginError] = useState('');
+  const [rememberMe, setRememberMe] = useState(true);
+
+  const handleSelectRole = (role: 'seller' | 'buyer') => {
+    setActiveRole(role);
+    setLoginError('');
+    if (role === 'seller') {
+      setEmail('seller@nusatrade.com');
+      setPassword('seller123');
+    } else {
+      setEmail('buyer@nusatrade.com');
+      setPassword('buyer123');
+    }
+  };
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
@@ -36,7 +50,7 @@ export default function LoginPage() {
             registeredPpjkEmail.toLowerCase().trim() === trimmedEmail && 
             registeredPpjkPassword.trim() === trimmedPassword) {
           isPPJK = true;
-          activePPJKId = 'profil-ppjk'; // Gunakan ID khusus agar data registrasi terbaca
+          activePPJKId = 'profil-ppjk';
         } else {
           const ppjkUser = getMockPPJKUser(trimmedEmail, trimmedPassword);
           if (ppjkUser) {
@@ -109,122 +123,137 @@ export default function LoginPage() {
         setLoginError('Surel (email) atau kata sandi yang Anda masukkan salah.');
         setIsLoading(false);
       }
-    }, 1000);
-  };
-
-  const fillCredentials = (role: 'buyer' | 'seller' | 'ppjk') => {
-    switch (role) {
-      case 'buyer':
-        setEmail('buyer@nusatrade.com');
-        setPassword('buyer123');
-        break;
-      case 'seller':
-        setEmail('seller@nusatrade.com');
-        setPassword('seller123');
-        break;
-      case 'ppjk':
-        setEmail('info@sinarjayadok.co.id');
-        setPassword('sinarjaya123');
-        break;
-    }
+    }, 600);
   };
 
   return (
-    <>
-      <div className="mb-10 text-center sm:text-left">
-        <h2 className="text-3xl font-display font-extrabold text-[var(--color-text-primary)] mb-3 tracking-tight">
-          Selamat Datang
+    <div className="w-full animate-fade-in">
+      {/* Header Section */}
+      <div className="mb-7 text-left">
+        <h2 className="text-3xl sm:text-4xl font-display font-extrabold text-[var(--color-text-primary)] mb-2.5 tracking-tight">
+          Selamat Datang Kembali
         </h2>
-        <p className="text-[var(--color-text-secondary)] font-medium">
-          Masuk untuk mengelola aktivitas ekspor atau impor Anda.
+        <p className="text-sm font-medium text-[var(--color-text-secondary)] leading-relaxed">
+          Masuk untuk mengelola aktivitas transaksi ekspor dan impor Anda di NusaTrade Connect.
         </p>
       </div>
 
-      <div className="mb-6">
-        <p className="text-xs font-bold text-[var(--color-text-secondary)] mb-3 uppercase tracking-wider">Pilih Akun Demo (Quick Login):</p>
-        <div className="flex flex-wrap gap-2">
-          <button 
+      {/* Main Unified Login Card Container */}
+      <div className="bg-white/95 backdrop-blur-xl border border-slate-200/90 rounded-3xl p-6 sm:p-8 shadow-xl shadow-slate-200/50">
+        
+        {/* Integrated Segmented Persona Selector Tabs */}
+        <div className="grid grid-cols-2 gap-1.5 p-1.5 bg-slate-100/90 rounded-2xl border border-slate-200/70 mb-6">
+          <button
             type="button"
-            onClick={() => fillCredentials('seller')}
-            className="px-3 py-1.5 text-xs font-bold bg-[var(--color-primary-subtle)] text-[var(--color-primary)] hover:bg-[var(--color-primary)] hover:text-white border border-[var(--color-primary)]/20 rounded-full transition-colors duration-200"
+            onClick={() => handleSelectRole('seller')}
+            className={`flex items-center justify-center gap-2 py-3 px-3 rounded-xl text-xs font-extrabold transition-all duration-300 cursor-pointer ${
+              activeRole === 'seller'
+                ? 'bg-white text-[var(--color-primary)] shadow-sm border border-emerald-500/30'
+                : 'text-slate-500 hover:text-slate-800 hover:bg-white/50'
+            }`}
           >
-            Eksportir (UMKM)
+            <Store className={`w-4 h-4 ${activeRole === 'seller' ? 'text-[var(--color-primary)]' : 'text-slate-400'}`} />
+            <span>Eksportir (UMKM)</span>
           </button>
-          <button 
+
+          <button
             type="button"
-            onClick={() => fillCredentials('buyer')}
-            className="px-3 py-1.5 text-xs font-bold bg-amber-50 text-[var(--color-warning-hover)] hover:bg-[var(--color-warning)] hover:text-white border border-[var(--color-warning)]/20 rounded-full transition-colors duration-200"
+            onClick={() => handleSelectRole('buyer')}
+            className={`flex items-center justify-center gap-2 py-3 px-3 rounded-xl text-xs font-extrabold transition-all duration-300 cursor-pointer ${
+              activeRole === 'buyer'
+                ? 'bg-white text-amber-700 shadow-sm border border-amber-500/30'
+                : 'text-slate-500 hover:text-slate-800 hover:bg-white/50'
+            }`}
           >
-            Importir (Buyer)
-          </button>
-          <button 
-            type="button"
-            onClick={() => fillCredentials('ppjk')}
-            className="px-3 py-1.5 text-xs font-bold bg-emerald-50 text-emerald-700 hover:bg-emerald-600 hover:text-white border border-emerald-200 rounded-full transition-colors duration-200"
-          >
-            Mitra PPJK
+            <Globe className={`w-4 h-4 ${activeRole === 'buyer' ? 'text-amber-600' : 'text-slate-400'}`} />
+            <span>Importir (Buyer)</span>
           </button>
         </div>
-      </div>
 
-      <form onSubmit={handleLogin} className="space-y-6">
-        <Input
-          label="Email Bisnis"
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder="nama@perusahaan.com"
-          startIcon={Mail}
-          required
-        />
-
-        <div className="space-y-2">
-          <div className="flex items-center justify-between">
-            <label className="text-sm font-bold text-[var(--color-text-primary)]">Kata Sandi</label>
-            <Link href="/lupa-sandi" className="text-sm font-bold text-[var(--color-primary)] hover:underline transition-colors duration-200">
-              Lupa sandi?
-            </Link>
-          </div>
+        {/* Form Inputs */}
+        <form onSubmit={handleLogin} className="space-y-5">
           <Input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="••••••••"
-            startIcon={Lock}
+            label="Email Bisnis"
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="nama@perusahaan.com"
+            startIcon={Mail}
             required
           />
-        </div>
 
-        {loginError && (
-          <div className="flex items-center gap-2 text-sm font-medium text-[var(--color-error)] bg-[var(--color-error-light)] px-4 py-3 rounded-xl animate-slide-up">
-            <AlertCircle className="w-4 h-4 shrink-0" />
-            {loginError}
+          <div className="space-y-2">
+            <div className="flex items-center justify-between">
+              <label className="text-sm font-bold text-[var(--color-text-primary)]">Kata Sandi</label>
+              <Link href="/lupa-sandi" className="text-xs font-bold text-[var(--color-primary)] hover:underline transition-colors">
+                Lupa sandi?
+              </Link>
+            </div>
+            <Input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="••••••••"
+              startIcon={Lock}
+              required
+            />
           </div>
-        )}
 
-        <div className="pt-4 space-y-3">
-          <Button
-            type="submit"
-            variant="primary"
-            size="lg"
-            className="w-full shadow-lg shadow-[var(--color-primary)]/20 text-base font-bold"
-            isLoading={isLoading}
-            rightIcon={!isLoading && <ArrowRight className="w-5 h-5" />}
-          >
-            Masuk ke Dashboard
-          </Button>
+          <div className="flex items-center justify-between pt-1">
+            <label className="flex items-center gap-2 cursor-pointer group">
+              <input
+                type="checkbox"
+                checked={rememberMe}
+                onChange={(e) => setRememberMe(e.target.checked)}
+                className="w-4 h-4 rounded border-slate-300 text-[var(--color-primary)] focus:ring-[var(--color-primary-light)] accent-[var(--color-primary)] cursor-pointer"
+              />
+              <span className="text-xs font-semibold text-[var(--color-text-secondary)] group-hover:text-[var(--color-text-primary)] transition-colors">
+                Ingat sesi saya
+              </span>
+            </label>
+          </div>
+
+          {loginError && (
+            <div className="flex items-center gap-2.5 text-xs font-semibold text-[var(--color-error)] bg-[var(--color-error-light)] border border-[var(--color-error)]/20 px-4 py-3 rounded-2xl animate-slide-up">
+              <AlertCircle className="w-4 h-4 shrink-0" />
+              <span>{loginError}</span>
+            </div>
+          )}
+
+          <div className="pt-2">
+            <Button
+              type="submit"
+              variant="primary"
+              size="lg"
+              className={`w-full h-12 text-sm font-extrabold tracking-wide rounded-2xl shadow-lg transition-all duration-300 ${
+                activeRole === 'seller'
+                  ? 'bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] shadow-emerald-900/20'
+                  : 'bg-amber-600 hover:bg-amber-700 text-white border-amber-600 shadow-amber-900/20'
+              }`}
+              isLoading={isLoading}
+              rightIcon={!isLoading && <ArrowRight className="w-4 h-4" />}
+            >
+              Masuk ke Dashboard
+            </Button>
+          </div>
+        </form>
+
+        <div className="mt-6 pt-5 border-t border-slate-100 text-center">
+          <p className="text-xs font-semibold text-[var(--color-text-secondary)]">
+            Belum memiliki akun?{' '}
+            <Link href="/register" className="font-extrabold text-[var(--color-primary)] hover:underline">
+              Daftar Gratis Sekarang
+            </Link>
+          </p>
         </div>
-      </form>
-
-      <div className="mt-8 pt-8 border-t border-[var(--color-border)] text-center">
-        <p className="text-sm font-medium text-[var(--color-text-secondary)]">
-          Belum punya akun?{' '}
-          <Link href="/register" className="font-bold text-[var(--color-primary)] hover:underline transition-colors duration-200">
-            Daftar Gratis
-          </Link>
-        </p>
       </div>
-    </>
+
+      {/* Trust Badge Footer */}
+      <div className="mt-6 flex items-center justify-center gap-2 text-[11px] font-semibold text-slate-400">
+        <ShieldCheck className="w-4 h-4 text-emerald-600" />
+        <span>Keamanan Terenkripsi • Terintegrasi OSS & QRIS BI</span>
+      </div>
+    </div>
   );
 }
 

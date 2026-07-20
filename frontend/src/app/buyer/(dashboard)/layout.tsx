@@ -26,6 +26,7 @@ export default function BuyerDashboardLayout({
   children: React.ReactNode;
 }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [isCollapsed, setIsCollapsed] = useState(false);
   const [isClient, setIsClient] = useState(false);
   const [buyerName, setBuyerName] = useState('Global Imports LLC');
   const pathname = usePathname();
@@ -96,7 +97,7 @@ export default function BuyerDashboardLayout({
   if (!isClient) return null;
 
   return (
-    <div className="min-h-screen bg-[var(--color-bg-base)] flex flex-col lg:flex-row font-body">
+    <div className="h-screen w-screen overflow-hidden bg-[var(--color-bg-base)] flex flex-col lg:flex-row font-body">
       {/* Mobile Sidebar Overlay */}
       {sidebarOpen && (
         <div 
@@ -108,17 +109,28 @@ export default function BuyerDashboardLayout({
       {/* Sidebar Navigation */}
       <aside
         className={cn(
-          "fixed lg:static inset-y-0 left-0 z-50 w-72 bg-white border-r border-[var(--color-border)] flex flex-col justify-between transition-transform duration-300 ease-in-out lg:translate-x-0 shadow-sm",
-          sidebarOpen ? "translate-x-0" : "-translate-x-full"
+          "fixed lg:static inset-y-0 left-0 z-50 bg-white border-r border-[var(--color-border)] flex flex-col justify-between transition-all duration-300 ease-in-out lg:translate-x-0 shadow-sm",
+          sidebarOpen ? "translate-x-0" : "-translate-x-full",
+          isCollapsed ? "w-20" : "w-72"
         )}
       >
-        <div className="flex flex-col h-full">
+        <div className="flex flex-col h-full overflow-hidden">
           {/* Sidebar Header / Logo */}
-          <div className="h-20 px-6 border-b border-[var(--color-border)] flex items-center justify-between">
-            <Link href="/" className="font-display font-bold text-xl text-[var(--color-text-primary)] inline-flex items-center gap-2 group">
-              <Globe2 className="w-7 h-7 text-[var(--color-primary)] group-hover:rotate-12 transition-transform duration-300" />
-              <span className="tracking-tight">Nusa<span className="text-[var(--color-primary)]">Trade</span></span>
+          <div className={cn("h-20 border-b border-[var(--color-border)] flex items-center shrink-0", isCollapsed ? "px-0 justify-center" : "px-6 justify-between")}>
+            <Link href="/" className={cn("font-display font-bold text-xl text-[var(--color-text-primary)] inline-flex items-center gap-2 group", isCollapsed ? "hidden" : "flex")}>
+              <Globe2 className="w-7 h-7 text-[var(--color-primary)] group-hover:rotate-12 transition-transform duration-300 shrink-0" />
+              <span className="tracking-tight whitespace-nowrap">Nusa<span className="text-[var(--color-primary)]">Trade</span></span>
             </Link>
+
+            <button
+              onClick={() => setIsCollapsed(!isCollapsed)}
+              className={cn(
+                "hidden lg:flex items-center justify-center w-8 h-8 rounded-full border border-[var(--color-border)] hover:bg-[var(--color-bg-subtle)] transition-all duration-300",
+                isCollapsed ? "rotate-180" : ""
+              )}
+            >
+              <img src="/caret-double-left.svg" alt="Collapse" className="w-5 h-5 invert opacity-70" />
+            </button>
 
             <button
               onClick={() => setSidebarOpen(false)}
@@ -129,28 +141,32 @@ export default function BuyerDashboardLayout({
           </div>
 
           {/* Profile Card Summary */}
-          <div className="p-4 mx-4 my-4 rounded-2xl bg-[var(--color-bg-subtle)] border border-[var(--color-border)]">
+          <div className={cn("mx-4 my-4 rounded-2xl bg-[var(--color-bg-subtle)] border border-[var(--color-border)] transition-all", isCollapsed ? "p-2 flex justify-center" : "p-4")}>
             <div className="flex items-center gap-3">
               <div className="w-11 h-11 rounded-2xl bg-[var(--color-primary)] text-white font-black flex items-center justify-center text-lg shadow-md shrink-0 font-display">
                 {buyerName.charAt(0)}
               </div>
-              <div className="min-w-0 flex-1">
-                <h4 className="text-sm font-bold text-[var(--color-text-primary)] truncate">
-                  {buyerName}
-                </h4>
-                <div className="inline-flex items-center gap-1 text-[10px] font-extrabold uppercase tracking-wider text-[var(--color-primary)] bg-[var(--color-primary-subtle)] px-2 py-0.5 rounded-full mt-1">
-                  <ShieldCheck className="w-3 h-3 text-[var(--color-primary)]" />
-                  {t('buyer_dashboard.verified') || 'Verified Buyer'}
+              {!isCollapsed && (
+                <div className="min-w-0 flex-1">
+                  <h4 className="text-sm font-bold text-[var(--color-text-primary)] truncate">
+                    {buyerName}
+                  </h4>
+                  <div className="inline-flex items-center gap-1 text-[10px] font-extrabold uppercase tracking-wider text-[var(--color-primary)] bg-[var(--color-primary-subtle)] px-2 py-0.5 rounded-full mt-1">
+                    <ShieldCheck className="w-3 h-3 text-[var(--color-primary)]" />
+                    {t('buyer_dashboard.verified') || 'Verified Buyer'}
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
           </div>
 
           {/* Nav Links */}
           <nav className="flex-1 px-4 space-y-1.5 overflow-y-auto">
-            <div className="text-[10px] font-bold text-[var(--color-text-muted)] uppercase tracking-wider px-3 mb-2">
-              {t('buyer_dashboard.main_menu') || 'Menu Utama'}
-            </div>
+            {!isCollapsed && (
+              <div className="text-[10px] font-bold text-[var(--color-text-muted)] uppercase tracking-wider px-3 mb-2">
+                {t('buyer_dashboard.main_menu') || 'Menu Utama'}
+              </div>
+            )}
             {navItems.map((item) => {
               const isActive = pathname === item.href || (item.href !== '/buyer/dashboard' && pathname.startsWith(item.href));
               const Icon = item.icon;
@@ -159,18 +175,20 @@ export default function BuyerDashboardLayout({
                   key={item.href}
                   href={item.href}
                   onClick={() => setSidebarOpen(false)}
+                  title={isCollapsed ? item.name : undefined}
                   className={cn(
-                    "flex items-center justify-between px-3.5 py-3 rounded-xl text-xs font-bold transition-all duration-200",
+                    "flex items-center justify-between py-3 rounded-xl text-xs font-bold transition-all duration-200",
+                    isCollapsed ? "px-0 justify-center" : "px-3.5",
                     isActive
                       ? "bg-[var(--color-primary-subtle)] text-[var(--color-primary)] shadow-xs"
                       : "text-[var(--color-text-secondary)] hover:bg-[var(--color-bg-subtle)] hover:text-[var(--color-text-primary)]"
                   )}
                 >
-                  <div className="flex items-center gap-3">
-                    <Icon className={cn("w-4 h-4", isActive ? "text-[var(--color-primary)]" : "text-[var(--color-text-muted)]")} />
-                    <span>{item.name}</span>
+                  <div className={cn("flex items-center gap-3", isCollapsed ? "justify-center" : "")}>
+                    <Icon className={cn("w-5 h-5", isActive ? "text-[var(--color-primary)]" : "text-[var(--color-text-muted)]")} />
+                    {!isCollapsed && <span>{item.name}</span>}
                   </div>
-                  {item.badge && (
+                  {!isCollapsed && item.badge && (
                     <span className="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-[var(--color-primary)] text-white shadow-xs">
                       {item.badge}
                     </span>
@@ -180,14 +198,18 @@ export default function BuyerDashboardLayout({
             })}
           </nav>
 
-          {/* Logout Button Footer */}
-          <div className="p-4 border-t border-[var(--color-border)]">
+          {/* Bottom Actions */}
+          <div className="p-4 border-t border-[var(--color-border)] flex flex-col gap-2">
             <button
               onClick={handleLogout}
-              className="w-full flex items-center gap-3 px-3.5 py-3 rounded-xl text-xs font-bold text-red-600 hover:bg-red-50 transition-colors"
+              title={isCollapsed ? (t('nav.logout') || 'Keluar') : undefined}
+              className={cn(
+                "w-full flex items-center py-3 rounded-xl text-xs font-bold text-red-600 hover:bg-red-50 transition-colors",
+                isCollapsed ? "justify-center px-0" : "px-3.5 gap-3"
+              )}
             >
-              <LogOut className="w-4 h-4" />
-              <span>{t('nav.logout') || 'Keluar dari Akun'}</span>
+              <LogOut className="w-5 h-5 shrink-0" />
+              {!isCollapsed && <span>{t('nav.logout') || 'Keluar dari Akun'}</span>}
             </button>
           </div>
         </div>

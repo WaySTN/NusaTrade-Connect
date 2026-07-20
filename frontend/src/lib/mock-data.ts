@@ -1,3 +1,12 @@
+export interface DemoMessage {
+  id: string;
+  from: 'buyer' | 'seller' | 'system';
+  lang: 'zh' | 'id' | 'en' | 'ja' | 'ai';
+  content: string;
+  timestamp: string;
+  type: 'original' | 'translated' | 'corrected' | 'sent';
+}
+
 export interface MockProduct {
   id: string;
   slug: string;
@@ -318,7 +327,9 @@ export const MOCK_PRODUCTS: MockProduct[] = [
 
 export interface MockConversation {
   id: string;
+  buyerId: string;
   buyerName: string;
+  buyerCompany: string;
   buyerAvatar: string;
   lastMessage: string;
   timestamp: string;
@@ -328,35 +339,43 @@ export interface MockConversation {
 
 export const MOCK_CONVERSATIONS: MockConversation[] = [
   {
-    id: 'conv-001',
-    buyerName: 'David Smith (Global Imports LLC)',
+    id: 'c-001',
+    buyerId: 'b-001',
+    buyerName: 'David Smith',
+    buyerCompany: 'Global Imports LLC',
     buyerAvatar: 'DS',
-    lastMessage: 'Could you provide the certificate of origin for the coffee beans?',
+    lastMessage: 'Could you provide the certificate of origin for the organic spices?',
     timestamp: '10:30 AM',
     unreadCount: 2,
     isOnline: true,
   },
   {
-    id: 'conv-002',
-    buyerName: 'Liu Wei (Beijing Trading)',
+    id: 'c-002',
+    buyerId: 'b-002',
+    buyerName: 'Liu Wei',
+    buyerCompany: 'Beijing Trading',
     buyerAvatar: 'LW',
-    lastMessage: 'Invoice paid successfully. Looking forward to the shipment.',
+    lastMessage: '你好！我对你们的 keycaps 很感兴趣。',
     timestamp: 'Yesterday',
     unreadCount: 0,
     isOnline: false,
   },
   {
-    id: 'conv-003',
-    buyerName: 'Sarah Johnson (EuroFurnish)',
-    buyerAvatar: 'SJ',
-    lastMessage: 'Are the rattan chairs treated for European climate?',
+    id: 'c-003',
+    buyerId: 'b-003',
+    buyerName: 'Kenji Sato',
+    buyerCompany: 'Tokyo Trading Co.',
+    buyerAvatar: 'KS',
+    lastMessage: 'こんにちは。ラタン製の家具についてお伺いします。',
     timestamp: 'Mon',
     unreadCount: 1,
     isOnline: true,
   },
   {
-    id: 'conv-004',
-    buyerName: 'Tariq Al-Fayed (Dubai Spices)',
+    id: 'c-004',
+    buyerId: 'b-004',
+    buyerName: 'Tariq Al-Fayed',
+    buyerCompany: 'Dubai Spices',
     buyerAvatar: 'TA',
     lastMessage: 'We need 500kg of nutmeg for the next quarter.',
     timestamp: '12 Jan',
@@ -722,4 +741,54 @@ export const getMockSellerUser = (email: string, password: string) =>
 export const getMockBuyerUser = (email: string, password: string) =>
   MOCK_BUYER_USERS.find(u => u.email.toLowerCase().trim() === email.toLowerCase().trim() && u.password.trim() === password.trim());
 
+export interface DemoChatScenario {
+  id: string;
+  buyerName: string;
+  buyerCompany: string;
+  country: string;
+  nativeLangName: string;
+  nativeLangCode: 'zh' | 'en' | 'ja';
+  buyerOriginal: string;
+  buyerTranslated: string;
+  umkmInformal: string;
+  umkmCorrected: string;
+}
 
+export const MOCK_CHAT_SCENARIOS: DemoChatScenario[] = [
+  {
+    id: 'c-001',
+    buyerName: 'David Smith',
+    buyerCompany: 'Global Imports LLC',
+    country: 'United Kingdom',
+    nativeLangName: 'English',
+    nativeLangCode: 'en',
+    buyerOriginal: "Hello! We are interested in your organic spices. Do you provide Certificate of Origin and what is the MOQ for EU shipment?",
+    buyerTranslated: "Halo! Kami tertarik dengan rempah organik Anda. Apakah Anda menyediakan Certificate of Origin dan berapa MOQ untuk pengiriman ke EU?",
+    umkmInformal: "halo pak, sedia kok cert origin, moq 500kg, harga $10/kg ya siap kirim",
+    umkmCorrected: "Hello Mr. Smith,\n\nThank you for your interest in our products. Yes, we do provide a Certificate of Origin. Our Minimum Order Quantity (MOQ) for EU shipments is 500 kg, and the price is $10 per kg.\n\nBest regards,\nRempah Maluku Jaya",
+  },
+  {
+    id: 'c-002',
+    buyerName: 'Liu Wei',
+    buyerCompany: 'Beijing Trading',
+    country: 'China',
+    nativeLangName: 'Mandarin',
+    nativeLangCode: 'zh',
+    buyerOriginal: "你好！我对你们的 keycaps 很感兴趣。请问可以批量购买吗？最低订购量是多少？价格是怎么计算的？",
+    buyerTranslated: "Halo! Saya tertarik dengan keycaps kalian. Apakah bisa pesan dalam jumlah besar? Berapa minimum order-nya dan bagaimana perhitungan harganya?",
+    umkmInformal: "bisa kok, min order 50 pcs, harga $4.5/pcs, ongkir tergantung negara tujuan",
+    umkmCorrected: "尊敬的客户您好，\n\n感谢您对我们的产品感兴趣。我们支持批量采购，最低订购量 (MOQ) 为 50 件，价格为每件 4.5 美元。运费将根据目标国家另行计算。\n\n期待您的回复。",
+  },
+  {
+    id: 'c-003',
+    buyerName: 'Kenji Sato',
+    buyerCompany: 'Tokyo Trading Co.',
+    country: 'Japan',
+    nativeLangName: 'Japanese',
+    nativeLangCode: 'ja',
+    buyerOriginal: "こんにちは。ラタン製の家具についてお伺いします。日本向けの輸出実績はありますか？",
+    buyerTranslated: "Halo. Saya ingin bertanyaについて (tentang) furnitur rotan. Apakah Anda memiliki pengalaman ekspor ke Jepang?",
+    umkmInformal: "ada bu, udah sering kirim ke tokyo. aman kualitasnya anti jamur.",
+    umkmCorrected: "こんにちは。\n\nお問い合わせありがとうございます。はい、日本への輸出実績は多数ございます（特に東京向け）。当社の製品は防カビ処理を施しており、日本の気候にも適した高品質な仕上がりとなっております。\n\nご検討のほどよろしくお願いいたします。",
+  }
+];

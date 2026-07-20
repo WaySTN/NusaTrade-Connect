@@ -52,7 +52,7 @@ export const LanguageProvider = ({ children }: { children: React.ReactNode }) =>
     }
   };
 
-  const dir = 'ltr';
+  const dir: 'ltr' | 'rtl' = 'ltr';
 
   useEffect(() => {
     if (mounted) {

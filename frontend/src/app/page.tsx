@@ -643,25 +643,52 @@ export default function Home() {
       </section>
 
       {/* ─── 7. GRAND CTA BANNER ────────────────────────────────────────────── */}
-      <section className="py-24 bg-white relative z-10">
+      <section className="py-20 sm:py-24 bg-white relative z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="rounded-3xl bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 p-8 sm:p-14 text-white text-center space-y-6 shadow-2xl relative overflow-hidden">
-            <div className="absolute inset-0 batik-pattern opacity-10 pointer-events-none"></div>
+          <div className="rounded-[2.5rem] bg-gradient-to-br from-[#004635] via-[#005743] to-[#003628] p-8 sm:p-14 text-white text-center space-y-6 shadow-2xl shadow-emerald-950/20 relative overflow-hidden border border-emerald-800/40">
+            
+            {/* Ambient Glowing Orbs */}
+            <div className="absolute top-[-30%] left-[-10%] w-[60%] h-[70%] bg-emerald-400/20 rounded-full blur-[120px] pointer-events-none"></div>
+            <div className="absolute bottom-[-30%] right-[-10%] w-[50%] h-[60%] bg-amber-400/15 rounded-full blur-[100px] pointer-events-none"></div>
 
-            <h2 className="text-3xl sm:text-5xl font-display font-extrabold tracking-tight max-w-3xl mx-auto">
+            {/* Interconnected Digital Trade Grid & Nodes SVG Overlay */}
+            <div className="absolute inset-0 opacity-15 pointer-events-none">
+              <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <pattern id="cta-grid" width="40" height="40" patternUnits="userSpaceOnUse">
+                    <path d="M 40 0 L 0 0 0 40" fill="none" stroke="currentColor" strokeWidth="0.8" className="text-emerald-300" />
+                  </pattern>
+                </defs>
+                <rect width="100%" height="100%" fill="url(#cta-grid)" />
+                <circle cx="15%" cy="35%" r="4" className="fill-amber-400 animate-pulse" />
+                <circle cx="80%" cy="25%" r="3" className="fill-emerald-300 animate-pulse" />
+                <circle cx="88%" cy="70%" r="5" className="fill-teal-300 animate-pulse" />
+              </svg>
+            </div>
+
+            {/* Floating Badge */}
+            <div className="relative z-10 inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-xs font-bold uppercase tracking-widest text-emerald-200 shadow-sm mb-2">
+              <Sparkles className="w-3.5 h-3.5 text-amber-400 animate-pulse" />
+              <span>EKOSISTEM EKSPOR B2B INDONESIA</span>
+            </div>
+
+            {/* Heading */}
+            <h2 className="relative z-10 text-3xl sm:text-5xl lg:text-6xl font-display font-black tracking-tight max-w-4xl mx-auto leading-[1.12]">
               {t('cta_bottom.title')}
             </h2>
 
-            <p className="text-slate-300 text-sm sm:text-base font-medium max-w-xl mx-auto leading-relaxed">
+            {/* Subtitle */}
+            <p className="relative z-10 text-emerald-100/90 text-sm sm:text-base lg:text-lg font-medium max-w-2xl mx-auto leading-relaxed">
               {t('cta_bottom.subtitle')}
             </p>
 
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
+            {/* Action Buttons */}
+            <div className="relative z-10 flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
               <Link href="/register" className="w-full sm:w-auto">
                 <Button
                   variant="primary"
                   size="lg"
-                  className="w-full sm:w-auto font-bold text-sm h-14 px-8 rounded-2xl emerald-gradient shadow-xl shadow-[var(--color-primary)]/30"
+                  className="w-full sm:w-auto font-extrabold text-sm h-14 px-9 rounded-2xl bg-gradient-to-r from-emerald-400 to-teal-400 text-slate-950 hover:from-emerald-300 hover:to-teal-300 shadow-xl shadow-emerald-400/25 border-0 hover:scale-[1.02] transition-transform"
                   rightIcon={<ArrowRight className="w-5 h-5" />}
                 >
                   {t('cta_bottom.btn_register')}
@@ -672,12 +699,29 @@ export default function Home() {
                 <Button
                   variant="outline"
                   size="lg"
-                  className="w-full sm:w-auto font-bold text-sm h-14 px-8 rounded-2xl bg-white/10 text-white border-white/20 hover:bg-white/20"
+                  className="w-full sm:w-auto font-bold text-sm h-14 px-8 rounded-2xl bg-white/10 backdrop-blur-md text-white border-white/20 hover:bg-white/20 hover:border-white/30"
                 >
                   {t('cta_bottom.btn_umkm')}
                 </Button>
               </Link>
             </div>
+
+            {/* Micro Trust Indicators */}
+            <div className="relative z-10 flex flex-wrap items-center justify-center gap-6 pt-6 border-t border-white/10 text-xs font-semibold text-emerald-200/80">
+              <div className="flex items-center gap-2">
+                <ShieldCheck className="w-4 h-4 text-emerald-300" />
+                <span>NIB Legalitas Verified</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Globe2 className="w-4 h-4 text-amber-300" />
+                <span>AI Multi-Language Chat</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <QrCode className="w-4 h-4 text-teal-300" />
+                <span>QRIS Cross-Border BI</span>
+              </div>
+            </div>
+
           </div>
         </div>
       </section>

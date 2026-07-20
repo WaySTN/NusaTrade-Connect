@@ -1,17 +1,11 @@
 import { useLanguage } from './LanguageContext';
 import { useCallback } from 'react';
 
-type NestedKeyOf<ObjectType extends object> = 
-{[Key in keyof ObjectType & (string | number)]: ObjectType[Key] extends object
-? `${Key}.${NestedKeyOf<ObjectType[Key]>}`
-: `${Key}`
-}[keyof ObjectType & (string | number)];
-
 export function useT() {
   const { t } = useLanguage();
 
-  // Helper to get nested value by dot notation (e.g. 'hero.title')
-  return useCallback(function translate(key: string): string {
+  // Helper to get nested value by dot notation (e.g. 'hero.title') with optional fallback
+  return useCallback(function translate(key: string, fallback?: string): string {
     const keys = key.split('.');
     let result: any = t;
     
@@ -19,10 +13,10 @@ export function useT() {
       if (result && typeof result === 'object' && k in result) {
         result = result[k as keyof typeof result];
       } else {
-        return key; // Fallback to key if not found
+        return fallback !== undefined ? fallback : key;
       }
     }
     
-    return typeof result === 'string' ? result : key;
+    return typeof result === 'string' ? result : (fallback !== undefined ? fallback : key);
   }, [t]);
 }
