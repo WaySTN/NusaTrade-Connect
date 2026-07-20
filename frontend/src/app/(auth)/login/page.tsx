@@ -131,7 +131,7 @@ export default function LoginPage() {
   return (
     <div className="w-full animate-fade-in">
       {/* Header Section */}
-      <div className="mb-7 text-left">
+      <div className="mb-4 text-left">
         <h2 className="text-3xl sm:text-4xl font-display font-extrabold text-[var(--color-text-primary)] mb-2.5 tracking-tight">
           {t('auth.login_title')}
         </h2>

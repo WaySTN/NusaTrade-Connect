@@ -297,7 +297,7 @@ export const PublicNavbar = () => {
         </div>
       </nav>
       {/* Spacer for fixed floating navbar */}
-      <div className="h-24"></div>
+      <div className="h-16 lg:h-20"></div>
     </>
   );
 };

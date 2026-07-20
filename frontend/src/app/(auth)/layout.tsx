@@ -103,12 +103,12 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
         <PublicNavbar />
 
         {/* Form Container Scrollable */}
-        <div className="flex-1 overflow-y-auto overflow-x-hidden flex flex-col items-center justify-center relative p-6 sm:p-10 lg:p-12">
+        <div className="flex-1 overflow-y-auto overflow-x-hidden flex flex-col items-center justify-start relative p-4 sm:p-6 lg:p-8">
           {/* Ambient Lighting Background */}
           <div className="absolute top-[10%] right-[10%] w-[400px] h-[400px] bg-emerald-400/10 rounded-full blur-[140px] pointer-events-none"></div>
           <div className="absolute bottom-[10%] left-[10%] w-[350px] h-[350px] bg-amber-400/10 rounded-full blur-[120px] pointer-events-none"></div>
 
-          <div className="w-full max-w-lg relative z-10 my-auto pt-24 lg:pt-24 pb-12">
+          <div className="w-full max-w-lg relative z-10 pt-6 lg:pt-8 pb-8">
             {children}
           </div>
         </div>

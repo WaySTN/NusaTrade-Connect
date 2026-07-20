@@ -62,7 +62,7 @@ export default function Home() {
       </div>
 
       {/* ─── 1. HERO SECTION ────────────────────────────────────────────────── */}
-      <main className="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10 relative pt-8 pb-16 lg:pt-14 lg:pb-24">
+      <main className="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10 relative pt-2 pb-12 lg:pt-4 lg:pb-20">
         <div className="grid lg:grid-cols-12 gap-12 lg:gap-8 items-center">
 
           {/* Left Column: Text & CTA */}
@@ -118,10 +118,21 @@ export default function Home() {
 
             {/* Social Proof Avatars */}
             <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4 pt-4 animate-fade-in">
-              <div className="flex -space-x-3">
-                {[1, 2, 3, 4].map(i => (
-                  <div key={i} className="w-10 h-10 rounded-full border-2 border-white bg-slate-100 flex items-center justify-center overflow-hidden shadow-sm">
-                    <img src={`https://api.dicebear.com/7.x/notionists/svg?seed=Ekspor${i}&backgroundColor=transparent`} alt="User" className="w-full h-full object-cover" />
+              <div className="flex -space-x-2.5 overflow-hidden p-0.5">
+                {[
+                  "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80",
+                  "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80",
+                  "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=150&q=80",
+                  "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=150&q=80",
+                  "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=150&q=80",
+                  "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=150&q=80",
+                  "https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=150&q=80",
+                  "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=150&q=80",
+                  "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=150&q=80",
+                  "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=150&q=80"
+                ].map((url, idx) => (
+                  <div key={idx} className="w-9 h-9 sm:w-10 sm:h-10 rounded-full border-2 border-white bg-slate-200 flex items-center justify-center overflow-hidden shadow-sm shrink-0 hover:scale-110 hover:z-30 transition-transform duration-200">
+                    <img src={url} alt={`User ${idx + 1}`} className="w-full h-full object-cover" />
                   </div>
                 ))}
               </div>

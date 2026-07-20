@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import Link from 'next/link';
 import { Store, Globe, Ship, ArrowRight, ShieldCheck } from 'lucide-react';
@@ -10,7 +12,7 @@ export default function RegisterRoleSelectPage() {
   return (
     <div className="w-full animate-fade-in">
       {/* Header Section */}
-      <div className="mb-7 text-left">
+      <div className="mb-4 text-left">
         <h2 className="text-3xl sm:text-4xl font-display font-extrabold text-[var(--color-text-primary)] mb-2.5 tracking-tight">
           {t('auth.register_title', 'Pilih Peran Anda')}
         </h2>
@@ -23,29 +25,6 @@ export default function RegisterRoleSelectPage() {
       <div className="bg-white/95 backdrop-blur-xl border border-slate-200/90 rounded-3xl p-6 sm:p-8 shadow-xl shadow-slate-200/50">
         
         <div className="space-y-4">
-          {/* Card Eksportir */}
-          <Link href="/register/seller" className="block group">
-            <div className="flex items-center p-5 border-2 border-slate-200/80 rounded-2xl bg-white hover:border-amber-500 hover:bg-amber-50/40 hover:shadow-md transition-all duration-300 transform hover:-translate-y-0.5">
-              <div className="w-12 h-12 bg-amber-100/70 border border-amber-200 rounded-xl flex items-center justify-center shrink-0 group-hover:bg-amber-500 group-hover:border-amber-500 transition-colors duration-300 shadow-xs">
-                <Store className="w-6 h-6 text-amber-600 group-hover:text-white transition-colors duration-300" />
-              </div>
-              <div className="ml-4 flex-1">
-                <div className="flex items-center gap-2">
-                  <h3 className="text-base font-extrabold text-[var(--color-text-primary)] group-hover:text-amber-600 transition-colors duration-200">
-                    {t('auth.role_seller', 'Sebagai Penjual (Eksportir)')}
-                  </h3>
-                  <span className="px-2 py-0.5 text-[10px] font-extrabold bg-amber-100 text-amber-800 rounded-full">UMKM RI</span>
-                </div>
-                <p className="text-xs font-medium text-[var(--color-text-secondary)] mt-0.5">
-                  Tampilkan katalog terverifikasi NIB & jual produk ke pasar global.
-                </p>
-              </div>
-              <div className="w-9 h-9 rounded-xl flex items-center justify-center bg-slate-100 group-hover:bg-amber-500 transition-colors duration-300 shrink-0 ml-2">
-                <ArrowRight className="w-4 h-4 text-slate-400 group-hover:text-white transition-colors transform group-hover:translate-x-0.5 duration-300" />
-              </div>
-            </div>
-          </Link>
-
           {/* Card Buyer */}
           <Link href="/register/buyer" className="block group">
             <div className="flex items-center p-5 border-2 border-slate-200/80 rounded-2xl bg-white hover:border-[var(--color-primary)] hover:bg-emerald-50/40 hover:shadow-md transition-all duration-300 transform hover:-translate-y-0.5">
@@ -64,6 +43,29 @@ export default function RegisterRoleSelectPage() {
                 </p>
               </div>
               <div className="w-9 h-9 rounded-xl flex items-center justify-center bg-slate-100 group-hover:bg-[var(--color-primary)] transition-colors duration-300 shrink-0 ml-2">
+                <ArrowRight className="w-4 h-4 text-slate-400 group-hover:text-white transition-colors transform group-hover:translate-x-0.5 duration-300" />
+              </div>
+            </div>
+          </Link>
+
+          {/* Card Eksportir */}
+          <Link href="/register/seller" className="block group">
+            <div className="flex items-center p-5 border-2 border-slate-200/80 rounded-2xl bg-white hover:border-amber-500 hover:bg-amber-50/40 hover:shadow-md transition-all duration-300 transform hover:-translate-y-0.5">
+              <div className="w-12 h-12 bg-amber-100/70 border border-amber-200 rounded-xl flex items-center justify-center shrink-0 group-hover:bg-amber-500 group-hover:border-amber-500 transition-colors duration-300 shadow-xs">
+                <Store className="w-6 h-6 text-amber-600 group-hover:text-white transition-colors duration-300" />
+              </div>
+              <div className="ml-4 flex-1">
+                <div className="flex items-center gap-2">
+                  <h3 className="text-base font-extrabold text-[var(--color-text-primary)] group-hover:text-amber-600 transition-colors duration-200">
+                    {t('auth.role_seller', 'Sebagai Penjual (Eksportir)')}
+                  </h3>
+                  <span className="px-2 py-0.5 text-[10px] font-extrabold bg-amber-100 text-amber-800 rounded-full">UMKM RI</span>
+                </div>
+                <p className="text-xs font-medium text-[var(--color-text-secondary)] mt-0.5">
+                  Tampilkan katalog terverifikasi NIB & jual produk ke pasar global.
+                </p>
+              </div>
+              <div className="w-9 h-9 rounded-xl flex items-center justify-center bg-slate-100 group-hover:bg-amber-500 transition-colors duration-300 shrink-0 ml-2">
                 <ArrowRight className="w-4 h-4 text-slate-400 group-hover:text-white transition-colors transform group-hover:translate-x-0.5 duration-300" />
               </div>
             </div>
