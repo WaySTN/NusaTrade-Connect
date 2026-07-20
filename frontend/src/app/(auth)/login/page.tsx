@@ -7,13 +7,15 @@ import { Mail, Lock, ArrowRight, Store, Globe, AlertCircle, ShieldCheck } from '
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { getMockPPJKUser, getMockSellerUser, getMockBuyerUser } from '@/lib/mock-data';
+import { useT } from '@/i18n/useT';
 
 export default function LoginPage() {
   const router = useRouter();
-  const [activeRole, setActiveRole] = useState<'seller' | 'buyer'>('seller');
+  const t = useT();
+  const [activeRole, setActiveRole] = useState<'seller' | 'buyer'>('buyer');
   const [isLoading, setIsLoading] = useState(false);
-  const [email, setEmail] = useState('seller@nusatrade.com');
-  const [password, setPassword] = useState('seller123');
+  const [email, setEmail] = useState('buyer@nusatrade.com');
+  const [password, setPassword] = useState('buyer123');
   const [loginError, setLoginError] = useState('');
   const [rememberMe, setRememberMe] = useState(true);
 
@@ -131,10 +133,10 @@ export default function LoginPage() {
       {/* Header Section */}
       <div className="mb-7 text-left">
         <h2 className="text-3xl sm:text-4xl font-display font-extrabold text-[var(--color-text-primary)] mb-2.5 tracking-tight">
-          Selamat Datang Kembali
+          {t('auth.login_title')}
         </h2>
         <p className="text-sm font-medium text-[var(--color-text-secondary)] leading-relaxed">
-          Masuk untuk mengelola aktivitas transaksi ekspor dan impor Anda di NusaTrade Connect.
+          {t('auth.login_desc')}
         </p>
       </div>
 
@@ -145,55 +147,55 @@ export default function LoginPage() {
         <div className="grid grid-cols-2 gap-1.5 p-1.5 bg-slate-100/90 rounded-2xl border border-slate-200/70 mb-6">
           <button
             type="button"
-            onClick={() => handleSelectRole('seller')}
+            onClick={() => handleSelectRole('buyer')}
             className={`flex items-center justify-center gap-2 py-3 px-3 rounded-xl text-xs font-extrabold transition-all duration-300 cursor-pointer ${
-              activeRole === 'seller'
+              activeRole === 'buyer'
                 ? 'bg-white text-[var(--color-primary)] shadow-sm border border-emerald-500/30'
                 : 'text-slate-500 hover:text-slate-800 hover:bg-white/50'
             }`}
           >
-            <Store className={`w-4 h-4 ${activeRole === 'seller' ? 'text-[var(--color-primary)]' : 'text-slate-400'}`} />
-            <span>Eksportir (UMKM)</span>
+            <Globe className={`w-4 h-4 ${activeRole === 'buyer' ? 'text-[var(--color-primary)]' : 'text-slate-400'}`} />
+            <span>{t('auth.role_buyer')}</span>
           </button>
 
           <button
             type="button"
-            onClick={() => handleSelectRole('buyer')}
+            onClick={() => handleSelectRole('seller')}
             className={`flex items-center justify-center gap-2 py-3 px-3 rounded-xl text-xs font-extrabold transition-all duration-300 cursor-pointer ${
-              activeRole === 'buyer'
+              activeRole === 'seller'
                 ? 'bg-white text-amber-700 shadow-sm border border-amber-500/30'
                 : 'text-slate-500 hover:text-slate-800 hover:bg-white/50'
             }`}
           >
-            <Globe className={`w-4 h-4 ${activeRole === 'buyer' ? 'text-amber-600' : 'text-slate-400'}`} />
-            <span>Importir (Buyer)</span>
+            <Store className={`w-4 h-4 ${activeRole === 'seller' ? 'text-amber-600' : 'text-slate-400'}`} />
+            <span>{t('auth.role_seller')}</span>
           </button>
         </div>
 
         {/* Form Inputs */}
         <form onSubmit={handleLogin} className="space-y-5">
           <Input
-            label="Email Bisnis"
+            label={t('auth.email_label')}
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            placeholder="nama@perusahaan.com"
+            placeholder={t('auth.email_placeholder')}
             startIcon={Mail}
             required
           />
 
           <div className="space-y-2">
             <div className="flex items-center justify-between">
-              <label className="text-sm font-bold text-[var(--color-text-primary)]">Kata Sandi</label>
+              <label className="text-sm font-bold text-[var(--color-text-primary)]">{t('auth.password_label')}</label>
               <Link href="/lupa-sandi" className="text-xs font-bold text-[var(--color-primary)] hover:underline transition-colors">
-                Lupa sandi?
+                {t('auth.forgot_password')}
               </Link>
             </div>
             <Input
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              placeholder="••••••••"
+              placeholder={t('auth.password_placeholder')}
               startIcon={Lock}
               required
             />
@@ -208,7 +210,7 @@ export default function LoginPage() {
                 className="w-4 h-4 rounded border-slate-300 text-[var(--color-primary)] focus:ring-[var(--color-primary-light)] accent-[var(--color-primary)] cursor-pointer"
               />
               <span className="text-xs font-semibold text-[var(--color-text-secondary)] group-hover:text-[var(--color-text-primary)] transition-colors">
-                Ingat sesi saya
+                {t('auth.remember_me')}
               </span>
             </label>
           </div>
@@ -226,23 +228,23 @@ export default function LoginPage() {
               variant="primary"
               size="lg"
               className={`w-full h-12 text-sm font-extrabold tracking-wide rounded-2xl shadow-lg transition-all duration-300 ${
-                activeRole === 'seller'
-                  ? 'bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] shadow-emerald-900/20'
+                activeRole === 'buyer'
+                  ? 'bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] shadow-emerald-900/20 text-white'
                   : 'bg-amber-600 hover:bg-amber-700 text-white border-amber-600 shadow-amber-900/20'
               }`}
               isLoading={isLoading}
               rightIcon={!isLoading && <ArrowRight className="w-4 h-4" />}
             >
-              Masuk ke Dashboard
+              {t('auth.login_button')}
             </Button>
           </div>
         </form>
 
         <div className="mt-6 pt-5 border-t border-slate-100 text-center">
           <p className="text-xs font-semibold text-[var(--color-text-secondary)]">
-            Belum memiliki akun?{' '}
+            {t('auth.no_account')}{' '}
             <Link href="/register" className="font-extrabold text-[var(--color-primary)] hover:underline">
-              Daftar Gratis Sekarang
+              {t('auth.register_now')}
             </Link>
           </p>
         </div>
@@ -251,7 +253,7 @@ export default function LoginPage() {
       {/* Trust Badge Footer */}
       <div className="mt-6 flex items-center justify-center gap-2 text-[11px] font-semibold text-slate-400">
         <ShieldCheck className="w-4 h-4 text-emerald-600" />
-        <span>Keamanan Terenkripsi • Terintegrasi OSS & QRIS BI</span>
+        <span>{t('auth.trust_badge')}</span>
       </div>
     </div>
   );

@@ -51,48 +51,48 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
         {/* Center Hero Content */}
         <div className="z-10 max-w-xl my-auto py-6">
           <h1 className="text-4xl xl:text-5xl font-display font-extrabold leading-[1.15] mb-5 tracking-tight">
-            Buka Peluang Bisnis Anda ke{' '}
+            {t('auth.banner_title1', 'Buka Peluang Bisnis')} {' '}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-amber-400 to-orange-400 drop-shadow-xs">
-              Pasar Global
+              {t('auth.banner_title2', 'Anda ke Pasar Global')}
             </span>
           </h1>
 
           <p className="text-emerald-100/90 text-base xl:text-lg font-medium leading-relaxed mb-8">
-            Bergabung dengan ribuan eksportir Indonesia yang telah sukses melakukan transaksi lintas negara dengan mudah, aman, dan terpercaya.
+            {t('auth.banner_desc', 'Bergabung dengan ribuan eksportir Indonesia yang telah sukses melakukan transaksi lintas negara dengan mudah, aman, dan terpercaya.')}
           </p>
 
           {/* Floating Feature Glass Cards */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2">
             <div className="p-3.5 rounded-2xl bg-white/10 backdrop-blur-md border border-white/15 hover:border-emerald-400/40 transition-all duration-300 group">
               <ShieldCheck className="w-5 h-5 text-emerald-300 mb-2 group-hover:scale-110 transition-transform" />
-              <div className="text-xs font-bold text-white">NIB Verified</div>
-              <div className="text-[10px] text-emerald-200/80 font-medium mt-0.5">Verifikasi Legalitas</div>
+              <div className="text-xs font-bold text-white">{t('auth.badge_nib_title', 'NIB Verified')}</div>
+              <div className="text-[10px] text-emerald-200/80 font-medium mt-0.5">{t('auth.badge_nib_desc', 'Verifikasi Legalitas')}</div>
             </div>
 
             <div className="p-3.5 rounded-2xl bg-white/10 backdrop-blur-md border border-white/15 hover:border-amber-400/40 transition-all duration-300 group">
               <Bot className="w-5 h-5 text-amber-300 mb-2 group-hover:scale-110 transition-transform" />
-              <div className="text-xs font-bold text-white">AI Business Chat</div>
-              <div className="text-[10px] text-emerald-200/80 font-medium mt-0.5">Auto-Tone & Translate</div>
+              <div className="text-xs font-bold text-white">{t('auth.badge_ai_title', 'AI Business Chat')}</div>
+              <div className="text-[10px] text-emerald-200/80 font-medium mt-0.5">{t('auth.badge_ai_desc', 'Auto-Tone & Translate')}</div>
             </div>
 
             <div className="p-3.5 rounded-2xl bg-white/10 backdrop-blur-md border border-white/15 hover:border-teal-400/40 transition-all duration-300 group">
               <CreditCard className="w-5 h-5 text-teal-300 mb-2 group-hover:scale-110 transition-transform" />
-              <div className="text-xs font-bold text-white">QRIS Cross-Border</div>
-              <div className="text-[10px] text-emerald-200/80 font-medium mt-0.5">Pembayaran Instan</div>
+              <div className="text-xs font-bold text-white">{t('auth.badge_qris_title', 'QRIS Cross-Border')}</div>
+              <div className="text-[10px] text-emerald-200/80 font-medium mt-0.5">{t('auth.badge_qris_desc', 'Pembayaran Instan')}</div>
             </div>
           </div>
         </div>
 
         {/* Footer info */}
         <div className="z-10 pb-4 flex items-center justify-between text-xs font-semibold text-emerald-200/70 border-t border-emerald-800/60 pt-5">
-          <span>&copy; 2026 NusaTrade Connect</span>
+          <span>{t('auth.copyright', '© 2026 NusaTrade Connect')}</span>
           <div className="flex items-center gap-4">
             <Link href="/terms" className="hover:text-white transition-colors">
-              {t('auth.terms') || 'Syarat & Ketentuan'}
+              {t('auth.term_cond', 'Syarat & Ketentuan')}
             </Link>
             <span>•</span>
             <Link href="/katalog" className="hover:text-white transition-colors">
-              Katalog B2B
+              {t('auth.b2b_catalog', 'Katalog B2B')}
             </Link>
           </div>
         </div>
@@ -108,7 +108,7 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
           <div className="absolute top-[10%] right-[10%] w-[400px] h-[400px] bg-emerald-400/10 rounded-full blur-[140px] pointer-events-none"></div>
           <div className="absolute bottom-[10%] left-[10%] w-[350px] h-[350px] bg-amber-400/10 rounded-full blur-[120px] pointer-events-none"></div>
 
-          <div className="w-full max-w-lg relative z-10 my-auto pt-16 lg:pt-0">
+          <div className="w-full max-w-lg relative z-10 my-auto pt-24 lg:pt-24 pb-12">
             {children}
           </div>
         </div>
