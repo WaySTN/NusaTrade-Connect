@@ -117,9 +117,8 @@ export default function BuyerDashboardLayout({
         <div className="flex flex-col h-full overflow-hidden">
           {/* Sidebar Header / Logo */}
           <div className={cn("h-20 border-b border-[var(--color-border)] flex items-center shrink-0", isCollapsed ? "px-0 justify-center" : "px-6 justify-between")}>
-            <Link href="/" className={cn("font-display font-bold text-xl text-[var(--color-text-primary)] inline-flex items-center gap-2 group", isCollapsed ? "hidden" : "flex")}>
-              <Globe2 className="w-7 h-7 text-[var(--color-primary)] group-hover:rotate-12 transition-transform duration-300 shrink-0" />
-              <span className="tracking-tight whitespace-nowrap">Nusa<span className="text-[var(--color-primary)]">Trade</span></span>
+            <Link href="/" className={cn("inline-flex items-center group overflow-visible", isCollapsed ? "hidden" : "flex")}>
+              <img src="/logo.png" alt="NusaTrade Connect" className="h-16 w-auto object-contain scale-[1.6] origin-left hover:scale-[1.7] transition-transform duration-300" />
             </Link>
 
             <button

@@ -110,9 +110,8 @@ export default function PPJKDashboardLayout({
       )}>
         {/* Logo Section */}
         <div className="flex items-center justify-between h-[var(--header-height)] px-6 border-b border-[var(--color-border)] shrink-0">
-          <Link href="/" className="font-display font-extrabold text-xl text-[var(--color-text-primary)] inline-flex items-center gap-2 group">
-            <Globe2 className="w-6 h-6 text-[var(--color-accent)] group-hover:rotate-12 transition-transform duration-300" />
-            <span className="tracking-tight">Nusa<span className="text-[var(--color-accent)]">Trade</span></span>
+          <Link href="/" className="inline-flex items-center group overflow-visible">
+            <img src="/logo.png" alt="NusaTrade Connect" className="h-16 w-auto object-contain scale-[1.6] origin-left hover:scale-[1.7] transition-transform duration-300" />
           </Link>
           <button 
             onClick={() => setSidebarOpen(false)}

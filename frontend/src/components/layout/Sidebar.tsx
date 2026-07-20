@@ -69,9 +69,8 @@ export const Sidebar = ({ isOpen, onClose }: SidebarProps) => {
         isCollapsed ? "w-20" : "w-[var(--sidebar-width)]"
       )}>
         <div className={cn("flex items-center h-[var(--header-height)] border-b border-[var(--color-border)] shrink-0 transition-all", isCollapsed ? "px-0 justify-center" : "px-6 justify-between")}>
-          <Link href="/" className={cn("font-display font-extrabold text-xl text-[var(--color-text-primary)] inline-flex items-center gap-2 group", isCollapsed ? "hidden" : "flex")} onClick={onClose}>
-            <Globe2 className="w-6 h-6 text-[var(--color-primary)] group-hover:rotate-12 transition-transform duration-300 shrink-0" />
-            <span className="tracking-tight whitespace-nowrap">Nusa<span className="text-[var(--color-primary)]">Trade</span></span>
+          <Link href="/" className={cn("inline-flex items-center group overflow-visible", isCollapsed ? "hidden" : "flex")} onClick={onClose}>
+            <img src="/logo.png" alt="NusaTrade Connect" className="h-16 w-auto object-contain scale-[1.55] origin-left hover:scale-[1.65] transition-transform duration-300" />
           </Link>
 
           <button

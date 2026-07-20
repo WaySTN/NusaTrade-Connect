@@ -24,9 +24,8 @@ export const PublicFooter = ({ className, variant = 'light' }: PublicFooterProps
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8 lg:gap-12 mb-12">
           <div className="col-span-2 lg:col-span-2">
-            <Link href="/" className={cn("font-display font-extrabold text-2xl inline-flex items-center gap-2 mb-4 group", isDark ? "text-white" : "text-[var(--color-text-primary)]")}>
-              <Globe2 className={cn("w-6 h-6 group-hover:rotate-12 transition-transform duration-300", isDark ? "text-emerald-400" : "text-[var(--color-primary)]")} />
-              <span className="tracking-tight">Nusa<span className={isDark ? "text-emerald-400" : "text-[var(--color-primary)]"}>Trade</span></span>
+            <Link href="/" className="inline-flex items-center mb-4 group overflow-visible">
+              <img src="/logo.png" alt="NusaTrade Connect" className={cn("h-16 sm:h-20 w-auto object-contain scale-[1.6] origin-left hover:scale-[1.7] transition-transform duration-300", isDark && "brightness-0 invert")} />
             </Link>
             <p className={cn("text-sm leading-relaxed max-w-sm mb-6", isDark ? "text-slate-400" : "text-[var(--color-text-secondary)]")}>
               {t('footer.tagline') || 'Memberdayakan UMKM Indonesia melalui platform ekspor B2B yang aman, transparan, dan terintegrasi dengan ekosistem logistik.'}

@@ -96,10 +96,9 @@ export const PublicNavbar = () => {
         )}>
           <div className="flex justify-between items-center h-16">
             {/* Logo */}
-            <div className="flex-shrink-0 flex items-center">
-              <Link href="/" className="font-display font-bold text-xl lg:text-2xl text-[var(--color-text-primary)] inline-flex items-center gap-2 group">
-                <Globe2 className="w-6 h-6 lg:w-7 lg:h-7 text-[var(--color-primary)] group-hover:rotate-12 transition-transform duration-300" />
-                <span className="tracking-tight">Nusa<span className="text-[var(--color-primary)]">Trade</span></span>
+            <div className="flex-shrink-0 flex items-center overflow-visible">
+              <Link href="/" className="inline-flex items-center group">
+                <img src="/logo.png" alt="NusaTrade Connect" className="h-16 sm:h-20 w-auto object-contain scale-[1.6] origin-left hover:scale-[1.7] transition-transform duration-300" />
               </Link>
             </div>
             
