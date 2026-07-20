@@ -96,7 +96,7 @@ export default function PPJKDirectoryPage() {
       <PublicNavbar />
 
       {/* Hero Header */}
-      <div className="relative pt-32 pb-16 bg-[var(--color-primary)] overflow-hidden">
+      <div className="relative -mt-16 lg:-mt-20 pt-28 sm:pt-32 lg:pt-36 pb-16 bg-[var(--color-primary)] overflow-hidden">
         <div className="absolute inset-0 futuristic-bg opacity-30 mix-blend-overlay"></div>
         <div className="absolute -right-10 -bottom-10 opacity-10">
           <Ship className="w-80 h-80 text-white" />

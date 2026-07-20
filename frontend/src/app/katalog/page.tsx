@@ -58,7 +58,7 @@ export default function KatalogPage() {
       <PublicNavbar />
       
       {/* Hero Header */}
-      <div className="relative pt-32 pb-16 bg-[var(--color-primary)] overflow-hidden">
+      <div className="relative -mt-16 lg:-mt-20 pt-28 sm:pt-32 lg:pt-36 pb-16 bg-[var(--color-primary)] overflow-hidden">
         <div className="absolute inset-0 futuristic-bg opacity-30 mix-blend-overlay"></div>
         <div className="absolute -right-20 -bottom-20 opacity-10">
           <Globe2 className="w-96 h-96 text-white" />
