@@ -751,7 +751,8 @@ export interface DemoChatScenario {
   buyerOriginal: string;
   buyerTranslated: string;
   umkmInformal: string;
-  umkmCorrected: string;
+  umkmCorrectedIndonesia: string; // Versi bisnis bahasa Indonesia — UMKM bisa edit ini
+  umkmCorrected: string; // Versi final bahasa buyer — dikirim otomatis oleh AI
 }
 
 export const MOCK_CHAT_SCENARIOS: DemoChatScenario[] = [
@@ -765,6 +766,7 @@ export const MOCK_CHAT_SCENARIOS: DemoChatScenario[] = [
     buyerOriginal: "Hello! We are interested in your organic spices. Do you provide Certificate of Origin and what is the MOQ for EU shipment?",
     buyerTranslated: "Halo! Kami tertarik dengan rempah organik Anda. Apakah Anda menyediakan Certificate of Origin dan berapa MOQ untuk pengiriman ke EU?",
     umkmInformal: "halo pak, sedia kok cert origin, moq 500kg, harga $10/kg ya siap kirim",
+    umkmCorrectedIndonesia: "Yth. Bapak Smith,\n\nTerima kasih atas ketertarikan Anda terhadap produk kami. Ya, kami menyediakan Certificate of Origin. Minimum Order Quantity (MOQ) untuk pengiriman ke EU adalah 500 kg dengan harga $10 per kg.\n\nHormat kami,\nRempah Maluku Jaya",
     umkmCorrected: "Hello Mr. Smith,\n\nThank you for your interest in our products. Yes, we do provide a Certificate of Origin. Our Minimum Order Quantity (MOQ) for EU shipments is 500 kg, and the price is $10 per kg.\n\nBest regards,\nRempah Maluku Jaya",
   },
   {
@@ -777,6 +779,7 @@ export const MOCK_CHAT_SCENARIOS: DemoChatScenario[] = [
     buyerOriginal: "你好！我对你们的 keycaps 很感兴趣。请问可以批量购买吗？最低订购量是多少？价格是怎么计算的？",
     buyerTranslated: "Halo! Saya tertarik dengan keycaps kalian. Apakah bisa pesan dalam jumlah besar? Berapa minimum order-nya dan bagaimana perhitungan harganya?",
     umkmInformal: "bisa kok, min order 50 pcs, harga $4.5/pcs, ongkir tergantung negara tujuan",
+    umkmCorrectedIndonesia: "Yth. Pelanggan,\n\nTerima kasih atas minat Anda. Kami melayani pembelian dalam jumlah besar dengan Minimum Order Quantity (MOQ) 50 pcs, harga $4.5 per pcs. Ongkos kirim akan dihitung berdasarkan negara tujuan.\n\nKami tunggu konfirmasi Anda.",
     umkmCorrected: "尊敬的客户您好，\n\n感谢您对我们的产品感兴趣。我们支持批量采购，最低订购量 (MOQ) 为 50 件，价格为每件 4.5 美元。运费将根据目标国家另行计算。\n\n期待您的回复。",
   },
   {
@@ -789,6 +792,7 @@ export const MOCK_CHAT_SCENARIOS: DemoChatScenario[] = [
     buyerOriginal: "こんにちは。ラタン製の家具についてお伺いします。日本向けの輸出実績はありますか？",
     buyerTranslated: "Halo. Saya ingin bertanyaについて (tentang) furnitur rotan. Apakah Anda memiliki pengalaman ekspor ke Jepang?",
     umkmInformal: "ada bu, udah sering kirim ke tokyo. aman kualitasnya anti jamur.",
+    umkmCorrectedIndonesia: "Halo,\n\nTerima kasih atas pertanyaan Anda. Ya, kami memiliki pengalaman ekspor ke Jepang, khususnya ke Tokyo. Produk kami telah melalui proses anti-jamur sehingga berkualitas tinggi dan cocok untuk iklim Jepang.\n\nKami harap Anda dapat mempertimbangkan kerjasama dengan kami.",
     umkmCorrected: "こんにちは。\n\nお問い合わせありがとうございます。はい、日本への輸出実績は多数ございます（特に東京向け）。当社の製品は防カビ処理を施しており、日本の気候にも適した高品質な仕上がりとなっております。\n\nご検討のほどよろしくお願いいたします。",
   }
 ];

@@ -23,7 +23,7 @@ export default function ChatWindowPage() {
   const scenario = MOCK_CHAT_SCENARIOS.find(s => s.id === conversationId);
   
   // States
-  const [currentStep, setCurrentStep] = useState(2); // Start at step 2 (buyer already sent message)
+  const [currentStep, setCurrentStep] = useState(2);
   const [showAIAlert, setShowAIAlert] = useState(false);
   const [inputText, setInputText] = useState('');
   
@@ -50,6 +50,7 @@ export default function ChatWindowPage() {
   const messages: DemoMessage[] = [];
   
   if (currentStep >= 2) {
+    // Original buyer message — hidden on seller side by ChatBubbleStandard, kept for buyer view
     messages.push({
       id: 'msg-1',
       from: 'buyer',
@@ -58,6 +59,7 @@ export default function ChatWindowPage() {
       timestamp: '10:00 AM',
       type: 'original'
     });
+    // AI translation to Indonesian — shown to seller
     messages.push({
       id: 'msg-1-trans',
       from: 'system',
@@ -69,11 +71,13 @@ export default function ChatWindowPage() {
   }
   
   if (currentStep >= 4) {
+    // Show seller's sent message using the INDONESIAN business version
+    // (buyer receives the buyer-language version via AI auto-translate — not shown here)
     messages.push({
       id: 'msg-2',
       from: 'seller',
-      lang: 'ai',
-      content: scenario.umkmCorrected,
+      lang: 'id',
+      content: scenario.umkmCorrectedIndonesia,
       timestamp: '10:05 AM',
       type: 'sent'
     });
@@ -81,7 +85,6 @@ export default function ChatWindowPage() {
 
   const handleSend = () => {
     if (currentStep === 2) {
-      // Simulate typing informal text then triggering AI
       setInputText(scenario.umkmInformal);
       setCurrentStep(3);
       setTimeout(() => setShowAIAlert(true), 500);
@@ -121,19 +124,25 @@ export default function ChatWindowPage() {
       </div>
 
       {/* Chat Area Scrollable */}
-      <div className="flex-1 overflow-y-auto p-4 sm:p-6 pb-4 flex flex-col relative z-10 space-y-4">
+      <div className="flex-1 overflow-y-auto p-4 sm:p-6 pb-4 flex flex-col relative z-10 space-y-1">
         <div className="text-center text-[10px] text-slate-400 font-bold uppercase tracking-wider my-2">
           Hari ini
         </div>
         
         {messages.map((msg) => (
-          <ChatBubbleStandard key={msg.id} message={msg} viewer="seller" />
+          <ChatBubbleStandard
+            key={msg.id}
+            message={msg}
+            viewer="seller"
+            buyerLangName={scenario.nativeLangName}
+          />
         ))}
         
         {showAIAlert && (
           <AIAlertBox 
             originalText={scenario.umkmInformal}
-            aiCorrectedText={scenario.umkmCorrected}
+            aiCorrectedText={scenario.umkmCorrectedIndonesia}
+            buyerLangName={scenario.nativeLangName}
             onApprove={handleApprove}
           />
         )}

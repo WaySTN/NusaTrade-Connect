@@ -33,6 +33,7 @@ export default function ChatDemoPage() {
   
   const sellerReplyInformal = "bisa kok, min order 50 pcs, harga $4.5/pcs,\nongkir tergantung negara tujuan";
   const sellerReplyCorrected = "尊敬的叶琳女士，\n\n感谢您对我们 Keicaps 系列产品的关注。我们接受批量订购，\n最低起订量 (MOQ) 为 50 件，单价 4.50 美元/件。\n\n运费将依据目的地地址另行计算，\n烦请提供收货地址以便我们为您出具精确报价。\n\n此致，\nDarmawan — Keicaps.id";
+  const sellerReplyCorrectedIndonesia = "Yth. Nyonya Ye Lin,\n\nTerima kasih atas ketertarikan Anda terhadap seri produk Keicaps kami. Kami menerima pemesanan dalam jumlah besar dengan Minimum Order Quantity (MOQ) 50 unit, dengan harga $4.50 per unit.\n\nOngkos kirim akan dihitung terpisah berdasarkan alamat tujuan.\n\nHormat kami,\nDarmawan — Keicaps.id";
 
   const buyerMsg2Original = "非常感谢！50件起订量完全可以接受。\n我的收货地址是中国广州市天河区。\n请问能提供包含运费的完整报价单吗？\n\n叶琳";
   const buyerMsg2Translated = "Terima kasih banyak! MOQ 50 unit sangat bisa diterima.\nAlamat saya di Guangzhou, Tianhe District, China.\nBisakah Anda mengirimkan penawaran lengkap termasuk ongkos kirim?\n\nYe Lin";
@@ -208,8 +209,9 @@ export default function ChatDemoPage() {
             {showAIAlert && (
               <AIAlertBox 
                 originalText={sellerReplyInformal}
-                aiCorrectedText={sellerReplyCorrected}
-                onApprove={handleSellerApprove}
+                aiCorrectedText={sellerReplyCorrectedIndonesia}
+                buyerLangName="Mandarin"
+                onApprove={(text) => handleSellerApprove(sellerReplyCorrected)} // send the Chinese version to buyer
               />
             )}
             
