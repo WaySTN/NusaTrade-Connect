@@ -76,8 +76,8 @@ export default function BuyerDashboardLayout({
       badge: '3',
     },
     {
-      name: t('buyer_dashboard.nav_invoices') || 'Invoice & QRIS Pembayaran',
-      href: '/buyer/dashboard/invoices',
+      name: t('buyer_dashboard.nav_invoices') || 'Invoice & QRIS Pembayaran (Demo)',
+      href: '/demo/payment/buyer',
       icon: Receipt,
     },
     {

@@ -412,6 +412,14 @@ export interface MockInvoice {
   amount: number;
   status: 'PENDING' | 'PAID' | 'EXPIRED' | 'FAILED' | 'COMPLETED';
   items: { name: string; qty: number; price: number }[];
+  finalPrice?: number;
+  escrowStatus?: 'holding' | 'released' | 'pending_release';
+  orderConfirmedAt?: string;
+  ppjkName?: string;
+  shippingEta?: string;
+  productImage?: string;
+  currency?: 'IDR' | 'USD' | 'JPY' | 'CNY';
+  exchangeRate?: number;
 }
 
 export const MOCK_INVOICES: MockInvoice[] = [
@@ -454,6 +462,46 @@ export const MOCK_INVOICES: MockInvoice[] = [
     amount: 12000000,
     status: 'FAILED',
     items: [{ name: 'Patchouli Essential Oil', qty: 10, price: 1200000 }]
+  },
+  {
+    id: 'INV-DEMO-001',
+    buyerName: 'Global Imports LLC',
+    date: '2026-07-22',
+    amount: 0,
+    status: 'PENDING',
+    items: [{ name: 'Kopi Luwak Premium Gayo', qty: 100, price: 0 }],
+    finalPrice: 15000000,
+    currency: 'USD',
+    exchangeRate: 15000,
+    productImage: 'https://images.unsplash.com/photo-1559525839-b184a4d698c7?q=80&w=200&auto=format&fit=crop',
+    ppjkName: 'PT Logistik Global Mandiri'
+  },
+  {
+    id: 'INV-DEMO-002',
+    buyerName: 'Beijing Trading',
+    date: '2026-07-21',
+    amount: 45000000,
+    status: 'PAID',
+    items: [{ name: 'Set Kursi Rotan Minimalis', qty: 50, price: 900000 }],
+    currency: 'USD',
+    exchangeRate: 15000,
+    escrowStatus: 'holding',
+    productImage: 'https://images.unsplash.com/photo-1592078615290-033ee584e267?q=80&w=200&auto=format&fit=crop',
+    ppjkName: 'PT Lintas Samudra Logistik'
+  },
+  {
+    id: 'INV-DEMO-003',
+    buyerName: 'Tokyo Trading Co.',
+    date: '2026-07-15',
+    amount: 25000000,
+    status: 'COMPLETED',
+    items: [{ name: 'Panel Kayu Ukir Relief', qty: 10, price: 2500000 }],
+    currency: 'JPY',
+    exchangeRate: 100,
+    escrowStatus: 'released',
+    orderConfirmedAt: '2026-07-20T10:00:00Z',
+    productImage: 'https://images.unsplash.com/photo-1611089201970-1fc45a995e8e?q=80&w=200&auto=format&fit=crop',
+    ppjkName: 'Bali Cargo Express'
   }
 ];
 
