@@ -15,6 +15,7 @@ export interface PPJKCardProps {
   isVerified: boolean;
   services: string[];
   estimatedCost: string;
+  logoUrl?: string;
 }
 
 export const PPJKCard = ({
@@ -25,7 +26,8 @@ export const PPJKCard = ({
   reviews,
   isVerified,
   services,
-  estimatedCost
+  estimatedCost,
+  logoUrl
 }: PPJKCardProps) => {
   return (
     <Link href={`/ppjk/${id}`} className="block h-full group">
@@ -33,8 +35,14 @@ export const PPJKCard = ({
         
         {/* Header Info */}
         <div className="p-5 flex gap-4">
-          <div className="w-14 h-14 rounded-xl bg-[var(--color-bg-subtle)] border border-[var(--color-border)] flex items-center justify-center shrink-0 group-hover:bg-[var(--color-primary-light)] group-hover:text-[var(--color-primary)] transition-colors duration-300">
-            <Ship className="w-7 h-7 text-[var(--color-primary)] group-hover:text-white transition-colors duration-300" />
+          <div className="w-14 h-14 rounded-xl bg-white border border-[var(--color-border)] overflow-hidden flex items-center justify-center shrink-0 shadow-sm relative group-hover:border-[var(--color-primary-subtle)] transition-colors duration-300">
+            {logoUrl ? (
+              <img src={logoUrl} alt={name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+            ) : (
+              <div className="w-full h-full bg-emerald-50 text-[var(--color-primary)] flex items-center justify-center font-bold text-lg font-display">
+                {name.charAt(0)}
+              </div>
+            )}
           </div>
           
           <div className="flex-1 min-w-0">

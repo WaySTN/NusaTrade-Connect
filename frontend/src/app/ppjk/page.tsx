@@ -178,6 +178,7 @@ export default function PPJKDirectoryPage() {
                     isVerified={ppjk.isVerified}
                     services={ppjk.services.length > 0 ? ppjk.services : ['Layanan belum diisi']}
                     estimatedCost={costString}
+                    logoUrl={ppjk.logoUrl}
                   />
                 </div>
               );
