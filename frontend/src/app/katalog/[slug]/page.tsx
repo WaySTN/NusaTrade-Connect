@@ -13,6 +13,42 @@ import { AuthModal } from '@/components/ui/AuthModal';
 import { DynamicText } from '@/components/ui/DynamicText';
 import { useT } from '@/i18n/useT';
 
+function ProductImageGallery({ mainPhoto, photos, productName, isVerified }: { mainPhoto: string; photos: string[]; productName: string; isVerified: boolean }) {
+  const [selectedPhoto, setSelectedPhoto] = useState(mainPhoto);
+
+  useEffect(() => {
+    setSelectedPhoto(mainPhoto);
+  }, [mainPhoto]);
+
+  return (
+    <div className="w-full lg:w-[45%] bg-[var(--color-bg-subtle)] p-6 sm:p-8 flex flex-col gap-6 lg:border-r border-[var(--color-border)]">
+      <div className="aspect-square w-full rounded-2xl overflow-hidden bg-white border border-[var(--color-border)] flex items-center justify-center relative shadow-sm group">
+        <img src={selectedPhoto} alt={productName} className="w-full h-full object-cover transition-transform duration-700 var(--ease-out-quart) group-hover:scale-105" />
+        
+        {isVerified && (
+          <div className="absolute top-4 left-4">
+            <Badge variant="verified" className="shadow-lg shadow-[var(--color-success)]/20 px-3 py-1 font-bold">Verified Seller</Badge>
+          </div>
+        )}
+      </div>
+      
+      {/* Thumbnails */}
+      <div className="grid grid-cols-4 gap-4">
+        {photos.map((photo, i) => (
+          <button 
+            key={i} 
+            type="button"
+            onClick={() => setSelectedPhoto(photo)}
+            className={`aspect-square rounded-xl border-[3px] overflow-hidden bg-white flex items-center justify-center transition-all duration-200 var(--ease-out-quart) ${selectedPhoto === photo ? 'border-[var(--color-primary)] shadow-md shadow-[var(--color-primary)]/10 ring-2 ring-[var(--color-primary)]/20' : 'border-[var(--color-border)] opacity-70 hover:opacity-100 hover:border-[var(--color-primary-subtle)]'}`}
+          >
+            <img src={photo} alt={`thumbnail-${i}`} className="w-full h-full object-cover" />
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export default function ProductDetailPage() {
   const t = useT();
   const params = useParams();
@@ -96,35 +132,25 @@ export default function ProductDetailPage() {
         <div className="bg-white border border-[var(--color-border)] rounded-3xl shadow-sm overflow-hidden animate-slide-up duration-300 var(--ease-out-quart) hover:shadow-md transition-shadow">
           <div className="flex flex-col lg:flex-row">
             
-            {/* Image Gallery Area */}
-            <div className="w-full lg:w-[45%] bg-[var(--color-bg-subtle)] p-6 sm:p-8 flex flex-col gap-6 lg:border-r border-[var(--color-border)]">
-              <div className="aspect-square w-full rounded-2xl overflow-hidden bg-white border border-[var(--color-border)] flex items-center justify-center relative shadow-sm group">
-                {product.photoUrl ? (
-                  <img src={product.photoUrl} alt={product.name} className="w-full h-full object-cover transition-transform duration-700 var(--ease-out-quart) group-hover:scale-105" />
-                ) : (
-                  <Package className="w-20 h-20 text-[var(--color-text-muted)] opacity-20" />
-                )}
-                
-                {product.isVerified && (
-                  <div className="absolute top-4 left-4">
-                    <Badge variant="verified" className="shadow-lg shadow-[var(--color-success)]/20 px-3 py-1 font-bold">Verified Seller</Badge>
-                  </div>
-                )}
-              </div>
-              
-              {/* Dummy thumbnails */}
-              <div className="grid grid-cols-4 gap-4">
-                {[...Array(4)].map((_, i) => (
-                  <div key={i} className={`aspect-square rounded-xl border-[3px] overflow-hidden bg-white flex items-center justify-center transition-all duration-200 var(--ease-out-quart) ${i === 0 ? 'border-[var(--color-primary)] shadow-md shadow-[var(--color-primary)]/10' : 'border-[var(--color-border)] cursor-pointer hover:border-[var(--color-primary-subtle)]'}`}>
-                     {product.photoUrl ? (
-                      <img src={product.photoUrl} alt="thumbnail" className={`w-full h-full object-cover ${i === 0 ? 'opacity-100' : 'opacity-70 hover:opacity-100 transition-opacity'}`} />
-                    ) : (
-                      <Package className="w-6 h-6 text-[var(--color-text-muted)] opacity-20" />
-                    )}
-                  </div>
-                ))}
-              </div>
-            </div>
+              {/* Image Gallery Area */}
+              {(() => {
+                const coffeeThumbnails = [
+                  'https://images.unsplash.com/photo-1559056199-641a0ac8b55e?w=800',
+                  'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=800',
+                  'https://images.unsplash.com/photo-1587734195503-904fca47e0e9?w=800',
+                  'https://images.unsplash.com/photo-1511920170033-f8396924c348?w=800'
+                ];
+                const photos = product.category === 'Food & Beverage' ? coffeeThumbnails : [product.photoUrl, product.photoUrl, product.photoUrl, product.photoUrl];
+
+                return (
+                  <ProductImageGallery 
+                    mainPhoto={photos[0]} 
+                    photos={photos} 
+                    productName={product.name} 
+                    isVerified={product.isVerified} 
+                  />
+                );
+              })()}
 
             {/* Product Info Area */}
             <div className="w-full lg:w-[55%] p-6 sm:p-10 flex flex-col">
@@ -147,11 +173,14 @@ export default function ProductDetailPage() {
                     {formatRupiah(product.minPrice)}
                     <span className="text-xl text-[var(--color-text-secondary)] font-body font-normal opacity-50">-</span>
                     {formatRupiah(product.maxPrice)}
+                    <span className="text-sm font-body text-[var(--color-text-muted)] font-normal ml-1">/ {product.category === 'Food & Beverage' ? 'kg' : 'unit'}</span>
                   </div>
                 </div>
                 <div className="bg-[var(--color-bg-base)] px-5 py-4 rounded-2xl border border-[var(--color-border-strong)] shadow-sm">
                   <div className="text-[10px] text-[var(--color-text-secondary)] mb-1.5 font-extrabold uppercase tracking-widest">{t('katalog.moq') || 'Minimum Order (MOQ)'}</div>
-                  <div className="font-mono font-bold text-[var(--color-text-primary)] text-xl">{product.moq} {t('katalog.unit') || 'Unit'}</div>
+                  <div className="font-mono font-bold text-[var(--color-text-primary)] text-xl">
+                    {product.moq} {product.category === 'Food & Beverage' ? 'Kg' : (t('katalog.unit') || 'Unit')}
+                  </div>
                 </div>
               </div>
 
@@ -159,7 +188,11 @@ export default function ProductDetailPage() {
                 <div>
                   <h3 className="font-bold text-[var(--color-text-primary)] text-lg mb-3">{t('landing.product_details') || 'Deskripsi Produk'}</h3>
                   <p className="text-[var(--color-text-secondary)] font-medium leading-relaxed text-[15px]">
-                    <DynamicText text="Produk kualitas ekspor terbaik dari Indonesia. Dibuat dengan standar internasional dan telah melewati proses quality control yang ketat. Cocok untuk pasar global dengan spesifikasi yang dapat disesuaikan dengan kebutuhan importir." />
+                    <DynamicText text={
+                      product.category === 'Food & Beverage'
+                        ? "Kopi Arabika Gayo Specialty (Green Beans Grade 1) dari Dataran Tinggi Takengon, Aceh. Dipetik dari ceri kopi pilihan yang tumbuh di ketinggian 1.300-1.600 mdpl. Diproses secara cermat dengan metode Full Washed untuk menghasilkan citarasa floral yang kaya, keasaman yang seimbang (mild acidity), serta body yang tebal dan aroma khas yang memikat pasar ekspor global."
+                        : "Produk kualitas ekspor terbaik dari Indonesia. Dibuat dengan standar internasional dan telah melewati proses quality control yang ketat. Cocok untuk pasar global dengan spesifikasi yang dapat disesuaikan dengan kebutuhan importir."
+                    } />
                   </p>
                 </div>
                 
@@ -168,14 +201,18 @@ export default function ProductDetailPage() {
                     <CheckCircle2 className="w-6 h-6 text-[var(--color-primary)] shrink-0" />
                     <div>
                       <h4 className="text-[15px] font-bold text-[var(--color-text-primary)] mb-0.5">{t('katalog.certifications') || 'Sertifikasi'}</h4>
-                      <p className="text-[13px] font-medium text-[var(--color-text-secondary)]"><DynamicText text="ISO 9001, BPOM, Halal MUI" /></p>
+                      <p className="text-[13px] font-medium text-[var(--color-text-secondary)]">
+                        <DynamicText text={product.category === 'Food & Beverage' ? "Organic Certified, Fairtrade, CoO Ready, ISO 9001" : "ISO 9001, BPOM, Halal MUI"} />
+                      </p>
                     </div>
                   </div>
                   <div className="flex items-start gap-4 p-4 rounded-2xl bg-[var(--color-bg-subtle)] border border-[var(--color-border)]">
                     <CheckCircle2 className="w-6 h-6 text-[var(--color-primary)] shrink-0" />
                     <div>
                       <h4 className="text-[15px] font-bold text-[var(--color-text-primary)] mb-0.5">{t('katalog.production_capacity') || 'Kapasitas Produksi'}</h4>
-                      <p className="text-[13px] font-medium text-[var(--color-text-secondary)]"><DynamicText text="10,000 unit / bulan" /></p>
+                      <p className="text-[13px] font-medium text-[var(--color-text-secondary)]">
+                        <DynamicText text={product.category === 'Food & Beverage' ? "25.000 kg / bulan" : "10,000 unit / bulan"} />
+                      </p>
                     </div>
                   </div>
                 </div>

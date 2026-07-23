@@ -230,14 +230,14 @@ export const MOCK_UMKM: MockUMKM[] = [
 export const MOCK_PRODUCTS: MockProduct[] = [
   {
     id: 'prod-001',
-    slug: 'kopi-luwak-premium',
-    name: 'Kopi Luwak Premium Gayo',
+    slug: 'kopi-arabika-gayo-specialty',
+    name: 'Kopi Arabika Gayo Specialty',
     sellerId: 'umkm-001',
     sellerName: 'Kopi Nusantara Abadi',
-    photoUrl: 'https://images.unsplash.com/photo-1559525839-b184a4d698c7?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60',
-    moq: 50,
-    minPrice: 150000,
-    maxPrice: 200000,
+    photoUrl: 'https://images.unsplash.com/photo-1559056199-641a0ac8b55e?w=800',
+    moq: 500,
+    minPrice: 135000,
+    maxPrice: 145000,
     category: 'Food & Beverage',
     isVerified: true,
   },
@@ -785,7 +785,10 @@ export const MOCK_CATEGORIES = [
 
 // ─── Helper Functions ────────────────────────────────────────────────────────
 
-export const getMockProduct = (slug: string) => MOCK_PRODUCTS.find(p => p.slug === slug);
+export const getMockProduct = (slug: string) => 
+  MOCK_PRODUCTS.find(p => p.slug === slug) || 
+  MOCK_PRODUCTS.find(p => p.id === 'prod-001' && (slug.includes('kopi') || slug.includes('gayo') || slug.includes('luwak'))) || 
+  MOCK_PRODUCTS[0];
 export const getMockUMKM = (idOrSlug: string) => MOCK_UMKM.find(u => u.id === idOrSlug || u.slug === idOrSlug);
 export const getMockUMKMProducts = (sellerIdOrName: string) => MOCK_PRODUCTS.filter(p => p.sellerId === sellerIdOrName || p.sellerName === sellerIdOrName);
 export const getMockInvoice = (id: string) => MOCK_INVOICES.find(i => i.id === id);
