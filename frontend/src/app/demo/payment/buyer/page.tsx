@@ -150,19 +150,22 @@ export default function DemoPaymentBuyer() {
                 </div>
               </div>
 
-              <div className="bg-slate-900 text-white p-6 border-t border-slate-800">
+              <div className="bg-gradient-to-br from-emerald-50 via-teal-50/60 to-emerald-100/50 p-6 border-t border-emerald-200">
                 <div className="flex justify-between items-end mb-2">
                   <div>
-                    <span className="text-[10px] font-extrabold uppercase tracking-widest text-emerald-400 block mb-1">Total Tagihan Cross-Border</span>
-                    <span className="text-2xl font-black font-mono tracking-tight text-white">{formatCny(totalCny)}</span>
+                    <span className="text-[10px] font-extrabold uppercase tracking-widest text-emerald-800 block mb-1">Total Tagihan Cross-Border</span>
+                    <span className="text-2xl font-black font-mono tracking-tight text-[var(--color-primary)]">{formatCny(totalCny)}</span>
                   </div>
                   <div className="text-right">
-                    <span className="text-lg font-bold font-mono text-slate-300">{formatUsd(totalUsd)}</span>
+                    <span className="text-lg font-bold font-mono text-emerald-950">{formatUsd(totalUsd)}</span>
                   </div>
                 </div>
-                <div className="flex justify-between items-center text-[11px] font-medium text-slate-400 pt-2 border-t border-slate-800 font-mono">
+                <div className="flex justify-between items-center text-[11px] font-medium text-emerald-800/90 pt-2.5 border-t border-emerald-200/80 font-mono">
                   <span>Setara dengan {formatRupiah(totalIdr)}</span>
-                  <span className="text-emerald-400 font-bold">Safe Escrow Guaranteed</span>
+                  <span className="text-emerald-700 font-extrabold flex items-center gap-1 bg-white/70 px-2 py-0.5 rounded-full border border-emerald-300">
+                    <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
+                    Escrow Protected
+                  </span>
                 </div>
               </div>
             </div>
@@ -241,9 +244,9 @@ export default function DemoPaymentBuyer() {
                         <Building2 className={cn("w-5 h-5", paymentMethod === 'bank' ? "text-[var(--color-primary)]" : "text-slate-400")} />
                       </div>
                       <div className="flex-1">
-                        <h4 className="font-bold text-[var(--color-text-primary)] text-sm mb-1">Transfer Bank SWIFT (USD / CNY)</h4>
+                        <h4 className="font-bold text-[var(--color-text-primary)] text-sm mb-1">Transfer Bank SWIFT (CNY / USD)</h4>
                         <p className="text-xs font-medium text-[var(--color-text-secondary)] leading-relaxed">
-                          Transfer Bank Internasional ke Virtual Account Escrow NusaTrade (Bank of China / Citibank).
+                          Transfer Bank Internasional ke Virtual Account Escrow (Bank of China, ICBC, Citibank).
                         </p>
                       </div>
                     </button>
@@ -253,23 +256,19 @@ export default function DemoPaymentBuyer() {
                     <div className="flex flex-col items-center animate-fade-in bg-[var(--color-bg-subtle)] p-5 rounded-2xl border border-[var(--color-border)]">
                       <div className="flex items-center gap-2 mb-3 text-xs font-bold text-[var(--color-text-secondary)]">
                         <img src="https://flagcdn.com/id.svg" className="w-4 h-3 rounded-2xs" alt="ID" />
-                        <span>QRIS Cross-Border Indonesia - China</span>
+                        <span>QRIS Cross-Border Indonesia ⇄ China</span>
                         <img src="https://flagcdn.com/cn.svg" className="w-4 h-3 rounded-2xs" alt="CN" />
                       </div>
 
-                      <div className="w-48 h-48 bg-white p-3 rounded-2xl border border-[var(--color-border)] shadow-md mb-4 relative overflow-hidden group flex items-center justify-center">
-                        <div className="w-full h-full border-4 border-slate-900 flex flex-col justify-between p-2 opacity-95">
-                          <div className="flex justify-between">
-                            <div className="w-8 h-8 bg-slate-900 border-2 border-white"></div>
-                            <div className="w-8 h-8 bg-slate-900 border-2 border-white"></div>
-                          </div>
-                          <div className="text-center font-mono text-[9px] font-black text-[var(--color-primary)] tracking-widest">
-                            QRIS INTERNASIONAL
-                          </div>
-                          <div className="flex justify-between items-end">
-                            <div className="w-8 h-8 bg-slate-900 border-2 border-white"></div>
-                            <div className="w-6 h-6 bg-slate-900"></div>
-                          </div>
+                      {/* Real QR Code Graphic */}
+                      <div className="bg-white p-3.5 rounded-2xl border border-[var(--color-border)] shadow-md mb-4 flex flex-col items-center justify-center">
+                        <img 
+                          src="https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=00020101021226680016ID.CO.NUSATRADE01189360091430000000005204581253033605802ID5920KopiNusantaraAbadi6008BEIJING6304A1B2" 
+                          alt="QRIS Cross-Border" 
+                          className="w-44 h-44 object-contain rounded-xl shadow-2xs" 
+                        />
+                        <div className="flex items-center gap-2 mt-2 pt-2 border-t border-slate-100">
+                          <span className="text-[10px] font-mono font-black text-emerald-800 tracking-widest uppercase">NusaTrade QRIS Interoperable</span>
                         </div>
                       </div>
                       
@@ -288,24 +287,35 @@ export default function DemoPaymentBuyer() {
 
                   {paymentMethod === 'bank' && (
                     <div className="animate-fade-in space-y-4">
-                      <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 text-xs">
-                        <p className="text-[10px] font-bold text-slate-500 uppercase mb-1">Bank Penerima Escrow</p>
-                        <p className="font-bold text-slate-800 mb-3">Bank of China (Beijing Branch) / Citibank Singapore</p>
+                      <div className="space-y-2.5">
+                        <p className="text-xs font-bold text-[var(--color-text-secondary)]">Pilih Bank Penerima Escrow:</p>
                         
-                        <p className="text-[10px] font-bold text-slate-500 uppercase mb-1">SWIFT Code</p>
-                        <p className="font-mono font-bold text-slate-800 mb-3">BKCHCNBJ / CITISGSG</p>
-
-                        <p className="text-[10px] font-bold text-slate-500 uppercase mb-1">Virtual Account Escrow (CNY / USD)</p>
-                        <div className="flex items-center justify-between bg-white p-2.5 border border-slate-200 rounded-lg">
-                          <span className="font-mono font-bold text-base text-[var(--color-primary)] tracking-wider">6217 0000 8891 2026</span>
-                        </div>
+                        {[
+                          { id: 'boc', name: 'Bank of China (中国银行)', swift: 'BKCHCNBJ', va: '6217 0000 8891 2026', flag: 'https://flagcdn.com/cn.svg', currency: 'CNY (¥)' },
+                          { id: 'icbc', name: 'ICBC Industrial Bank (中国工商银行)', swift: 'ICBCCNBJ', va: '6222 0802 9912 4011', flag: 'https://flagcdn.com/cn.svg', currency: 'CNY (¥)' },
+                          { id: 'citi', name: 'Citibank N.A. (Singapore Branch)', swift: 'CITISGSG', va: '8812 0000 1234 5678', flag: 'https://flagcdn.com/sg.svg', currency: 'USD ($)' },
+                        ].map((b, idx) => (
+                          <div key={b.id} className="bg-slate-50 p-3.5 rounded-2xl border border-slate-200 hover:border-emerald-500 transition-colors">
+                            <div className="flex items-center justify-between mb-1">
+                              <span className="font-bold text-xs text-slate-900 flex items-center gap-2">
+                                <img src={b.flag} className="w-4 h-3 rounded-xs shadow-2xs" alt="flag" />
+                                {b.name}
+                              </span>
+                              <span className="text-[10px] font-mono font-bold bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full">{b.currency}</span>
+                            </div>
+                            <div className="flex items-center justify-between mt-2 pt-2 border-t border-slate-200 text-xs">
+                              <span className="text-slate-500 font-mono text-[11px]">SWIFT: <strong>{b.swift}</strong></span>
+                              <span className="font-mono font-bold text-[var(--color-primary)] text-sm">{b.va}</span>
+                            </div>
+                          </div>
+                        ))}
                       </div>
 
                       <Button 
                         variant="primary" 
                         size="lg" 
                         disabled={isProcessing}
-                        className="w-full h-13 rounded-xl text-sm font-bold shadow-lg shadow-[var(--color-primary)]/20"
+                        className="w-full h-13 rounded-xl text-sm font-bold shadow-lg shadow-[var(--color-primary)]/20 bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)]"
                         leftIcon={isProcessing ? <Loader2 className="w-5 h-5 animate-spin" /> : undefined}
                         onClick={handleSimulatePayment}
                       >
