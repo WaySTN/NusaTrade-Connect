@@ -29,6 +29,9 @@ export const PPJKCard = ({
   estimatedCost,
   logoUrl
 }: PPJKCardProps) => {
+  const [imgError, setImgError] = React.useState(false);
+  const initials = name.split(' ').slice(0, 2).map(w => w[0]).join('').toUpperCase();
+
   return (
     <Link href={`/ppjk/${id}`} className="block h-full group">
       <div className="bg-white border border-[var(--color-border)] rounded-2xl overflow-hidden hover:shadow-xl hover-lift hover:border-[var(--color-primary-light)] hover:ring-4 hover:ring-[var(--color-primary-light)]/20 flex flex-col h-full transition-all duration-300">
@@ -36,11 +39,16 @@ export const PPJKCard = ({
         {/* Header Info */}
         <div className="p-5 flex gap-4">
           <div className="w-14 h-14 rounded-xl bg-white border border-[var(--color-border)] overflow-hidden flex items-center justify-center shrink-0 shadow-sm relative group-hover:border-[var(--color-primary-subtle)] transition-colors duration-300">
-            {logoUrl ? (
-              <img src={logoUrl} alt={name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+            {logoUrl && !imgError ? (
+              <img 
+                src={logoUrl} 
+                alt={name} 
+                onError={() => setImgError(true)}
+                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" 
+              />
             ) : (
-              <div className="w-full h-full bg-emerald-50 text-[var(--color-primary)] flex items-center justify-center font-bold text-lg font-display">
-                {name.charAt(0)}
+              <div className="w-full h-full bg-emerald-50 text-[var(--color-primary)] flex items-center justify-center font-bold text-sm font-display">
+                {initials}
               </div>
             )}
           </div>

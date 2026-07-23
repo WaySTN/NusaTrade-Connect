@@ -82,6 +82,7 @@ export default function PPJKDetailPage() {
 
   const [ppjk, setPpjk] = useState<MockPPJK | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [imgError, setImgError] = useState(false);
 
   useEffect(() => {
     // Find PPJK by ID from MOCK or localStorage
@@ -165,9 +166,9 @@ export default function PPJKDetailPage() {
       {/* Decorative Grid Pattern */}
       <div className="fixed inset-0 grid-pattern opacity-30 z-0 pointer-events-none"></div>
 
-      <main className="flex-1 pb-20 relative z-10">
+      <main className="flex-1 pb-12 relative z-10">
         {/* A. Header Hero Section */}
-        <div className="relative pt-32 pb-20 overflow-hidden text-white" style={{background: 'linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-hover) 60%, var(--color-primary-active) 100%)'}}>
+        <div className="relative pt-28 pb-16 overflow-hidden text-white bg-gradient-to-br from-[#063826] via-[var(--color-primary)] to-[#04281a]">
           {/* Dot pattern overlay */}
           <div className="absolute inset-0 pointer-events-none opacity-[0.08]" style={{backgroundImage: 'radial-gradient(circle, white 1px, transparent 1px)', backgroundSize: '24px 24px'}}></div>
           {/* Top-right light flare */}
@@ -175,18 +176,25 @@ export default function PPJKDetailPage() {
           
           <div className="relative z-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
             {/* Back to directory */}
-            <Link href="/ppjk" className="inline-flex items-center gap-2 text-sm font-bold text-slate-400 hover:text-white transition-colors duration-200 mb-8">
+            <Link href="/ppjk" className="inline-flex items-center gap-2 text-xs sm:text-sm font-bold text-emerald-200 hover:text-white bg-white/10 hover:bg-white/20 px-3.5 py-1.5 rounded-full backdrop-blur-md border border-white/15 transition-all duration-200 mb-8">
               <ArrowLeft className="w-4 h-4" />
               Kembali ke Direktori PPJK
             </Link>
 
             <div className="flex flex-col md:flex-row gap-6 md:items-center">
               {/* Logo / Initials */}
-              <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl bg-slate-800 border border-slate-700 flex items-center justify-center shrink-0 shadow-xl overflow-hidden">
-                {ppjk.logoUrl ? (
-                  <img src={ppjk.logoUrl} alt={ppjk.name} className="w-full h-full object-cover" />
+              <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl bg-white border border-white/20 p-1 flex items-center justify-center shrink-0 shadow-2xl overflow-hidden relative">
+                {ppjk.logoUrl && !imgError ? (
+                  <img 
+                    src={ppjk.logoUrl} 
+                    alt={ppjk.name} 
+                    onError={() => setImgError(true)}
+                    className="w-full h-full object-cover rounded-xl" 
+                  />
                 ) : (
-                  <Building2 className="w-12 h-12 sm:w-14 sm:h-14 text-slate-400" />
+                  <div className="w-full h-full bg-emerald-800 text-white flex items-center justify-center font-bold text-2xl font-display rounded-xl">
+                    {initials}
+                  </div>
                 )}
               </div>
 
@@ -580,20 +588,20 @@ export default function PPJKDetailPage() {
         </div>
 
         {/* F. CTA Bawah Halaman */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-16">
-          <div className="rounded-3xl bg-[var(--color-text-primary)] border border-slate-800 p-8 sm:p-12 text-center relative overflow-hidden shadow-2xl text-white">
-            <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/10 to-teal-500/5 pointer-events-none"></div>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-14 mb-4">
+          <div className="rounded-3xl bg-gradient-to-r from-[#063826] via-[var(--color-primary)] to-[#04281a] border border-emerald-700/40 p-8 sm:p-12 text-center relative overflow-hidden shadow-2xl text-white">
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.08)_0,transparent_70%)] pointer-events-none"></div>
             
-            <h2 className="text-2xl sm:text-3xl font-display font-extrabold tracking-tight mb-4 relative z-10">
+            <h2 className="text-2xl sm:text-3xl font-display font-extrabold tracking-tight mb-3 relative z-10">
               Butuh bantuan pengurusan dokumen ekspor?
             </h2>
-            <p className="text-slate-300 font-medium mb-8 max-w-xl mx-auto text-sm sm:text-base relative z-10">
+            <p className="text-emerald-100/90 font-medium mb-8 max-w-xl mx-auto text-sm sm:text-base relative z-10">
               Konsultasikan kebutuhan logistik, izin ekspor, PEB, atau pengurusan bea cukai langsung dengan perwakilan resmi kami.
             </p>
             
             <button
               onClick={() => handleContactWhatsApp(`Halo ${ppjk.name}, saya membutuhkan bantuan pengurusan dokumen ekspor.`)}
-              className="inline-flex items-center justify-center gap-2.5 px-7 py-3.5 rounded-2xl font-bold bg-[#25D366] hover:bg-[#1da851] transition-all duration-300 shadow-xl shadow-[#25D366]/20 border-0 text-base relative z-10"
+              className="inline-flex items-center justify-center gap-2.5 px-8 py-3.5 rounded-2xl font-bold bg-[#25D366] hover:bg-[#1da851] text-white transition-all duration-300 shadow-xl shadow-[#25D366]/25 border-0 text-base relative z-10 hover:scale-105"
             >
               <MessageSquare className="w-5 h-5 fill-current" />
               Hubungi via WhatsApp

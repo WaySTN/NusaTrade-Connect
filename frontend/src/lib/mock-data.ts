@@ -703,7 +703,7 @@ export const MOCK_PPJK: MockPPJK[] = [
     rating: 4.6,
     reviewCount: 96,
     isVerified: true,
-    logoUrl: 'https://images.unsplash.com/photo-1565891741441-6ad96557871a?w=500',
+    logoUrl: 'https://images.unsplash.com/photo-1494412574643-ff11b0a5c1c3?w=500',
     description: 'PT Andalan Ekspor Medan berpengalaman dalam pengurusan dokumen ekspor komoditas unggulan Sumatera seperti sawit, karet, kopi, dan produk hutan. Berbasis di Belawan, pelabuhan ekspor terbesar di Sumatera, kami menjamin proses kepabeanan yang cepat dan sesuai regulasi.',
     estimatedCostMin: 400000,
     estimatedCostMax: 1800000,
