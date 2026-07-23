@@ -1,10 +1,19 @@
 export interface DemoMessage {
   id: string;
   from: 'buyer' | 'seller' | 'system';
-  lang: 'zh' | 'id' | 'en' | 'ja' | 'ai';
+  lang?: 'zh' | 'id' | 'en' | 'ja' | 'ai';
   content: string;
+  translatedContent?: string;
   timestamp: string;
-  type: 'original' | 'translated' | 'corrected' | 'sent';
+  type?: 'original' | 'translated' | 'corrected' | 'sent' | 'product_card' | 'deal';
+  productInfo?: {
+    title: string;
+    image: string;
+    seller: string;
+    moq: string;
+    price: string;
+    specs: string;
+  };
 }
 
 export interface MockProduct {
