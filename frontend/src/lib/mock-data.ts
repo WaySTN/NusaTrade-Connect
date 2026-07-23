@@ -434,11 +434,11 @@ export interface MockInvoice {
 export const MOCK_INVOICES: MockInvoice[] = [
   {
     id: 'INV-2026-0001',
-    buyerName: 'Global Imports LLC',
+    buyerName: 'Beijing Trading (Ye Lin)',
     date: '2026-07-15',
-    amount: 15000000,
+    amount: 68000000,
     status: 'PENDING',
-    items: [{ name: 'Kopi Luwak Premium Gayo', qty: 100, price: 150000 }]
+    items: [{ name: 'Kopi Arabika Gayo Specialty', qty: 500, price: 136000 }]
   },
   {
     id: 'INV-2026-0002',
@@ -474,15 +474,15 @@ export const MOCK_INVOICES: MockInvoice[] = [
   },
   {
     id: 'INV-DEMO-001',
-    buyerName: 'Global Imports LLC',
+    buyerName: 'Beijing Trading (Ye Lin)',
     date: '2026-07-22',
     amount: 0,
     status: 'PENDING',
-    items: [{ name: 'Kopi Luwak Premium Gayo', qty: 100, price: 0 }],
-    finalPrice: 15000000,
+    items: [{ name: 'Kopi Arabika Gayo Specialty', qty: 500, price: 0 }],
+    finalPrice: 68000000,
     currency: 'USD',
-    exchangeRate: 15000,
-    productImage: 'https://images.unsplash.com/photo-1559525839-b184a4d698c7?q=80&w=200&auto=format&fit=crop',
+    exchangeRate: 16000,
+    productImage: 'https://images.unsplash.com/photo-1559056199-641a0ac8b55e?w=400',
     ppjkName: 'PT Logistik Global Mandiri'
   },
   {
@@ -757,11 +757,12 @@ export const MOCK_BUYER_USERS: MockUser[] = [
 // ─── Shared Seller Profile & Stats ──────────────────────────────────────────
 
 export const MOCK_SELLER_PROFILE = {
-  name: 'Budi Santoso',
+  name: 'Kopi Nusantara Abadi',
   businessName: 'Kopi Nusantara Abadi',
+  ownerName: 'Budi Santoso',
   city: 'Takengon, Aceh',
   categories: ['Food & Beverage', 'Agriculture'],
-  nibVerified: false,
+  nibVerified: true,
   photoUrl: ''
 };
 

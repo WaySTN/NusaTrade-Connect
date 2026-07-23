@@ -55,7 +55,7 @@ export default function BuyerDashboardOverview() {
               {t('buyer_dashboard.verified') || 'Verified International B2B Buyer'}
             </div>
             <h2 className="text-2xl sm:text-3xl font-display font-extrabold tracking-tight">
-              {t('buyer_dashboard.welcome') || 'Selamat Datang'}, Global Imports LLC
+              {t('buyer_dashboard.welcome') || 'Selamat Datang'}, Beijing Trading (Ye Lin)
             </h2>
             <p className="text-emerald-100 text-sm font-medium leading-relaxed">
               {t('buyer_dashboard.welcome_desc') || 'Kelola negosiasi berbantuan AI, bayar tagihan via QRIS Antarnegara, dan pantau pengiriman produk kreatif Indonesia.'}
@@ -169,7 +169,7 @@ export default function BuyerDashboardOverview() {
                         Kopi Nusantara Abadi
                         <ShieldCheck className="w-4 h-4 text-[var(--color-primary)]" />
                       </h4>
-                      <span className="text-[11px] text-[var(--color-text-muted)] font-medium">Kopi Luwak Premium Gayo</span>
+                      <span className="text-[11px] text-[var(--color-text-muted)] font-medium">Kopi Arabika Gayo Specialty</span>
                     </div>
                   </div>
 

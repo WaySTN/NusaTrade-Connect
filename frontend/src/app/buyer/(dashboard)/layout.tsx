@@ -28,7 +28,7 @@ export default function BuyerDashboardLayout({
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [isClient, setIsClient] = useState(false);
-  const [buyerName, setBuyerName] = useState('Global Imports LLC');
+  const [buyerName, setBuyerName] = useState('Beijing Trading (Ye Lin)');
   const pathname = usePathname();
   const router = useRouter();
   const t = useT();
@@ -47,8 +47,10 @@ export default function BuyerDashboardLayout({
       }
 
       const storedName = localStorage.getItem('userName');
-      if (storedName) {
+      if (storedName && storedName !== 'Global Imports LLC') {
         setBuyerName(storedName);
+      } else {
+        setBuyerName('Beijing Trading (Ye Lin)');
       }
     }
   }, [router, pathname]);

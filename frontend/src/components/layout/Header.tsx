@@ -96,12 +96,12 @@ export const Header = ({ onMenuClick, title }: HeaderProps) => {
           <div className="flex items-center gap-3 cursor-pointer group">
             <div className="text-right hidden lg:block">
               <div className="text-sm font-semibold text-[var(--color-text-primary)] group-hover:text-[var(--color-primary)] transition-colors">
-                {MOCK_SELLER_PROFILE.name}
+                {MOCK_SELLER_PROFILE.businessName || MOCK_SELLER_PROFILE.name}
               </div>
             </div>
             <Avatar 
               src={MOCK_SELLER_PROFILE.photoUrl} 
-              initials={MOCK_SELLER_PROFILE.name.charAt(0)} 
+              initials="KN" 
               size="sm" 
               className="ring-2 ring-transparent group-hover:ring-[var(--color-primary-light)] transition-all"
             />
