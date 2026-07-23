@@ -175,7 +175,8 @@ export default function DemoPaymentBuyer() {
               
               {isPaid ? (
                 <div className="h-full flex flex-col items-center justify-center text-center space-y-5 animate-fade-in py-6">
-                  <div className="w-20 h-20 rounded-full bg-emerald-100 flex items-center justify-center shadow-inner ring-8 ring-emerald-50">
+                  {/* Animated Checkmark */}
+                  <div className="w-20 h-20 bg-emerald-100 rounded-full flex items-center justify-center shadow-lg shadow-emerald-500/20 ring-8 ring-emerald-50 animate-bounce">
                     <CheckCircle2 className="w-10 h-10 text-emerald-600" />
                   </div>
                   <div>
@@ -192,12 +193,6 @@ export default function DemoPaymentBuyer() {
                       <strong>Garansi Keamanan Buyer:</strong> Dana Anda tidak akan ditransfer ke UMKM hingga barang sampai di pelabuhan dan Anda mengonfirmasi penerimaan.
                     </p>
                   </div>
-
-                  <Link href="/demo/payment/escrow" className="w-full">
-                    <Button variant="primary" className="w-full h-12 rounded-xl font-bold bg-emerald-600 hover:bg-emerald-700 shadow-md">
-                      Lanjut Pantau Status Escrow →
-                    </Button>
-                  </Link>
                 </div>
               ) : (
                 <>
@@ -280,7 +275,7 @@ export default function DemoPaymentBuyer() {
                         leftIcon={isProcessing ? <Loader2 className="w-5 h-5 animate-spin" /> : <CreditCard className="w-5 h-5" />}
                         onClick={handleSimulatePayment}
                       >
-                        {isProcessing ? 'Memproses Pembayaran Cross-Border...' : 'Simulasi Scan & Bayar via QRIS'}
+                        {isProcessing ? 'Memproses Pembayaran Cross-Border...' : 'Scan dan Bayar via QRIS'}
                       </Button>
                     </div>
                   )}
@@ -319,7 +314,7 @@ export default function DemoPaymentBuyer() {
                         leftIcon={isProcessing ? <Loader2 className="w-5 h-5 animate-spin" /> : undefined}
                         onClick={handleSimulatePayment}
                       >
-                        {isProcessing ? 'Memproses Verifikasi Transfer...' : 'Simulasi Transfer Bank Berhasil'}
+                        {isProcessing ? 'Memproses Verifikasi Transfer...' : 'Konfirmasi Transfer Bank'}
                       </Button>
                     </div>
                   )}

@@ -49,35 +49,36 @@ export default function DemoPaymentEscrow() {
         <div className="max-w-4xl mx-auto space-y-8">
           
           {/* Header & Role Switcher */}
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 animate-fade-in">
-            <div>
-              <h1 className="text-3xl font-display font-extrabold text-[var(--color-text-primary)]">
-                Proteksi Dana Escrow
-              </h1>
-              <p className="text-sm text-[var(--color-text-secondary)] font-medium mt-2">
-                Simulasi penahanan dan pencairan dana demi keamanan kedua belah pihak.
-              </p>
-            </div>
-            
-            <div className="bg-white p-1 rounded-xl border border-[var(--color-border)] flex shadow-sm">
+          <div className="flex flex-col items-start gap-4 animate-fade-in">
+            {/* Role Switcher Pill (Placed ON TOP of title for clean UI) */}
+            <div className="bg-white p-1.5 rounded-2xl border border-[var(--color-border)] flex shadow-2xs">
               <button
                 onClick={() => setViewRole('buyer')}
                 className={cn(
-                  "px-4 py-2 rounded-lg text-xs font-bold transition-all flex items-center gap-2",
-                  viewRole === 'buyer' ? "bg-[var(--color-primary)] text-white shadow-md" : "text-[var(--color-text-secondary)] hover:bg-[var(--color-bg-subtle)]"
+                  "px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 cursor-pointer",
+                  viewRole === 'buyer' ? "bg-[var(--color-primary)] text-white shadow-sm" : "text-[var(--color-text-secondary)] hover:bg-[var(--color-bg-subtle)]"
                 )}
               >
-                <Globe className="w-4 h-4" /> View Buyer
+                <Globe className="w-4 h-4" /> View Buyer (Beijing Trading 🇨🇳)
               </button>
               <button
                 onClick={() => setViewRole('umkm')}
                 className={cn(
-                  "px-4 py-2 rounded-lg text-xs font-bold transition-all flex items-center gap-2",
-                  viewRole === 'umkm' ? "bg-indigo-600 text-white shadow-md" : "text-[var(--color-text-secondary)] hover:bg-[var(--color-bg-subtle)]"
+                  "px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-2 cursor-pointer",
+                  viewRole === 'umkm' ? "bg-indigo-600 text-white shadow-sm" : "text-[var(--color-text-secondary)] hover:bg-[var(--color-bg-subtle)]"
                 )}
               >
-                <Store className="w-4 h-4" /> View UMKM
+                <Building2 className="w-4 h-4" /> View UMKM (Kopi Nusantara Abadi 🇮🇩)
               </button>
+            </div>
+
+            <div>
+              <h1 className="text-3xl font-display font-extrabold text-[var(--color-text-primary)]">
+                Proteksi Dana Escrow
+              </h1>
+              <p className="text-sm text-[var(--color-text-secondary)] font-medium mt-1">
+                Simulasi penahanan dan pencairan dana demi keamanan kedua belah pihak.
+              </p>
             </div>
           </div>
 

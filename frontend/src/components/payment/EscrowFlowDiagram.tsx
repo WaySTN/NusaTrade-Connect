@@ -46,32 +46,33 @@ export const EscrowFlowDiagram = ({ currentStep = 2, className, animate = false 
     },
   ];
 
-  // Progress line width percentage: step 1 = 0%, step 2 = 33.3%, step 3 = 66.6%, step 4 = 100%
-  const progressPercent = ((currentStep - 1) / 3) * 100;
+  // Progress line width percentage: step 1 = 0%, step 2 = 25%, step 3 = 50%, step 4 = 75%
+  const progressPercent = ((currentStep - 1) / 3) * 75;
 
   return (
     <div className={cn("w-full py-6 select-none", className)}>
-      <div className="relative max-w-2xl mx-auto px-4 sm:px-8">
+      <div className="relative max-w-2xl mx-auto px-2 sm:px-6">
         
-        {/* Step Icon Circles Container & Connecting Lines */}
-        <div className="relative flex items-center justify-between z-10 mb-4">
-          {/* Track Line Background */}
-          <div className="absolute top-1/2 left-6 right-6 -translate-y-1/2 h-1.5 bg-slate-100 rounded-full z-0"></div>
-          
-          {/* Active Progress Line */}
-          <div 
-            className="absolute top-1/2 left-6 -translate-y-1/2 h-1.5 bg-gradient-to-r from-emerald-500 via-teal-500 to-emerald-600 rounded-full z-0 transition-all duration-700 ease-out shadow-xs"
-            style={{ width: `calc(${progressPercent}% * (100% - 48px) / 100)` }}
-          ></div>
+        {/* Background Track Line (From Col 1 center 12.5% to Col 4 center 87.5%) */}
+        <div className="absolute top-[20px] sm:top-[24px] left-[12.5%] right-[12.5%] h-1.5 bg-slate-100 rounded-full z-0"></div>
+        
+        {/* Active Progress Line */}
+        <div 
+          className="absolute top-[20px] sm:top-[24px] left-[12.5%] h-1.5 bg-gradient-to-r from-emerald-500 via-teal-500 to-emerald-600 rounded-full z-0 transition-all duration-700 ease-out shadow-xs"
+          style={{ width: `${progressPercent}%` }}
+        ></div>
 
+        {/* 4-Columns Grid (Badge + Label together in one cell for exact centering) */}
+        <div className="grid grid-cols-4 relative z-10">
           {steps.map((step) => {
             const isActive = step.id === currentStep;
             const isPast = step.id < currentStep;
 
             return (
-              <div key={step.id} className="relative z-10 flex flex-col items-center">
+              <div key={step.id} className="flex flex-col items-center text-center">
+                {/* Step Badge */}
                 <div className={cn(
-                  "w-12 h-12 sm:w-14 sm:h-14 rounded-2xl flex items-center justify-center transition-all duration-500 relative border-2",
+                  "w-10 h-10 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl flex items-center justify-center transition-all duration-500 relative border-2 mb-2 bg-white",
                   isActive 
                     ? `${step.activeBg} border-transparent scale-110` 
                     : isPast 
@@ -98,21 +99,10 @@ export const EscrowFlowDiagram = ({ currentStep = 2, className, animate = false 
                     </span>
                   )}
                 </div>
-              </div>
-            );
-          })}
-        </div>
 
-        {/* Labels Row */}
-        <div className="grid grid-cols-4 gap-1 text-center">
-          {steps.map((step) => {
-            const isActive = step.id === currentStep;
-            const isPast = step.id < currentStep;
-
-            return (
-              <div key={step.id} className="flex flex-col items-center">
+                {/* Step Label */}
                 <span className={cn(
-                  "text-xs font-bold leading-snug transition-colors duration-300",
+                  "text-xs font-bold leading-snug transition-colors max-w-[100px]",
                   isActive 
                     ? "text-[var(--color-primary)] font-extrabold" 
                     : isPast 
@@ -121,7 +111,7 @@ export const EscrowFlowDiagram = ({ currentStep = 2, className, animate = false 
                 )}>
                   {step.label}
                 </span>
-                <span className="text-[10px] font-medium text-[var(--color-text-secondary)] hidden sm:block mt-0.5">
+                <span className="text-[10px] font-medium text-[var(--color-text-secondary)] hidden sm:block mt-0.5 max-w-[100px]">
                   {step.sublabel}
                 </span>
               </div>
