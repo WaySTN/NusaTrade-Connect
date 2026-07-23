@@ -18,7 +18,7 @@ export default function DemoPaymentEscrow() {
   const invoice = getMockInvoice('INV-DEMO-001');
   if (!invoice) return null;
 
-  const finalPriceIdr = invoice.finalPrice || 15000000;
+  const finalPriceIdr = invoice.finalPrice || 68000000;
   const platformFeeIdr = finalPriceIdr * 0.02; // 2% fee
 
   const formatRupiah = (amount: number) => {

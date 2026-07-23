@@ -168,7 +168,7 @@ export default function PPJKDetailPage() {
 
       <main className="flex-1 pb-12 relative z-10">
         {/* A. Header Hero Section */}
-        <div className="relative pt-28 pb-16 overflow-hidden text-white bg-gradient-to-br from-[#063826] via-[var(--color-primary)] to-[#04281a]">
+        <div className="relative -mt-16 sm:-mt-20 lg:-mt-24 pt-28 sm:pt-32 lg:pt-36 pb-16 overflow-hidden text-white bg-gradient-to-br from-[#063826] via-[var(--color-primary)] to-[#04281a]">
           {/* Dot pattern overlay */}
           <div className="absolute inset-0 pointer-events-none opacity-[0.08]" style={{backgroundImage: 'radial-gradient(circle, white 1px, transparent 1px)', backgroundSize: '24px 24px'}}></div>
           {/* Top-right light flare */}

@@ -5,25 +5,41 @@ import Link from 'next/link';
 import { DemoNavBar } from '@/components/payment/DemoNavBar';
 import { getMockInvoice } from '@/lib/mock-data';
 import { Button } from '@/components/ui/Button';
-import { Globe, CreditCard, ShieldCheck, QrCode, Building2, CheckCircle2, ArrowRight } from 'lucide-react';
+import { Globe, CreditCard, ShieldCheck, QrCode, Building2, CheckCircle2, ArrowRight, Clock, Loader2 } from 'lucide-react';
 import { cn } from '@/lib/utils/cn';
 
 export default function DemoPaymentBuyer() {
   const [paymentMethod, setPaymentMethod] = useState<'qris' | 'bank' | null>('qris');
+  const [isProcessing, setIsProcessing] = useState(false);
   const [isPaid, setIsPaid] = useState(false);
+  const [timeLeft, setTimeLeft] = useState(899); // 14:59 seconds
   
+  // Timer countdown simulation
+  useEffect(() => {
+    if (isPaid || timeLeft <= 0) return;
+    const timer = setInterval(() => setTimeLeft(prev => prev - 1), 1000);
+    return () => clearInterval(timer);
+  }, [isPaid, timeLeft]);
+
+  const formatTimer = (seconds: number) => {
+    const m = Math.floor(seconds / 60);
+    const s = seconds % 60;
+    return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+  };
+
   // Ambil data invoice
   const invoice = getMockInvoice('INV-DEMO-001');
   if (!invoice) return null;
 
-  // Asumsikan UMKM menset finalPrice ke 15.000.000 (dari page sebelumnya)
-  const finalPriceIdr = invoice.finalPrice || 15000000;
+  const finalPriceIdr = invoice.finalPrice || 68000000;
   const platformFeeIdr = finalPriceIdr * 0.02; // 2% fee
   const totalIdr = finalPriceIdr + platformFeeIdr;
   
-  // Konversi dummy (Rate: 1 USD = 15.000 IDR)
-  const rate = invoice.exchangeRate || 15000;
-  const totalUsd = totalIdr / rate;
+  // Konversi dummy (Rate: 1 USD = 16.000 IDR, 1 CNY = 2.222 IDR)
+  const rateUsd = invoice.exchangeRate || 16000;
+  const rateCny = 2222;
+  const totalUsd = totalIdr / rateUsd;
+  const totalCny = totalIdr / rateCny;
 
   const formatRupiah = (amount: number) => {
     return new Intl.NumberFormat('id-ID', {
@@ -43,12 +59,23 @@ export default function DemoPaymentBuyer() {
     }).format(amount);
   };
 
+  const formatCny = (amount: number) => {
+    return `¥ ${new Intl.NumberFormat('zh-CN', {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    }).format(amount)}`;
+  };
+
   const handleSimulatePayment = () => {
-    setIsPaid(true);
+    setIsProcessing(true);
+    setTimeout(() => {
+      setIsProcessing(false);
+      setIsPaid(true);
+    }, 1500);
   };
 
   return (
-    <div className="min-h-screen bg-[var(--color-bg-base)] flex flex-col">
+    <div className="min-h-screen bg-[var(--color-bg-base)] flex flex-col font-body">
       <DemoNavBar />
       
       <main className="flex-1 py-12 px-4 sm:px-6">
@@ -57,22 +84,22 @@ export default function DemoPaymentBuyer() {
           {/* Header */}
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 animate-fade-in">
             <div>
-              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-50 text-amber-700 text-xs font-bold uppercase tracking-wider mb-3 border border-amber-200">
-                <Globe className="w-4 h-4" />
-                Sisi Buyer (Global Imports LLC)
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-50 text-amber-700 text-xs font-bold uppercase tracking-wider mb-3 border border-amber-200 shadow-2xs">
+                <Globe className="w-4 h-4 text-amber-600" />
+                Sisi Buyer (Beijing Trading — China 🇨🇳)
               </div>
               <h1 className="text-3xl font-display font-extrabold text-[var(--color-text-primary)]">
-                Tagihan Final
+                Tagihan Final Cross-Border
               </h1>
               <p className="text-sm text-[var(--color-text-secondary)] font-medium mt-2">
-                Pilih metode pembayaran dengan mata uang lokal Anda. Dana akan ditahan aman di Escrow.
+                Bayar aman dengan mata uang lokal (CNY/USD/IDR) melalui QRIS Antarnegara & Escrow.
               </p>
             </div>
             
             {isPaid && (
               <Link href="/demo/payment/escrow">
-                <Button variant="primary" className="shadow-lg shadow-[var(--color-primary)]/20 animate-slide-up" rightIcon={<ArrowRight className="w-4 h-4" />}>
-                  Pantau Status Escrow
+                <Button variant="primary" className="shadow-lg shadow-[var(--color-primary)]/20 animate-slide-up bg-emerald-600 hover:bg-emerald-700 font-bold" rightIcon={<ArrowRight className="w-4 h-4" />}>
+                  Pantau Status Escrow & Pencairan
                 </Button>
               </Link>
             )}
@@ -84,51 +111,58 @@ export default function DemoPaymentBuyer() {
             <div className="bg-white rounded-3xl border border-[var(--color-border)] shadow-sm overflow-hidden flex flex-col animate-slide-up" style={{ animationDelay: '100ms' }}>
               <div className="p-6 border-b border-[var(--color-border)] bg-[var(--color-bg-subtle)] flex items-center justify-between">
                 <div>
-                  <p className="text-xs font-bold text-[var(--color-text-secondary)] mb-1">Dari</p>
-                  <p className="font-bold text-[var(--color-text-primary)] flex items-center gap-2">
+                  <p className="text-[10px] font-bold uppercase tracking-wider text-[var(--color-text-muted)] mb-1">Penjual (UMKM)</p>
+                  <p className="font-bold text-sm text-[var(--color-text-primary)] flex items-center gap-2">
                     Kopi Nusantara Abadi
-                    <img src="https://flagcdn.com/id.svg" className="w-4" alt="ID" />
+                    <img src="https://flagcdn.com/id.svg" className="w-4 h-3 rounded-xs shadow-2xs" alt="ID" />
                   </p>
                 </div>
                 <div className="text-right">
-                  <p className="text-xs font-bold text-[var(--color-text-secondary)] mb-1">Kepada</p>
-                  <p className="font-bold text-[var(--color-text-primary)] flex items-center gap-2 justify-end">
-                    Global Imports LLC
-                    <img src="https://flagcdn.com/gb.svg" className="w-4" alt="UK" />
+                  <p className="text-[10px] font-bold uppercase tracking-wider text-[var(--color-text-muted)] mb-1">Pembeli (Importir)</p>
+                  <p className="font-bold text-sm text-[var(--color-text-primary)] flex items-center gap-2 justify-end">
+                    Beijing Trading (Ye Lin)
+                    <img src="https://flagcdn.com/cn.svg" className="w-4 h-3 rounded-xs shadow-2xs" alt="CN" />
                   </p>
                 </div>
               </div>
 
               <div className="p-6 flex-1 space-y-6">
                 <div className="flex gap-4">
-                  <img src={invoice.productImage} alt="Product" className="w-16 h-16 rounded-xl object-cover border border-[var(--color-border)]" />
+                  <img src={invoice.productImage} alt="Product" className="w-20 h-20 rounded-2xl object-cover border border-[var(--color-border)] shadow-xs" />
                   <div>
-                    <h4 className="font-bold text-[var(--color-text-primary)] leading-tight">{invoice.items[0].name}</h4>
-                    <p className="text-xs font-medium text-[var(--color-text-secondary)] mt-1">Qty: {invoice.items[0].qty} kg</p>
+                    <h4 className="font-bold text-[var(--color-text-primary)] leading-snug">{invoice.items[0].name}</h4>
+                    <p className="text-xs font-medium text-[var(--color-text-secondary)] mt-1">Kuantitas: <strong className="text-[var(--color-text-primary)]">500 kg (Grade 1 Green Beans)</strong></p>
+                    <p className="text-xs font-medium text-[var(--color-text-secondary)]">Sertifikasi: Organik, CoO, GrainPro Bag</p>
                   </div>
                 </div>
 
                 <div className="space-y-3 pt-4 border-t border-[var(--color-border-strong)]">
                   <div className="flex justify-between text-sm">
-                    <span className="text-[var(--color-text-secondary)] font-medium">Subtotal Barang</span>
+                    <span className="text-[var(--color-text-secondary)] font-medium">Nilai Barang (500kg x Rp 136rb)</span>
                     <span className="font-mono font-bold text-[var(--color-text-primary)]">{formatRupiah(finalPriceIdr)}</span>
                   </div>
                   <div className="flex justify-between text-sm">
                     <span className="text-[var(--color-text-secondary)] font-medium flex items-center gap-1.5">
-                      Platform Fee (2%)
+                      Biaya Layanan Platform (2%)
                     </span>
                     <span className="font-mono font-bold text-[var(--color-text-primary)]">{formatRupiah(platformFeeIdr)}</span>
                   </div>
                 </div>
               </div>
 
-              <div className="bg-[var(--color-bg-subtle)] p-6 border-t border-[var(--color-border)]">
+              <div className="bg-slate-900 text-white p-6 border-t border-slate-800">
                 <div className="flex justify-between items-end mb-2">
-                  <span className="text-sm font-extrabold text-[var(--color-text-primary)] uppercase tracking-wider">Total Tagihan</span>
-                  <span className="text-2xl font-black font-mono text-[var(--color-primary)] tracking-tight">{formatUsd(totalUsd)}</span>
+                  <div>
+                    <span className="text-[10px] font-extrabold uppercase tracking-widest text-emerald-400 block mb-1">Total Tagihan Cross-Border</span>
+                    <span className="text-2xl font-black font-mono tracking-tight text-white">{formatCny(totalCny)}</span>
+                  </div>
+                  <div className="text-right">
+                    <span className="text-lg font-bold font-mono text-slate-300">{formatUsd(totalUsd)}</span>
+                  </div>
                 </div>
-                <div className="flex justify-end text-xs font-medium text-[var(--color-text-muted)] font-mono">
-                  Setara dengan {formatRupiah(totalIdr)} (Rate: 1 USD = Rp 15.000)
+                <div className="flex justify-between items-center text-[11px] font-medium text-slate-400 pt-2 border-t border-slate-800 font-mono">
+                  <span>Setara dengan {formatRupiah(totalIdr)}</span>
+                  <span className="text-emerald-400 font-bold">Safe Escrow Guaranteed</span>
                 </div>
               </div>
             </div>
@@ -137,45 +171,60 @@ export default function DemoPaymentBuyer() {
             <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[var(--color-border)] shadow-sm animate-slide-up" style={{ animationDelay: '200ms' }}>
               
               {isPaid ? (
-                <div className="h-full flex flex-col items-center justify-center text-center space-y-4 animate-fade-in">
-                  <div className="w-20 h-20 rounded-full bg-emerald-100 flex items-center justify-center shadow-inner">
+                <div className="h-full flex flex-col items-center justify-center text-center space-y-5 animate-fade-in py-6">
+                  <div className="w-20 h-20 rounded-full bg-emerald-100 flex items-center justify-center shadow-inner ring-8 ring-emerald-50">
                     <CheckCircle2 className="w-10 h-10 text-emerald-600" />
                   </div>
-                  <h3 className="text-2xl font-display font-extrabold text-[var(--color-text-primary)]">Pembayaran Berhasil</h3>
-                  <p className="text-sm font-medium text-[var(--color-text-secondary)] max-w-xs">
-                    Dana sebesar {formatUsd(totalUsd)} telah kami terima dan ditahan aman dalam sistem Escrow.
+                  <div>
+                    <h3 className="text-2xl font-display font-extrabold text-[var(--color-text-primary)]">Pembayaran QRIS Berhasil!</h3>
+                    <p className="text-xs text-emerald-700 font-bold uppercase tracking-wider mt-1">Payment ID: TX-2026-8891-CN</p>
+                  </div>
+                  <p className="text-sm font-medium text-[var(--color-text-secondary)] max-w-sm leading-relaxed">
+                    Dana sebesar <strong className="text-[var(--color-text-primary)]">{formatCny(totalCny)}</strong> ({formatUsd(totalUsd)}) telah dikonfirmasi dan ditahan dengan aman di **Escrow Vault NusaTrade Connect**.
                   </p>
                   
-                  <div className="mt-4 p-4 bg-blue-50 border border-blue-200 rounded-xl flex items-start gap-3 text-left">
+                  <div className="p-4 bg-blue-50 border border-blue-200 rounded-2xl flex items-start gap-3 text-left w-full">
                     <ShieldCheck className="w-5 h-5 text-blue-600 shrink-0 mt-0.5" />
-                    <p className="text-xs font-medium text-blue-800 leading-relaxed">
-                      Langkah selanjutnya: Tunggu pesanan dikirimkan. Dana Anda baru akan diteruskan ke penjual setelah Anda mengonfirmasi penerimaan barang.
+                    <p className="text-xs font-medium text-blue-900 leading-relaxed">
+                      <strong>Garansi Keamanan Buyer:</strong> Dana Anda tidak akan ditransfer ke UMKM hingga barang sampai di pelabuhan dan Anda mengonfirmasi penerimaan.
                     </p>
                   </div>
+
+                  <Link href="/demo/payment/escrow" className="w-full">
+                    <Button variant="primary" className="w-full h-12 rounded-xl font-bold bg-emerald-600 hover:bg-emerald-700 shadow-md">
+                      Lanjut Pantau Status Escrow →
+                    </Button>
+                  </Link>
                 </div>
               ) : (
                 <>
-                  <h3 className="font-bold text-lg text-[var(--color-text-primary)] mb-4">Pilih Metode Pembayaran</h3>
+                  <div className="flex items-center justify-between mb-4">
+                    <h3 className="font-bold text-lg text-[var(--color-text-primary)]">Metode Pembayaran Cross-Border</h3>
+                    <div className="flex items-center gap-1.5 text-xs font-mono font-bold text-amber-600 bg-amber-50 px-2.5 py-1 rounded-full border border-amber-200">
+                      <Clock className="w-3.5 h-3.5" />
+                      <span>{formatTimer(timeLeft)}</span>
+                    </div>
+                  </div>
                   
-                  <div className="space-y-3 mb-8">
+                  <div className="space-y-3 mb-6">
                     {/* Method 1: QRIS */}
                     <button 
                       onClick={() => setPaymentMethod('qris')}
                       className={cn(
-                        "w-full flex items-start gap-4 p-4 rounded-2xl border-2 text-left transition-all",
-                        paymentMethod === 'qris' ? "border-[var(--color-primary)] bg-[var(--color-primary-subtle)]" : "border-[var(--color-border)] bg-white hover:border-[var(--color-primary)]/50"
+                        "w-full flex items-start gap-4 p-4 rounded-2xl border-2 text-left transition-all cursor-pointer",
+                        paymentMethod === 'qris' ? "border-[var(--color-primary)] bg-[var(--color-primary-subtle)] shadow-xs" : "border-[var(--color-border)] bg-white hover:border-[var(--color-primary)]/50"
                       )}
                     >
-                      <div className="w-10 h-10 rounded-xl bg-white border border-[var(--color-border)] flex items-center justify-center shrink-0">
+                      <div className="w-10 h-10 rounded-xl bg-white border border-[var(--color-border)] flex items-center justify-center shrink-0 shadow-2xs">
                         <QrCode className={cn("w-5 h-5", paymentMethod === 'qris' ? "text-[var(--color-primary)]" : "text-slate-400")} />
                       </div>
                       <div className="flex-1">
                         <div className="flex items-center justify-between mb-1">
-                          <h4 className="font-bold text-[var(--color-text-primary)]">QRIS Cross-Border</h4>
-                          <span className="text-[9px] font-bold uppercase tracking-wider bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded-full">Recommended</span>
+                          <h4 className="font-bold text-[var(--color-text-primary)] text-sm">QRIS Cross-Border (🇮🇩 ⇄ 🇨🇳)</h4>
+                          <span className="text-[9px] font-bold uppercase tracking-wider bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded-full">Rekomendasi</span>
                         </div>
                         <p className="text-xs font-medium text-[var(--color-text-secondary)] leading-relaxed">
-                          Scan dengan aplikasi DuitNow, PayNow, Alipay, atau bank digital yang mendukung QRIS. Rate otomatis konversi.
+                          Scan langsung memakai WeChat Pay, Alipay, UnionPay, atau e-Wallet terhubung. Kurs konversi otomatis real-time.
                         </p>
                       </div>
                     </button>
@@ -184,32 +233,38 @@ export default function DemoPaymentBuyer() {
                     <button 
                       onClick={() => setPaymentMethod('bank')}
                       className={cn(
-                        "w-full flex items-start gap-4 p-4 rounded-2xl border-2 text-left transition-all",
-                        paymentMethod === 'bank' ? "border-[var(--color-primary)] bg-[var(--color-primary-subtle)]" : "border-[var(--color-border)] bg-white hover:border-[var(--color-primary)]/50"
+                        "w-full flex items-start gap-4 p-4 rounded-2xl border-2 text-left transition-all cursor-pointer",
+                        paymentMethod === 'bank' ? "border-[var(--color-primary)] bg-[var(--color-primary-subtle)] shadow-xs" : "border-[var(--color-border)] bg-white hover:border-[var(--color-primary)]/50"
                       )}
                     >
-                      <div className="w-10 h-10 rounded-xl bg-white border border-[var(--color-border)] flex items-center justify-center shrink-0">
+                      <div className="w-10 h-10 rounded-xl bg-white border border-[var(--color-border)] flex items-center justify-center shrink-0 shadow-2xs">
                         <Building2 className={cn("w-5 h-5", paymentMethod === 'bank' ? "text-[var(--color-primary)]" : "text-slate-400")} />
                       </div>
                       <div className="flex-1">
-                        <h4 className="font-bold text-[var(--color-text-primary)] mb-1">Bank Transfer (SWIFT)</h4>
+                        <h4 className="font-bold text-[var(--color-text-primary)] text-sm mb-1">Transfer Bank SWIFT (USD / CNY)</h4>
                         <p className="text-xs font-medium text-[var(--color-text-secondary)] leading-relaxed">
-                          Transfer langsung ke Virtual Account USD NusaTrade Connect. Proses 1-2 hari kerja.
+                          Transfer Bank Internasional ke Virtual Account Escrow NusaTrade (Bank of China / Citibank).
                         </p>
                       </div>
                     </button>
                   </div>
 
                   {paymentMethod === 'qris' && (
-                    <div className="flex flex-col items-center animate-fade-in">
-                      <div className="w-48 h-48 bg-white p-3 rounded-2xl border border-[var(--color-border)] shadow-sm mb-4 relative overflow-hidden group">
-                        <div className="w-full h-full border-4 border-slate-900 flex flex-col justify-between p-2 opacity-90 transition-opacity group-hover:opacity-100">
+                    <div className="flex flex-col items-center animate-fade-in bg-[var(--color-bg-subtle)] p-5 rounded-2xl border border-[var(--color-border)]">
+                      <div className="flex items-center gap-2 mb-3 text-xs font-bold text-[var(--color-text-secondary)]">
+                        <img src="https://flagcdn.com/id.svg" className="w-4 h-3 rounded-2xs" alt="ID" />
+                        <span>QRIS Cross-Border Indonesia - China</span>
+                        <img src="https://flagcdn.com/cn.svg" className="w-4 h-3 rounded-2xs" alt="CN" />
+                      </div>
+
+                      <div className="w-48 h-48 bg-white p-3 rounded-2xl border border-[var(--color-border)] shadow-md mb-4 relative overflow-hidden group flex items-center justify-center">
+                        <div className="w-full h-full border-4 border-slate-900 flex flex-col justify-between p-2 opacity-95">
                           <div className="flex justify-between">
                             <div className="w-8 h-8 bg-slate-900 border-2 border-white"></div>
                             <div className="w-8 h-8 bg-slate-900 border-2 border-white"></div>
                           </div>
-                          <div className="text-center font-mono text-[9px] font-bold text-[var(--color-primary)]">
-                            SCAN TO PAY
+                          <div className="text-center font-mono text-[9px] font-black text-[var(--color-primary)] tracking-widest">
+                            QRIS INTERNASIONAL
                           </div>
                           <div className="flex justify-between items-end">
                             <div className="w-8 h-8 bg-slate-900 border-2 border-white"></div>
@@ -221,37 +276,40 @@ export default function DemoPaymentBuyer() {
                       <Button 
                         variant="primary" 
                         size="lg" 
-                        className="w-full h-14 rounded-xl text-sm font-bold shadow-lg shadow-[var(--color-primary)]/20"
-                        leftIcon={<CreditCard className="w-5 h-5" />}
+                        disabled={isProcessing}
+                        className="w-full h-13 rounded-xl text-sm font-bold shadow-lg shadow-[var(--color-primary)]/20 bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)]"
+                        leftIcon={isProcessing ? <Loader2 className="w-5 h-5 animate-spin" /> : <CreditCard className="w-5 h-5" />}
                         onClick={handleSimulatePayment}
                       >
-                        Simulasi Scan & Bayar Berhasil
+                        {isProcessing ? 'Memproses Pembayaran Cross-Border...' : 'Simulasi Scan & Bayar via QRIS'}
                       </Button>
                     </div>
                   )}
 
                   {paymentMethod === 'bank' && (
                     <div className="animate-fade-in space-y-4">
-                      <div className="bg-slate-50 p-4 rounded-xl border border-slate-200">
-                        <p className="text-[10px] font-bold text-slate-500 uppercase mb-1">Bank Beneficiary</p>
-                        <p className="font-bold text-slate-800 mb-3">Citibank N.A. (Singapore Branch)</p>
+                      <div className="bg-slate-50 p-4 rounded-xl border border-slate-200 text-xs">
+                        <p className="text-[10px] font-bold text-slate-500 uppercase mb-1">Bank Penerima Escrow</p>
+                        <p className="font-bold text-slate-800 mb-3">Bank of China (Beijing Branch) / Citibank Singapore</p>
                         
                         <p className="text-[10px] font-bold text-slate-500 uppercase mb-1">SWIFT Code</p>
-                        <p className="font-mono font-bold text-slate-800 mb-3">CITISGSG</p>
+                        <p className="font-mono font-bold text-slate-800 mb-3">BKCHCNBJ / CITISGSG</p>
 
-                        <p className="text-[10px] font-bold text-slate-500 uppercase mb-1">Virtual Account (USD)</p>
-                        <div className="flex items-center justify-between bg-white p-2 border border-slate-200 rounded-lg">
-                          <span className="font-mono font-bold text-lg text-[var(--color-primary)] tracking-widest">8812 0000 1234 5678</span>
+                        <p className="text-[10px] font-bold text-slate-500 uppercase mb-1">Virtual Account Escrow (CNY / USD)</p>
+                        <div className="flex items-center justify-between bg-white p-2.5 border border-slate-200 rounded-lg">
+                          <span className="font-mono font-bold text-base text-[var(--color-primary)] tracking-wider">6217 0000 8891 2026</span>
                         </div>
                       </div>
 
                       <Button 
                         variant="primary" 
                         size="lg" 
-                        className="w-full h-14 rounded-xl text-sm font-bold shadow-lg shadow-[var(--color-primary)]/20"
+                        disabled={isProcessing}
+                        className="w-full h-13 rounded-xl text-sm font-bold shadow-lg shadow-[var(--color-primary)]/20"
+                        leftIcon={isProcessing ? <Loader2 className="w-5 h-5 animate-spin" /> : undefined}
                         onClick={handleSimulatePayment}
                       >
-                        Simulasi Transfer Berhasil
+                        {isProcessing ? 'Memproses Verifikasi Transfer...' : 'Simulasi Transfer Bank Berhasil'}
                       </Button>
                     </div>
                   )}

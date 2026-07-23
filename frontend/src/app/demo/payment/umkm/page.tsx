@@ -11,7 +11,7 @@ import { cn } from '@/lib/utils/cn';
 
 export default function DemoPaymentUMKM() {
   const [isSent, setIsSent] = useState(false);
-  const [price, setPrice] = useState(150000); // Harga per kg
+  const [price, setPrice] = useState(136000); // Harga per kg (500kg x 136rb = 68 Jt / $4,250 USD)
   
   const invoice = getMockInvoice('INV-DEMO-001');
   if (!invoice) return null;
