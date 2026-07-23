@@ -49,13 +49,13 @@ export const ProductCard = ({ product, className }: ProductCardProps) => {
           {/* Badge overlays */}
           <div className="absolute top-3 left-3 flex flex-col gap-2 items-start">
             {product.isVerified && (
-              <Badge variant="verified" dot pulse className="shadow-sm backdrop-blur-md bg-white/90">Verified Seller</Badge>
+              <Badge variant="verified" dot pulse className="shadow-sm backdrop-blur-md bg-white/90">NIB Verified</Badge>
             )}
           </div>
           
           <div className="absolute bottom-3 right-3">
             <Badge variant="default" className="bg-white/90 backdrop-blur-md shadow-sm text-xs font-bold border-[var(--color-border)]">
-              MOQ: {product.moq} unit
+              MOQ: {product.moq} {product.category === 'Food & Beverage' ? 'kg' : 'unit'}
             </Badge>
           </div>
         </div>

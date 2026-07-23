@@ -82,7 +82,7 @@ export const FilterPanel = ({
                 )}></div>
               </div>
               <span className="text-sm font-bold text-[var(--color-text-primary)] group-hover:text-[var(--color-primary)] transition-colors duration-200">
-                {t('katalog.only_verified') || 'Hanya Seller Terverifikasi'}
+                {t('katalog.only_verified') || 'Hanya NIB Verified'}
               </span>
             </label>
           </div>
